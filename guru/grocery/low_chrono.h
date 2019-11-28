@@ -10,6 +10,7 @@
 
 #include "../gvals.h"
 
+
 _GURU_BEGIN
 
 // Returns number of days since civil 1970-01-01.  Negative values indicate

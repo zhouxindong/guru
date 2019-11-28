@@ -72,7 +72,7 @@ namespace guru_unittest
 			Assert::IsTrue(civil_from_days(0) == make_tuple(1970, 1, 1));
 			static_assert(weekday_from_days(days_from_civil(1970, 1, 1)) == 4, "1970-01-01 is a Thursday");
 
-			int ystart = -10000;
+			int ystart = -1000;
 			int prev_z = days_from_civil(ystart, 1, 1) - 1;
 			Assert::IsTrue(prev_z < 0);
 			int prev_wd = weekday_from_days(prev_z);
@@ -193,7 +193,7 @@ namespace guru_unittest
 			//auto delta = std::chrono::system_clock::now().time_since_epoch() - epoch;
 
 			auto wakeup_at = system_clock::time_point(days(days_from_civil(1962, 8, 4))
-				+ hours(10) + minutes(12) + seconds(33)/* - utc_offset*/);
+				+ hours(20) + minutes(12) + seconds(33)/* - utc_offset*/);
 			auto delta = wakeup_at.time_since_epoch() - epoch;
 
 			auto tim = wakeup_at.time_since_epoch();
