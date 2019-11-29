@@ -5,6 +5,8 @@
 #include "../gvals.h"
 #include <string>
 #include <windows.h>
+#include "chrono_ex.h"
+#include "digest.h"
 
 _GURU_BEGIN
 
@@ -14,7 +16,9 @@ public:
 	/*
 	** get current application full path name
 	*/
-	static std::string app_full_name()
+	static
+	std::string 
+	app_full_name() noexcept
 	{
 		char buf[MAX_PATH];
 		::GetModuleFileNameA(NULL, buf, MAX_PATH);
@@ -24,7 +28,9 @@ public:
 	/*
 	** get current application name(include .exe)
 	*/
-	static std::string app_name(const char* s = "\\")
+	static
+	std::string 
+	app_name(const char* s = "\\") noexcept
 	{
 		char buf[MAX_PATH];
 		::GetModuleFileNameA(NULL, buf, MAX_PATH);
@@ -42,7 +48,9 @@ public:
 	/*
 	** get current application nakin name(exclude .exe)
 	*/
-	static std::string app_base_name(const char* s = "\\")
+	static
+	std::string 
+	app_base_name(const char* s = "\\") noexcept
 	{
 		std::string name = std::move(app_name(s));
 		char buf[MAX_PATH];
@@ -50,6 +58,26 @@ public:
 		return std::string(buf);
 	}
 };
+
+/*
+** create a name 
+** name+[digest for _Tx]+year+month+day+ext
+*/
+template <typename _Tx>
+inline 
+std::string 
+unique_name_by_date_for_class(std::string const& name, std::string const& ext) noexcept
+{
+	auto t = tokenize_time_point(to_local(std::chrono::system_clock::now()));
+
+	auto digest_name = digest_md5().str_md5(typeid(_Tx).name()).get_md5();
+	std::ostringstream oss;
+	oss << name << "[" << digest_name << "]"
+		<< std::get<0>(t) << std::setw(2) << std::setfill('0')
+		<< std::get<1>(t) << std::setw(2) << std::setfill('0') << std::get<2>(t)
+		<< ext;
+	return oss.str();
+}
 
 _GURU_END
 

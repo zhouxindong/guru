@@ -184,4 +184,17 @@ elapse_ms(std::chrono::system_clock::time_point const& begin) noexcept
 
 _GURU_END
 
+_STD_BEGIN
+
+inline
+ostream&
+operator << (ostream& out, chrono::system_clock::time_point const& tp) noexcept
+{
+	using namespace guru;
+	out << time_point_to_string(tp);
+	return out;
+}
+
+_STD_END
+
 #endif /* _GURU_CHRONO_EX_H_ */

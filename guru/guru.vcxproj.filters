@@ -16,6 +16,9 @@
     <Filter Include="Header Files\grocery">
       <UniqueIdentifier>{503ef953-7f8c-4484-8e95-75e30309ac74}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\log">
+      <UniqueIdentifier>{4efcfeb2-60f1-4be6-bd42-4138cc10dff9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -41,6 +44,18 @@
     </ClInclude>
     <ClInclude Include="grocery\low_chrono.h">
       <Filter>Header Files\grocery</Filter>
+    </ClInclude>
+    <ClInclude Include="grocery\digest.h">
+      <Filter>Header Files\grocery</Filter>
+    </ClInclude>
+    <ClInclude Include="grocery\string_ex.h">
+      <Filter>Header Files\grocery</Filter>
+    </ClInclude>
+    <ClInclude Include="log\log_level.h">
+      <Filter>Header Files\log</Filter>
+    </ClInclude>
+    <ClInclude Include="log\log_item.h">
+      <Filter>Header Files\log</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

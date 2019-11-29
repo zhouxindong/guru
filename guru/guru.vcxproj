@@ -144,10 +144,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="grocery\chrono_ex.h" />
+    <ClInclude Include="grocery\digest.h" />
     <ClInclude Include="grocery\low_chrono.h" />
     <ClInclude Include="grocery\path.h" />
+    <ClInclude Include="grocery\string_ex.h" />
     <ClInclude Include="guru.h" />
     <ClInclude Include="gvals.h" />
+    <ClInclude Include="log\log_item.h" />
+    <ClInclude Include="log\log_level.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>

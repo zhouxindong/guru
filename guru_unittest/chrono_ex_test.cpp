@@ -188,5 +188,40 @@ namespace guru_unittest
 			Assert::IsTrue(0 == get<6>(tup));
 		}
 
+		TEST_METHOD(chrono_ex_key_test)
+		{
+			// this test would be execute about 2 mins
+			int year = 1970;
+			for (int mon = 1; mon < 13; ++mon)
+			{
+				for (int day = 1; day < 29; ++day)
+				{
+					for (int hour = 0; hour < 24; ++hour)
+					{
+						for (int min = 0; min < 60; ++min)
+						{
+							for (int sec = 0; sec < 60; ++sec)
+							{
+								auto tp = to_time_point(year, mon, day, hour, min, sec);
+								auto tk = tokenize_time_point(tp);
+								Assert::IsTrue(year == get<0>(tk));
+								Assert::IsTrue(mon == get<1>(tk));
+								Assert::IsTrue(day == get<2>(tk));
+								Assert::IsTrue(hour == get<3>(tk));
+								Assert::IsTrue(min == get<4>(tk));
+								Assert::IsTrue(sec == get<5>(tk));
+								Assert::IsTrue(0 == get<6>(tk));
+							}
+						}
+					}
+				}
+			}
+		}
+
+		TEST_METHOD(chrono_ex_error_test)
+		{
+			auto tp = to_time_point(1921, 2, 30, 25, 89, 71, 382);
+			auto tu = tokenize_time_point(tp);
+		}
 	};
 }
