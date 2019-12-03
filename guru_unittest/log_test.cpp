@@ -22,24 +22,5 @@ namespace guru_unittest
 			Assert::IsTrue(string("ERROR") == string(log_level(_LOG_ERROR)));
 			Assert::IsTrue(string("FATAL") == string(log_level(_LOG_FATAL)));
 		}
-
-		TEST_METHOD(log_item_test)
-		{
-			log_item item(_LOG_FATAL, , __LINE__);
-			item << "some test";
-			int i = 100;
-			item << i;
-			auto s = item.message();
-
-			log_item item2(item);
-
-			log_item item3(std::move(item2));
-
-			Assert::IsTrue(item.get_level() == item3.get_level());
-			Assert::IsTrue(item.get_caller() == item3.get_caller());
-			Assert::AreEqual(item.get_line(), item3.get_line());
-			Assert::AreEqual(item.get_pid(), item3.get_pid());
-			Assert::IsTrue(item.message() == item3.message());
-		}
 	};
 }
