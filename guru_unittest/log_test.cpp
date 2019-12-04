@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "CppUnitTest.h"
-#include "log/log_level.h"
-#include "log/log_item.h"
+#include "zlog/log_level.h"
+#include "zlog/log_item.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace std;

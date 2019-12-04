@@ -15,9 +15,9 @@ struct non_instantable : public _Base
 {
 	non_instantable() = delete;
 
-	//template <typename... _Args>
-	//explicit non_instantable(_Args&&... args)
-	//	: _Base(std::forward<_Args>(args)...) = delete;
+	template <typename... _Args>
+	explicit non_instantable(_Args&&... args)
+		: _Base(std::forward<_Args>(args)...) = delete;
 };
 
 _GURU_END

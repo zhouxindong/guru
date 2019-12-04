@@ -153,9 +153,6 @@
     <ClInclude Include="grocery\string_ex.h" />
     <ClInclude Include="guru.h" />
     <ClInclude Include="gvals.h" />
-    <ClInclude Include="log\log_formatter.h" />
-    <ClInclude Include="log\log_item.h" />
-    <ClInclude Include="log\log_level.h" />
     <ClInclude Include="mp\loop.h" />
     <ClInclude Include="mp\pow.h" />
     <ClInclude Include="mp\sqrt.h" />
@@ -163,6 +160,9 @@
     <ClInclude Include="targetver.h" />
     <ClInclude Include="trick\countable_CRTP.h" />
     <ClInclude Include="trick\type_traits.h" />
+    <ClInclude Include="zlog\log_formatter.h" />
+    <ClInclude Include="zlog\log_item.h" />
+    <ClInclude Include="zlog\log_level.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
