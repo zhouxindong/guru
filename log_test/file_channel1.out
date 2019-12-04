@@ -1,0 +1,7 @@
+2019-12-04 15:37:26.057 FATAL [c:\cpp\guru\log_test\log_test.cpp] [main@164] some information 3456
+2019-12-04 15:37:26.062 TRACE [c:\cpp\guru\log_test\log_test.cpp] [main@169] a log item: trace
+2019-12-04 15:37:26.062 DEBUG [c:\cpp\guru\log_test\log_test.cpp] [main@172] a log item: debug
+2019-12-04 15:37:26.063  INFO [c:\cpp\guru\log_test\log_test.cpp] [main@175] a log item: info
+2019-12-04 15:37:26.063  WARN [c:\cpp\guru\log_test\log_test.cpp] [main@178] a log item: warn
+2019-12-04 15:37:26.063 ERROR [c:\cpp\guru\log_test\log_test.cpp] [main@181] a log item: error
+2019-12-04 15:37:26.063 FATAL [c:\cpp\guru\log_test\log_test.cpp] [main@184] a log item: fatal

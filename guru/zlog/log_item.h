@@ -6,6 +6,7 @@
 #include "log_level.h"
 #include "../grocery/chrono_ex.h"
 #include <ostream>
+#include <iomanip>
 
 _GURU_BEGIN
 
@@ -22,6 +23,7 @@ class log_item
 	_PROPERTY_READONLY(std::chrono::system_clock::time_point, time_stamp)
 
 public:
+
 	log_item(_LOG_LEVEL level, std::string file, std::string caller, size_t line) noexcept :
 		_level(level),
 		_file(file),
@@ -100,6 +102,15 @@ public:
 		return *this;
 	}
 
+	//log_item&
+	//new_line() noexcept
+	//{
+	//	_stream << std::endl;
+	//	return *this;
+	//}
+
+	//friend log_item& _cdecl endl(log_item& out) noexcept;
+
 private:
 	std::ostringstream _stream;
 };
@@ -118,6 +129,16 @@ operator << (std::ostream& out, log_item const& log) noexcept
 	out << "msg:\t" << log.message() << endl;
 	return out;
 }
+
+//inline
+//log_item&
+//_cdecl
+//endl(log_item& out) noexcept
+//{
+//	out._stream.put(out._stream.widen('\n'));
+//	out._stream.flush();
+//	return out;
+//}
 
 #define LOG_TRACE log_item(_LOG_LEVEL::_LOG_TRACE, __FILE__, __func__, __LINE__)
 #define LOG_DEBUG log_item(_LOG_LEVEL::_LOG_DEBUG, __FILE__, __func__, __LINE__)

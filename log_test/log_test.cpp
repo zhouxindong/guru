@@ -5,6 +5,9 @@
 #include "zlog/log_item.h"
 #include "zlog/log_formatter.h"
 #include "base_chain/non_instantable.h"
+#include "zlog/log_channel.h"
+#include "zlog/log_item_generator.h"
+#include "zlog/log_filter.h"
 
 #include <iostream>
 
@@ -44,6 +47,7 @@ int main()
 */
 
 // log_formatter
+/*
 int main()
 {
 	log_item log1(_LOG_FATAL, __FILE__, __func__, __LINE__);
@@ -79,6 +83,7 @@ int main()
 	system("pause");
 	return 0;
 }
+*/
 
 // non_instantable
 /*
@@ -105,4 +110,111 @@ int main()
 }
 */
 
+// channel
+/*
+int main()
+{
+	// 1. null_channel
+	//log_item log1 = LOG(FATAL);
+	//log1 << "some information";
+	//log1 << " " << 3456;
+	//Dummy_Channel << log1;
 
+	//log1 = std::move((LOG(TRACE) << "a log item: trace"));
+	//Dummy_Channel << log1;
+
+	//log1 = LOG(DEBUG) << "a log item: debug";
+	//Dummy_Channel << log1;
+
+	//log1 = LOG(INFO) << "a log item: info";
+	//Dummy_Channel << log1;
+
+	//log1 = std::move(LOG(WARN) << "a log item: warn");
+	//Dummy_Channel << log1;
+
+	//log1 = LOG(ERROR) << "a log item: error";
+	//Dummy_Channel << log1;
+
+	//log1 = LOG(FATAL) << "a log item: fatal";
+	//Dummy_Channel << log1;
+
+	// 2. console_channel
+	//log_item log1 = LOG(FATAL);
+	//log1 << "some information";
+	//log1 << " " << 3456;
+	//Console_Channel << log1;
+
+	//log1 = std::move((LOG(TRACE) << "a log item: trace"));
+	//Console_Channel << log1;
+
+	//log1 = LOG(DEBUG) << "a log item: debug";
+	//Console_Channel << log1;
+
+	//log1 = LOG(INFO) << "a log item: info";
+	//Console_Channel << log1;
+
+	//log1 = std::move(LOG(WARN) << "a log item: warn");
+	//Console_Channel << log1;
+
+	//log1 = LOG(ERROR) << "a log item: error";
+	//Console_Channel << log1;
+
+	//log1 = LOG(FATAL) << "a log item: fatal";
+	//Console_Channel << log1;
+
+	// 3. file_channel
+	file_channel fc("file_channel1.out");
+	log_item log1 = LOG(FATAL);
+	log1 << "some information";
+	log1 << " " << 3456;
+	fc << log1;
+
+	log1 = std::move((LOG(TRACE) << "a log item: trace"));
+	fc << log1;
+
+	log1 = LOG(DEBUG) << "a log item: debug";
+	fc << log1;
+
+	log1 = LOG(INFO) << "a log item: info";
+	fc << log1;
+
+	log1 = std::move(LOG(WARN) << "a log item: warn");
+	fc << log1;
+
+	log1 = LOG(ERROR) << "a log item: error";
+	fc << log1;
+
+	log1 = LOG(FATAL) << "a log item: fatal";
+	fc << log1;
+
+	system("pause");
+	return 0;
+}
+*/
+
+// filter
+int main()
+{
+	// level filter + console channel
+	//console_channel cc;
+	//auto v = generate_log_item(100);
+	//level_filter<_LOG_FATAL> filter;
+	//for (auto& item : v) 
+	//{
+	//	filter(item, cc) << std_formatter<log_item>::format(item) << std::endl;
+	//	Sleep(100);
+	//}
+
+	// set_filter + file channel
+	file_channel fc("set_filter_demo.out");
+	auto v = generate_log_item(100);
+	set_filter<_LOG_TRACE, _LOG_FATAL> filter;
+	for (auto& item : v)
+	{
+		filter(item, fc) << std_formatter<log_item>::format(item) << std::endl;
+		Sleep(100);
+	}
+
+	system("pause");
+	return 0;
+}

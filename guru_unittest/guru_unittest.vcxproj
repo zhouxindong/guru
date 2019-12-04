@@ -151,9 +151,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="base_chain_test.cpp" />
+    <ClCompile Include="channel_test.cpp" />
     <ClCompile Include="chrono_ex_test.cpp" />
     <ClCompile Include="log_test.cpp" />
     <ClCompile Include="low_chrono.cpp" />
+    <ClCompile Include="null_stream_test.cpp" />
     <ClCompile Include="pow_test.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

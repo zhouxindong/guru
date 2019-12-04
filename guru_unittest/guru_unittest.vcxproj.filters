@@ -53,5 +53,11 @@
     <ClCompile Include="base_chain_test.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="null_stream_test.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="channel_test.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

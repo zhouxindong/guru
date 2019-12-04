@@ -28,6 +28,9 @@
     <Filter Include="Header Files\zlog">
       <UniqueIdentifier>{f72885fb-4103-4773-b10b-715c64388e0f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\stream">
+      <UniqueIdentifier>{a82cb4ed-0feb-4047-a62c-763a9a0442fb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -91,6 +94,18 @@
       <Filter>Header Files\zlog</Filter>
     </ClInclude>
     <ClInclude Include="zlog\log_level.h">
+      <Filter>Header Files\zlog</Filter>
+    </ClInclude>
+    <ClInclude Include="stream\null_stream.h">
+      <Filter>Header Files\stream</Filter>
+    </ClInclude>
+    <ClInclude Include="zlog\log_channel.h">
+      <Filter>Header Files\zlog</Filter>
+    </ClInclude>
+    <ClInclude Include="zlog\log_filter.h">
+      <Filter>Header Files\zlog</Filter>
+    </ClInclude>
+    <ClInclude Include="zlog\log_item_generator.h">
       <Filter>Header Files\zlog</Filter>
     </ClInclude>
   </ItemGroup>

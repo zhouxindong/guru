@@ -157,11 +157,15 @@
     <ClInclude Include="mp\pow.h" />
     <ClInclude Include="mp\sqrt.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="stream\null_stream.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="trick\countable_CRTP.h" />
     <ClInclude Include="trick\type_traits.h" />
+    <ClInclude Include="zlog\log_channel.h" />
+    <ClInclude Include="zlog\log_filter.h" />
     <ClInclude Include="zlog\log_formatter.h" />
     <ClInclude Include="zlog\log_item.h" />
+    <ClInclude Include="zlog\log_item_generator.h" />
     <ClInclude Include="zlog\log_level.h" />
   </ItemGroup>
   <ItemGroup>
