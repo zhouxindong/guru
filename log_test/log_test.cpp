@@ -8,6 +8,8 @@
 #include "zlog/log_channel.h"
 #include "zlog/log_item_generator.h"
 #include "zlog/log_filter.h"
+#include "zlog/logger.h"
+#include <future>
 
 #include <iostream>
 
@@ -193,6 +195,7 @@ int main()
 */
 
 // filter
+/*
 int main()
 {
 	// level filter + console channel
@@ -212,9 +215,82 @@ int main()
 	for (auto& item : v)
 	{
 		filter(item, fc) << std_formatter<log_item>::format(item) << std::endl;
+		//filter << std::tuple(std::ref<file_channel>(fc), std::ref<log_item>(item));
 		Sleep(100);
 	}
 
+	system("pause");
+	return 0;
+}
+*/
+
+// basic_logger
+/*
+int main()
+{
+	// console_logger
+	//auto& logger = console_logger::get("console1");
+	//auto v = std::move(generate_log_item(200));
+	//for (auto& item : v)
+	//{
+	//	logger.log(item);
+	//	Sleep(100);
+	//}
+
+	//auto& logger2 = console_logger::get("console2");
+	//v = std::move(generate_log_item(200, " new log"));
+	//for (auto& item : v)
+	//{
+	//	logger2.log(item);
+	//	Sleep(100);
+	//}
+
+	// file_logger
+	auto& logger = file_logger::get("log_test");
+	auto v = std::move(generate_log_item(200));
+	for (auto& item : v)
+	{
+		logger.log(item);
+	}
+
+	auto& logger2 = file_logger::get("log_test");
+	v = std::move(generate_log_item(200, " new log"));
+	for (auto& item : v)
+	{
+		logger2.log(item);
+	}
+
+	system("pause");
+	return 0;
+}
+*/
+
+ //different logger class with the same name, it would create different log file
+bool thread_proc(/*logger& mylog*/) {
+	auto v = generate_log_item(1000, std::string("单独的异步线程..."));
+	for (auto& item : v) {
+		//logger::get("thread_logger3").log(item);
+		file_info_logger::get("thread_logger84").log(item);
+
+		Sleep(1);
+	}
+	return true;
+}
+
+int main()
+{
+	/*auto& logger = logger::get("thread_logger2");*/
+	auto v = generate_log_item(1000, std::string("主线程..."));
+	std::future<bool> rs(std::async(thread_proc/*, std::ref(logger)*/));
+
+	for (auto& item : v) {
+
+		//logger::get("thread_logger3").log(item);
+		file_logger::get("thread_logger84").log(item);
+
+		Sleep(1);
+	}
+	rs.wait();
 	system("pause");
 	return 0;
 }

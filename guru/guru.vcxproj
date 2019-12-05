@@ -161,6 +161,7 @@
     <ClInclude Include="targetver.h" />
     <ClInclude Include="trick\countable_CRTP.h" />
     <ClInclude Include="trick\type_traits.h" />
+    <ClInclude Include="zlog\logger.h" />
     <ClInclude Include="zlog\log_channel.h" />
     <ClInclude Include="zlog\log_filter.h" />
     <ClInclude Include="zlog\log_formatter.h" />

@@ -7,6 +7,7 @@
 #include "log_channel.h"
 #include <unordered_set>
 #include <initializer_list>
+#include <tuple>
 
 _GURU_BEGIN
 
@@ -64,18 +65,18 @@ private:
 	std::unordered_set<int> _set;
 };
 
-template <typename _Log_item = log_item>
-level_filter&
-operator << (level_filter& out, _Log_item const& item)
-{
-	out(item, fc...) << std_formatter<log_item>::format(item) << std::endl;
-
-	out.stream() << std_formatter<_Log_item>::format(item);
-	out.stream() << std::endl;
-	out.flush();
-	return out;
-}
-
+//template <typename _Channel, typename _Log_item = log_item>
+//set_filter&
+//operator << (set_filter& out, std::tuple<std::ref<_Channel>, std::ref<_Log_item>> const& t)
+//{
+//	//out(item, fc...) << std_formatter<log_item>::format(item) << std::endl;
+//
+//	//out.stream() << std_formatter<_Log_item>::format(item);
+//	//out.stream() << std::endl;
+//	//out.flush();
+//	out(std::get<1>(t), std::get<0>(t)) << std_formatter<_Log_item>::format(t.second) << std::endl;
+//	return out;
+//}
 
 _GURU_END
 

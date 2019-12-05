@@ -108,6 +108,9 @@
     <ClInclude Include="zlog\log_item_generator.h">
       <Filter>Header Files\zlog</Filter>
     </ClInclude>
+    <ClInclude Include="zlog\logger.h">
+      <Filter>Header Files\zlog</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">

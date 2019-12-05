@@ -10,7 +10,7 @@
 _GURU_BEGIN
 
 std::vector<log_item> 
-generate_log_item(size_t count, std::string& suffix = std::string()) noexcept
+generate_log_item(size_t count, std::string suffix = std::string()) noexcept
 {
 	if (count == 0)
 		return std::vector<log_item>();
