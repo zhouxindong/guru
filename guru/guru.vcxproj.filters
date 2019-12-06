@@ -16,12 +16,6 @@
     <Filter Include="Header Files\grocery">
       <UniqueIdentifier>{503ef953-7f8c-4484-8e95-75e30309ac74}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\trick">
-      <UniqueIdentifier>{66c8eb97-aacb-4a76-a94d-940a6338c32a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\mp">
-      <UniqueIdentifier>{33dd1ad6-47cb-4255-869b-a9bf00999b3e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\base_chain">
       <UniqueIdentifier>{89f24727-df76-4ac9-82a0-0ac8d1dad62a}</UniqueIdentifier>
     </Filter>
@@ -30,6 +24,24 @@
     </Filter>
     <Filter Include="Header Files\stream">
       <UniqueIdentifier>{a82cb4ed-0feb-4047-a62c-763a9a0442fb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\nut">
+      <UniqueIdentifier>{48952655-69cf-4398-a2db-0160dc9610b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\dump">
+      <UniqueIdentifier>{31053283-6e10-456e-814b-880dc48df3d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\cpp">
+      <UniqueIdentifier>{ffa75f37-aaef-4fdd-afaa-f1c07aca6787}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\cpp\mp">
+      <UniqueIdentifier>{33dd1ad6-47cb-4255-869b-a9bf00999b3e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\cpp\template">
+      <UniqueIdentifier>{42073e7b-1314-450e-9b70-3da7c7c3ec5b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\cpp\trick">
+      <UniqueIdentifier>{66c8eb97-aacb-4a76-a94d-940a6338c32a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -64,19 +76,19 @@
       <Filter>Header Files\grocery</Filter>
     </ClInclude>
     <ClInclude Include="trick\countable_CRTP.h">
-      <Filter>Header Files\trick</Filter>
+      <Filter>Header Files\cpp\trick</Filter>
     </ClInclude>
     <ClInclude Include="mp\pow.h">
-      <Filter>Header Files\mp</Filter>
+      <Filter>Header Files\cpp\mp</Filter>
     </ClInclude>
     <ClInclude Include="mp\sqrt.h">
-      <Filter>Header Files\mp</Filter>
+      <Filter>Header Files\cpp\mp</Filter>
     </ClInclude>
     <ClInclude Include="mp\loop.h">
-      <Filter>Header Files\mp</Filter>
+      <Filter>Header Files\cpp\mp</Filter>
     </ClInclude>
     <ClInclude Include="trick\type_traits.h">
-      <Filter>Header Files\trick</Filter>
+      <Filter>Header Files\cpp\trick</Filter>
     </ClInclude>
     <ClInclude Include="base_chain\non_instantable.h">
       <Filter>Header Files\base_chain</Filter>
@@ -110,6 +122,15 @@
     </ClInclude>
     <ClInclude Include="zlog\logger.h">
       <Filter>Header Files\zlog</Filter>
+    </ClInclude>
+    <ClInclude Include="nut\signal.h">
+      <Filter>Header Files\nut</Filter>
+    </ClInclude>
+    <ClInclude Include="template\friend.h">
+      <Filter>Header Files\cpp\template</Filter>
+    </ClInclude>
+    <ClInclude Include="dump\stack_tracer.h">
+      <Filter>Header Files\dump</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
