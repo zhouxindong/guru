@@ -132,6 +132,12 @@
     <ClInclude Include="dump\stack_tracer.h">
       <Filter>Header Files\dump</Filter>
     </ClInclude>
+    <ClInclude Include="dump\uncatcher.h">
+      <Filter>Header Files\dump</Filter>
+    </ClInclude>
+    <ClInclude Include="dump\struct_exception.h">
+      <Filter>Header Files\dump</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">

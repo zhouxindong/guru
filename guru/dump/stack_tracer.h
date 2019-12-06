@@ -5,12 +5,14 @@
 
 #include "../gvals.h"
 #include <windows.h>
+//#include <DbgHelp.h>
 #include <Psapi.h>
 #include <string>
 #include <vector>
 #include <sstream>
 #include <iomanip>
 #include <algorithm>
+#include <mutex>
 
 #pragma comment(lib, "psapi.lib")
 #pragma comment(lib, "dbghelp.lib")
@@ -21,6 +23,9 @@
 
 _GURU_BEGIN
 
+/*
+** print current call stack
+*/
 class stack_tracer
 {
 	struct module_data
@@ -85,7 +90,7 @@ class stack_tracer
 		static const int max_name_len = 1024;
 
 	public:
-		symbol(HANDLE process, DWORD64 address) noexcept : 
+		symbol(HANDLE process, DWORD64 address) : 
 			sym((sym_type *)::operator new(sizeof(*sym) + max_name_len)) 
 		{
 			memset(sym, '\0', sizeof(*sym) + max_name_len);
@@ -167,7 +172,7 @@ public:
 		IMAGE_NT_HEADERS *h = ImageNtHeader(base);
 		DWORD image_type = h->FileHeader.Machine;
 
-		os << "\n" << "\t\t" << prefix << "\n";
+		if (prefix != "") os << "\n" << "\t\t" << prefix << "\n";
 		do 
 		{
 			if (!StackWalk64(image_type, process, hThread, &s, &c, NULL, SymFunctionTableAccess64, SymGetModuleBase64, NULL))
@@ -187,8 +192,93 @@ public:
 			++frame_number;
 		} while (s.AddrReturn.Offset != 0);
 
-		os << "\n\n" << "\t\t" << surfix << "\n";
+		if (surfix != "") os << "\n\n" << "\t\t" << surfix << "\n";
 
+		return os.str();
+	}
+
+	static 
+	std::string
+		stack_trace2(const std::string& prefix = "", const std::string& surfix = "") noexcept
+	{
+		static std::mutex m;
+		std::lock_guard<std::mutex> lock(m);
+
+		HANDLE process = GetCurrentProcess();
+		HANDLE thread = GetCurrentThread();
+
+		CONTEXT context;
+		memset(&context, 0, sizeof(CONTEXT));
+
+#ifdef _M_IX86
+		context.ContextFlags = CONTEXT_CONTROL;
+
+		__asm
+		{
+		Label:
+			mov[context.Ebp], ebp;
+			mov[context.Esp], esp;
+			mov eax, [Label];
+			mov[context.Eip], eax;
+		}
+#else
+		context.ContextFlags = CONTEXT_FULL;
+		RtlCaptureContext(&context);
+#endif
+
+		SymInitialize(process, NULL, TRUE);
+
+		DWORD image;
+		STACKFRAME64 stackframe;
+		ZeroMemory(&stackframe, sizeof(STACKFRAME64));
+
+#ifdef _M_IX86
+		image = IMAGE_FILE_MACHINE_I386;
+		stackframe.AddrPC.Offset = context.Eip;
+		stackframe.AddrPC.Mode = AddrModeFlat;
+		stackframe.AddrFrame.Offset = context.Ebp;
+		stackframe.AddrFrame.Mode = AddrModeFlat;
+		stackframe.AddrStack.Offset = context.Esp;
+		stackframe.AddrStack.Mode = AddrModeFlat;
+#elif _M_X64
+		image = IMAGE_FILE_MACHINE_AMD64;
+		stackframe.AddrPC.Offset = context.Rip;
+		stackframe.AddrPC.Mode = AddrModeFlat;
+		stackframe.AddrFrame.Offset = context.Rsp;
+		stackframe.AddrFrame.Mode = AddrModeFlat;
+		stackframe.AddrStack.Offset = context.Rsp;
+		stackframe.AddrStack.Mode = AddrModeFlat;
+#elif _M_IA64
+		image = IMAGE_FILE_MACHINE_IA64;
+		stackframe.AddrPC.Offset = context.StIIP;
+		stackframe.AddrPC.Mode = AddrModeFlat;
+		stackframe.AddrFrame.Offset = context.IntSp;
+		stackframe.AddrFrame.Mode = AddrModeFlat;
+		stackframe.AddrBStore.Offset = context.RsBSP;
+		stackframe.AddrBStore.Mode = AddrModeFlat;
+		stackframe.AddrStack.Offset = context.IntSp;
+		stackframe.AddrStack.Mode = AddrModeFlat;
+#endif
+
+		std::ostringstream os;
+		if (prefix != "") os << "\n" << "\t" << prefix << "\n\n";
+
+		while (StackWalk64(image, process, thread, &stackframe, &context, NULL, SymFunctionTableAccess64, SymGetModuleBase64, NULL))
+		{
+			char buffer[sizeof(SYMBOL_INFO) + MAX_SYM_NAME * sizeof(TCHAR)];
+			PSYMBOL_INFO symbol = (PSYMBOL_INFO)buffer;
+			symbol->SizeOfStruct = sizeof(SYMBOL_INFO);
+			symbol->MaxNameLen = MAX_SYM_NAME;
+
+			DWORD64 displacement = 0;
+
+			SymFromAddr(process, stackframe.AddrPC.Offset, &displacement, symbol) ?
+				os << symbol->Name << std::endl :
+				os << "??????" << std::endl;
+		}
+
+		SymCleanup(process);
+		if (surfix != "") os << "\n" << "\t" << surfix << "\n";
 		return os.str();
 	}
 
