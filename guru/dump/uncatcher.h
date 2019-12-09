@@ -11,10 +11,12 @@ _GURU_BEGIN
 
 enum class Unhandle_Result
 {
-	Quit = EXCEPTION_EXECUTE_HANDLER,
-	OS_Def = EXCEPTION_CONTINUE_SEARCH,
-	Continue = EXCEPTION_CONTINUE_EXECUTION
+	Quit		= EXCEPTION_EXECUTE_HANDLER,
+	OS_Def		= EXCEPTION_CONTINUE_SEARCH,
+	Continue	= EXCEPTION_CONTINUE_EXECUTION
 };
+
+bool DisableSetUnhandledExceptionFilter();
 
 /*
 ** unhandled exception call back function
@@ -37,6 +39,7 @@ public:
 	{
 		uncatched_call_back = cb;
 		SetUnhandledExceptionFilter(_UnhandledException);
+		DisableSetUnhandledExceptionFilter();
 		_old_se_translator = _set_se_translator(_se_translator);
 	}
 
@@ -68,6 +71,33 @@ void
 _se_translator(unsigned u, EXCEPTION_POINTERS *ep)
 {
 	throw struct_exception(struct_exception::se_info(ep, true, u));
+}
+
+// after success call it, SetUnhandledExceptionFilter() call would be invalid
+bool 
+DisableSetUnhandledExceptionFilter()
+{
+	void* addr = (void*)GetProcAddress(LoadLibraryA("kernel32.dll"),
+		"SetUnhandledExceptionFilter");
+
+	if (addr)
+	{
+		unsigned char code[16];
+		int size = 0;
+
+		code[size++] = 0x33;
+		code[size++] = 0xC0;
+		code[size++] = 0xC2;
+		code[size++] = 0x04;
+		code[size++] = 0x00;
+
+		DWORD dwOldFlag, dwTempFlag;
+		VirtualProtect(addr, size, PAGE_READWRITE, &dwOldFlag);
+		WriteProcessMemory(GetCurrentProcess(), addr, code, size, NULL);
+		VirtualProtect(addr, size, dwOldFlag, &dwTempFlag);
+		return true;
+	}
+	return false;
 }
 
 _GURU_END

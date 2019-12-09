@@ -8,6 +8,7 @@
 #include <thread>
 #include <iostream>
 #include "struct_exception_af.h"
+#include "dump/uncatcher.h"
 
 using namespace std;
 using namespace guru;
@@ -40,10 +41,72 @@ using namespace guru;
 //}
 
 // uncatched exception
+// must be runed without IDE
+//void uncatch_cb(std::string const& msg)
+//{
+//	std::cout << "uncatched begin:\n";
+//	std::cout << msg;
+//	std::cout << "uncatched end!\n";
+//}
+//
+//int main()
+//{
+//	uncatcher uncat(uncatch_cb);
+//	foo1();
+//	//throw std::exception("asdfasdf");
+//
+//	cout << "after uncaught!!!\n";
+//	system("pause");
+//	return 0;
+//}
+
+// SEH
+// C++ /EHa
+void uncatch_cb(std::string const& msg)
+{
+	std::cout << msg;
+}
+
 int main()
 {
+	uncatcher uncat(uncatch_cb);
 
-...
+	//try {
+	//	int* p = 0;
+	//	std::cout << *p;
+	//}
+	//catch (const std::exception& e) {
+	//	std::cerr << e.what() << "\n";
+	//}
+
+	//try
+	//{
+	//	throw "adfasdf";
+	//}
+	//catch (...)
+	//{
+	//	std::cout << "adfasdf\n";
+	//}
+
+	//try {
+	//	int* p = 0;
+	//	*p = 0;
+	//	std::cout << *p;
+	//}
+	//catch (const std::exception& e) {
+	//	std::cerr << e.what() << "\n";
+	//}
+
+	//try {
+	int a = 42;
+	volatile int b = 0;
+	std::cout << a / b;
+	//}
+	//catch (const std::exception& e) {
+	//	std::cerr << e.what() << "\n";
+	//}
+
+
 	system("pause");
 	return 0;
 }

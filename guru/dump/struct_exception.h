@@ -128,7 +128,7 @@ private:
 
 public:
 	static 
-	const char* 
+	std::string 
 		se_info(
 			struct _EXCEPTION_POINTERS* ep,
 			bool has_exception_code = false, unsigned int code = 0) noexcept
@@ -161,7 +161,7 @@ public:
 				<< ep->ExceptionRecord->ExceptionInformation[2] << "\n";
 		}
 
-		return oss.str().c_str();
+		return oss.str();
 	}
 };
 

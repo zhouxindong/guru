@@ -43,6 +43,9 @@
     <Filter Include="Header Files\cpp\trick">
       <UniqueIdentifier>{66c8eb97-aacb-4a76-a94d-940a6338c32a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\cpp\type_traits">
+      <UniqueIdentifier>{9d103f02-5cfc-4865-b547-d91dd8bc1747}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -137,6 +140,27 @@
     </ClInclude>
     <ClInclude Include="dump\struct_exception.h">
       <Filter>Header Files\dump</Filter>
+    </ClInclude>
+    <ClInclude Include="template\variadic.h">
+      <Filter>Header Files\cpp\template</Filter>
+    </ClInclude>
+    <ClInclude Include="template\raw_array.h">
+      <Filter>Header Files\cpp\template</Filter>
+    </ClInclude>
+    <ClInclude Include="template\variable.h">
+      <Filter>Header Files\cpp\template</Filter>
+    </ClInclude>
+    <ClInclude Include="template\forwarding.h">
+      <Filter>Header Files\cpp\template</Filter>
+    </ClInclude>
+    <ClInclude Include="type_traits\enable_if.h">
+      <Filter>Header Files\cpp\type_traits</Filter>
+    </ClInclude>
+    <ClInclude Include="stream\trait_stream.h">
+      <Filter>Header Files\stream</Filter>
+    </ClInclude>
+    <ClInclude Include="stream\head_tail_stream.h">
+      <Filter>Header Files\stream</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
