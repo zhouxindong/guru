@@ -7,7 +7,7 @@
 
 int main()
 {
-	foo<double>();
+	//foo<double>();
 	//foo<int>(); // foo not
 	system("pause");
     return 0;

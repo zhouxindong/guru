@@ -32,7 +32,7 @@ public:
 	typedef trait_stream<N> self_class;
 	typedef trait_stream<N> type;
 
-	signal<void(std::vector<uint8_t>)>& matched_signal();
+	guru::signal<void(std::vector<uint8_t>)>& matched_signal() noexcept;
 	void set_src_signal(signal<void(std::vector<uint8_t>)>& src_signal);
 
 protected:
@@ -45,8 +45,8 @@ protected:
 protected:
 	std::deque<uint8_t> _unmatched;
 	std::vector<uint8_t> _matched;
-	signal<void(std::vector<uint8_t>)> _arrived_signal;
-	signal<void(std::vector<uint8_t>)> _matched_signal;
+	guru::signal<void(std::vector<uint8_t>)> _arrived_signal;
+	guru::signal<void(std::vector<uint8_t>)> _matched_signal;
 
 	mutable std::mutex _mutex;
 	MatchState _state{ MatchState::ToFindHead };
@@ -54,7 +54,7 @@ protected:
 
 template<size_t N>
 inline
-signal<void(std::vector<uint8_t>)>& 
+guru::signal<void(std::vector<uint8_t>)>& 
 trait_stream<N>::matched_signal() noexcept
 {
 	return _matched_signal;
@@ -74,7 +74,7 @@ trait_stream<N>::~trait_stream() noexcept
 template<size_t N>
 inline 
 void 
-trait_stream<N>::set_src_signal(signal<void(std::vector<uint8_t>)>& src_signal)
+trait_stream<N>::set_src_signal(guru::signal<void(std::vector<uint8_t>)>& src_signal)
 {
 	_arrived_signal.disconnect_all();
 	src_signal.connect(&_arrived_signal);

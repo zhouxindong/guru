@@ -162,6 +162,15 @@
     <ClInclude Include="stream\head_tail_stream.h">
       <Filter>Header Files\stream</Filter>
     </ClInclude>
+    <ClInclude Include="stream\stream_generator.h">
+      <Filter>Header Files\stream</Filter>
+    </ClInclude>
+    <ClInclude Include="grocery\ostream_ex.h">
+      <Filter>Header Files\grocery</Filter>
+    </ClInclude>
+    <ClInclude Include="stream\transparent_stream.h">
+      <Filter>Header Files\stream</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">

@@ -6,6 +6,9 @@
 #define _GURU_END   }
 #define _GURU  ::guru::
 
+#define _STD_BEGIN namespace std {
+#define _STD_END   }
+
 /*
 ** defined class data member
 ** generated data set|get function automatic

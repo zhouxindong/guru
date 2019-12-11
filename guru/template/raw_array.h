@@ -1,5 +1,10 @@
 #pragma once
 
+// passed by value can lead to DECAY:
+// 1. arrays not converted to pointers
+// 2. string literal not converted to pointers (char const(&)[N+1])
+// 3. qualifier const and volatile not be removed
+
 // for raw array or string literal
 // 1. reference argument don't decay "hello" -> char const[6], this cause diff len means diff types
 // 2. value argument lead decay "hello" -> char const*
@@ -80,3 +85,12 @@ void foo(
 	MyClass<decltype(x3)>::print();		// MyClass<T(&)[]>
 }
 
+// get the dimension of array
+template <typename T>
+void outR(T& arg)
+{
+	if (std::is_array<T>::value)
+	{
+		std::cout << "got array of " << std::extent<T>::value << " elems\n";
+	}
+}
