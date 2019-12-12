@@ -46,6 +46,15 @@
     <Filter Include="Header Files\cpp\type_traits">
       <UniqueIdentifier>{9d103f02-5cfc-4865-b547-d91dd8bc1747}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\socket">
+      <UniqueIdentifier>{949bffe7-438c-414a-9762-60e8220062bc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\base_feature">
+      <UniqueIdentifier>{c1226ebb-f656-4433-9b14-cd850bf0e2c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\cpp\c17">
+      <UniqueIdentifier>{3d8c4e5d-117e-4e1e-bb4c-74d262fcc3db}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -170,6 +179,57 @@
     </ClInclude>
     <ClInclude Include="stream\transparent_stream.h">
       <Filter>Header Files\stream</Filter>
+    </ClInclude>
+    <ClInclude Include="socket\niceer.h">
+      <Filter>Header Files\socket</Filter>
+    </ClInclude>
+    <ClInclude Include="base_feature\noncopyable.h">
+      <Filter>Header Files\base_feature</Filter>
+    </ClInclude>
+    <ClInclude Include="base_feature\nonassignable.h">
+      <Filter>Header Files\base_feature</Filter>
+    </ClInclude>
+    <ClInclude Include="socket\base_socket.h">
+      <Filter>Header Files\socket</Filter>
+    </ClInclude>
+    <ClInclude Include="socket\sender_socket.h">
+      <Filter>Header Files\socket</Filter>
+    </ClInclude>
+    <ClInclude Include="base_feature\null_fixable.h">
+      <Filter>Header Files\base_feature</Filter>
+    </ClInclude>
+    <ClInclude Include="base_feature\lock_fixable.h">
+      <Filter>Header Files\base_feature</Filter>
+    </ClInclude>
+    <ClInclude Include="socket\recver_socket.h">
+      <Filter>Header Files\socket</Filter>
+    </ClInclude>
+    <ClInclude Include="socket\udp_sender.h">
+      <Filter>Header Files\socket</Filter>
+    </ClInclude>
+    <ClInclude Include="c17\if_constexpr.h">
+      <Filter>Header Files\cpp\c17</Filter>
+    </ClInclude>
+    <ClInclude Include="socket\udp_recver.h">
+      <Filter>Header Files\socket</Filter>
+    </ClInclude>
+    <ClInclude Include="socket\multi_sender.h">
+      <Filter>Header Files\socket</Filter>
+    </ClInclude>
+    <ClInclude Include="socket\multi_recver.h">
+      <Filter>Header Files\socket</Filter>
+    </ClInclude>
+    <ClInclude Include="socket\broad_sender.h">
+      <Filter>Header Files\socket</Filter>
+    </ClInclude>
+    <ClInclude Include="socket\broad_recver.h">
+      <Filter>Header Files\socket</Filter>
+    </ClInclude>
+    <ClInclude Include="socket\tcp_base.h">
+      <Filter>Header Files\socket</Filter>
+    </ClInclude>
+    <ClInclude Include="socket\tcp_conn.h">
+      <Filter>Header Files\socket</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

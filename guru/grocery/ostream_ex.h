@@ -23,21 +23,21 @@ std::ostream& operator << (std::ostream& out, std::vector<_Tx> const& v)
 	size_t line = 0;
 	size_t count = 0;
 
-	std::cout << "size:\t" << v.size() << std::endl;
+	out << "size:\t" << v.size() << std::endl;
 	for_each(v.cbegin(), v.cend(), [&](auto& val)
 	{
 		if (count % 10 == 0)
 		{
 			if (count != 0)
 			{
-				std::cout << std::endl;
+				out << std::endl;
 			}
-			std::cout << std::setw(4) << std::setfill('0') << line++;
+			out << std::setw(4) << std::setfill('0') << line++;
 		}
-		std::cout << "\t" << (out_type)val;
+		out << "\t" << (out_type)val;
 		count++;
 	});
-	std::cout << std::endl;
+	out << std::endl;
 	return out;
 }
 

@@ -3,7 +3,6 @@
 #define _GURU_TRANSPARENT_STREAM_H_
 
 #include "../gvals.h"
-//#include "trait_stream.h"
 
 _GURU_BEGIN
 

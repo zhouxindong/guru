@@ -28,3 +28,11 @@ template <
 	Person(STR&& n) // only used for STR can converted to std::string
 {
 }
+
+class thread2
+{
+public:
+	template <typename F, typename... Args,
+		typename = std::enable_if_t<!std::is_same_v<std::decay_t<F>, thread2>>>
+		explicit thread2(F&& f, Args&&... args) {} // disable template copy ctor
+};
