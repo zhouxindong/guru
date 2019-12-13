@@ -4,6 +4,13 @@
 
 #include "../gvals.h"
 #include <WinSock2.h>
+#include <map>
+#include <future>
+#include "tcp_conn.h"
+#include <iterator>
+#include <memory>
+#include "../stream/transparent_stream.h"
+#include "base_socket.h"
 
 #pragma warning(disable:4275 4251) // disable warning C4275, C4251
 #pragma comment(lib, "Ws2_32.lib")
@@ -55,6 +62,92 @@ is_alive(SOCKET& socket) noexcept
 	{
 		return false;
 	}
+}
+
+/*
+** base class for TCP
+** main function: observer for received data
+*/
+template <
+	typename _Trait_stream = transparent_stream<>,
+	size_t N = 4096>
+class tcp_base
+{
+public:
+	typedef tcp_base<_Trait_stream, N> type;
+	typedef _Trait_stream trait_stream_type;
+	static constexpr size_t Buf_Size = N;
+
+public:
+	tcp_base(std::string ip, uint16_t port) noexcept;
+	~tcp_base() noexcept;
+
+public:
+	void stop() noexcept;
+	void add_listen(std::function<void(tcp_conn<_Trait_stream, N>&, std::vector<uint8_t>)> f) noexcept;
+
+protected:
+	// received data through connection
+	void _recved_data(tcp_conn<_Trait_stream, N>& conn, std::vector<uint8_t> v) noexcept;
+
+protected:
+	bool _running{ false };	// true for alive
+	bool _ready{ false };
+	std::mutex _mutex;
+	std::vector<std::function<void(tcp_conn<_Trait_stream, N>&, std::vector<uint8_t>)>> _slots;	// all observers
+
+protected:
+	std::string _srv_ip;	// TCP server IP
+	uint16_t _srv_port;		// TCP server port
+	SOCKADDR_IN _srv_addr;
+	SOCKET _socket;
+};
+
+template<typename _Trait_stream, size_t N>
+inline 
+tcp_base<_Trait_stream, N>::tcp_base(std::string ip, uint16_t port) noexcept
+	: _srv_ip(ip), _srv_port(port)
+{
+	if (!init_WSA()) return;
+	init_sockaddr_in(_srv_addr, _srv_ip, _srv_port);
+	if (!init_socket(_socket, SOCK_STREAM, IPPROTO_TCP)) return;
+	_ready = true;
+}
+
+template<typename _Trait_stream, size_t N>
+inline
+tcp_base<_Trait_stream, N>::~tcp_base() noexcept
+{
+	_running = false;
+}
+
+template<typename _Trait_stream, size_t N>
+inline 
+void 
+tcp_base<_Trait_stream, N>::stop() noexcept
+{
+	_running = false;
+}
+
+template<typename _Trait_stream, size_t N>
+inline 
+void 
+tcp_base<_Trait_stream, N>::add_listen(std::function<void(tcp_conn<_Trait_stream, N>&, std::vector<uint8_t>)> f) noexcept
+{
+	std::lock_guard<std::mutex> locker(_mutex);
+	_slots.push_back(f);
+}
+
+template<typename _Trait_stream, size_t N>
+inline 
+void 
+tcp_base<_Trait_stream, N>::_recved_data(tcp_conn<_Trait_stream, N>& conn, std::vector<uint8_t> v) noexcept
+{
+	std::lock_guard<std::mutex> locker(_mutex);
+	if (_slots.empty()) return;
+	for_each(_slots.cbegin(), _slots.cend(), [&](auto& f) {
+		f(conn, v);
+	});
 }
 
 _GURU_END

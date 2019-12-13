@@ -13,6 +13,8 @@
 #include "socket/multi_recver.h"
 #include "socket/broad_sender.h"
 #include "socket/broad_recver.h"
+#include "socket/tcp_conn.h"
+#include <initializer_list>
 
 using namespace std;
 using namespace guru;
@@ -206,3 +208,18 @@ int main()
 	return 0;
 }
 */
+
+// tcp_conn
+int main()
+{
+	SOCKET s;
+	SOCKADDR_IN a;
+
+	std::initializer_list<uint8_t> head{ 1,2,3,4 };
+	std::initializer_list<uint8_t> tail{ 4,3,2,1 };
+
+	tcp_conn<head_tail_stream<>> con1(s, a, head, tail);
+
+	system("pause");
+	return 0;
+}

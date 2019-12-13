@@ -180,6 +180,7 @@
     <ClInclude Include="socket\sender_socket.h" />
     <ClInclude Include="socket\tcp_base.h" />
     <ClInclude Include="socket\tcp_conn.h" />
+    <ClInclude Include="socket\tcp_server.h" />
     <ClInclude Include="socket\udp_recver.h" />
     <ClInclude Include="socket\udp_sender.h" />
     <ClInclude Include="stdafx.h" />
