@@ -158,6 +158,8 @@
     <ClInclude Include="dump\stack_tracer.h" />
     <ClInclude Include="dump\struct_exception.h" />
     <ClInclude Include="dump\uncatcher.h" />
+    <ClInclude Include="ext\fixed_vector.h" />
+    <ClInclude Include="ext\Stack.h" />
     <ClInclude Include="grocery\chrono_ex.h" />
     <ClInclude Include="grocery\digest.h" />
     <ClInclude Include="grocery\low_chrono.h" />
@@ -179,6 +181,7 @@
     <ClInclude Include="socket\recver_socket.h" />
     <ClInclude Include="socket\sender_socket.h" />
     <ClInclude Include="socket\tcp_base.h" />
+    <ClInclude Include="socket\tcp_client.h" />
     <ClInclude Include="socket\tcp_conn.h" />
     <ClInclude Include="socket\tcp_server.h" />
     <ClInclude Include="socket\udp_recver.h" />

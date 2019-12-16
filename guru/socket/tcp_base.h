@@ -83,7 +83,7 @@ public:
 	~tcp_base() noexcept;
 
 public:
-	void stop() noexcept;
+	virtual void stop() noexcept;
 	void add_listen(std::function<void(tcp_conn<_Trait_stream, N>&, std::vector<uint8_t>)> f) noexcept;
 
 protected:

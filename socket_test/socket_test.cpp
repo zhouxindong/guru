@@ -15,6 +15,8 @@
 #include "socket/broad_recver.h"
 #include "socket/tcp_conn.h"
 #include <initializer_list>
+#include "socket/tcp_server.h"
+#include "socket/tcp_client.h"
 
 using namespace std;
 using namespace guru;
@@ -210,6 +212,7 @@ int main()
 */
 
 // tcp_conn
+/*
 int main()
 {
 	SOCKET s;
@@ -221,5 +224,126 @@ int main()
 	tcp_conn<head_tail_stream<>> con1(s, a, head, tail);
 
 	system("pause");
+	return 0;
+}
+*/
+
+// tcp_server (transparent_stream)
+/*
+tcp_server<> server("10.16.2.25", 9990);
+void start()
+{
+	server.start();
+}
+void received(tcp_conn<>& conn, vector<uint8_t> v)
+{
+	cout << conn.conn_id() << endl;
+	cout << v;
+}
+int main()
+{
+	server.add_listen(received);
+	thread t(start);
+	system("pause");
+
+	std::vector<uint8_t> v{ 1,2,3,4 };
+	server.send<std::vector<uint8_t>>(v.cbegin(), v.cend());
+
+	system("pause");
+	server.send<std::vector<uint8_t>>(v.cbegin(), v.cend());
+	system("pause");
+
+	server.stop();
+	t.join();
+	return 0;
+}
+*/
+
+// tcp_server (head_tail_stream)
+/*
+tcp_server<head_tail_stream<>> server("10.16.2.25", 9990);
+initializer_list<uint8_t> head{ 104,116 };
+initializer_list<uint8_t> tail{ 99,110 };
+void start()
+{
+	server.start(head, tail);
+}
+void received(tcp_conn<head_tail_stream<>>& conn, vector<uint8_t> v)
+{
+	cout << conn.conn_id() << endl;
+	cout << v;
+}
+int main()
+{
+	server.add_listen(received);
+	thread t(start);
+	system("pause");
+
+	std::vector<uint8_t> v{ 1,2,3,4 };
+	server.send<std::vector<uint8_t>>(v.cbegin(), v.cend());
+
+	system("pause");
+	server.send<std::vector<uint8_t>>(v.cbegin(), v.cend());
+	system("pause");
+
+	server.stop();
+	t.join();
+	return 0;
+}
+*/
+
+// tcp_client (transparent_stream)
+/*
+tcp_client<> client("10.16.2.25", 9990, "10.16.2.25");
+void start()
+{
+	client.start();
+}
+void received(tcp_conn<>& conn, std::vector<uint8_t> v)
+{
+	cout << conn.conn_id() << endl;
+	cout << v;
+}
+int main()
+{
+	client.add_listen(received);
+	thread t(start);
+	system("pause");
+
+	std::vector<uint8_t> v{ 1,2,3,4 };
+	client.send<std::vector<uint8_t>>(v.cbegin(), v.cend());
+	system("pause");
+
+	client.stop();
+	t.join();
+	return 0;
+}
+*/
+
+// tcp_client (head_tail_stream)
+tcp_client<head_tail_stream<>> client("10.16.2.25", 9990, "10.16.2.25");
+initializer_list<uint8_t> head{ 104, 116 };
+initializer_list<uint8_t> tail{ 99,110 };
+void start()
+{
+	client.start(head, tail);
+}
+void received(tcp_conn<head_tail_stream<>>& conn, std::vector<uint8_t> v)
+{
+	cout << conn.conn_id() << endl;
+	cout << v;
+}
+int main()
+{
+	client.add_listen(received);
+	thread t(start);
+	system("pause");
+
+	std::vector<uint8_t> v{ 1,2,3,4 };
+	client.send<std::vector<uint8_t>>(v.cbegin(), v.cend());
+	system("pause");
+
+	client.stop();
+	t.join();
 	return 0;
 }

@@ -55,6 +55,9 @@
     <Filter Include="Header Files\cpp\c17">
       <UniqueIdentifier>{3d8c4e5d-117e-4e1e-bb4c-74d262fcc3db}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\cpp\ext">
+      <UniqueIdentifier>{8013f156-b5eb-4e03-936a-2ff1368e90eb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -232,6 +235,15 @@
       <Filter>Header Files\socket</Filter>
     </ClInclude>
     <ClInclude Include="socket\tcp_server.h">
+      <Filter>Header Files\socket</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\fixed_vector.h">
+      <Filter>Header Files\cpp\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\Stack.h">
+      <Filter>Header Files\cpp\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="socket\tcp_client.h">
       <Filter>Header Files\socket</Filter>
     </ClInclude>
   </ItemGroup>

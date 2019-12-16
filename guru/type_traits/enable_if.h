@@ -21,13 +21,13 @@ template <
 }
 
 // demo
-template <
-	typename STR,
-	typename = std::enable_if_t<
-	std::is_convertible_v<STR, std::string>>>
-	Person(STR&& n) // only used for STR can converted to std::string
-{
-}
+//template <
+//	typename STR,
+//	typename = std::enable_if_t<
+//	std::is_convertible_v<STR, std::string>>>
+//	Person(STR&& n) // only used for STR can converted to std::string
+//{
+//}
 
 class thread2
 {
