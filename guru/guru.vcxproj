@@ -156,6 +156,7 @@
     <ClInclude Include="base_feature\null_fixable.h" />
     <ClInclude Include="c17\if_constexpr.h" />
     <ClInclude Include="dump\mem_tracer.h" />
+    <ClInclude Include="dump\proc_info.h" />
     <ClInclude Include="dump\stack_tracer.h" />
     <ClInclude Include="dump\struct_exception.h" />
     <ClInclude Include="dump\uncatcher.h" />

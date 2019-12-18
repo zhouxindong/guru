@@ -18,7 +18,7 @@ _GURU_BEGIN
 #pragma region alloc_rec
 
 struct alloc_rec
-{
+{	// new alloc record item
 	void* addr;
 	std::string file;
 	int line;

@@ -10,6 +10,7 @@
 #include "struct_exception_af.h"
 #include "dump/uncatcher.h"
 #include "dump/mem_tracer.h"
+#include "dump/proc_info.h"
 
 using namespace std;
 using namespace guru;
@@ -118,7 +119,7 @@ int main()
 //#if defined(_WIN32) || defined(_WIN64)
 //#include <crtdbg.h>
 //#endif
-
+/*
 class MyWork
 {
 public:
@@ -149,7 +150,7 @@ private:
 
 int main()
 {
-	// pointer
+	// 1. pointer
 	//int* pi = new int;
 	//double* pda = new double[10];
 	//std::string* ps1 = new std::string("hello");
@@ -169,15 +170,42 @@ int main()
 	//cout << "\n--------------after deleted----------------\n";
 	//cout << dump_mem_tracer() << "\n";
 
-	// smart pointer
-	uint64_t count = 0;
-	while (true)
-	{
-		std::shared_ptr<MyWork> ps(new MyWork(1, 2));
-		if (++count % 100 == 0)
-			cout << dump_mem_tracer() << '\n';
-		//Sleep(1);
-	}
+	// 2. smart pointer
+	//uint64_t count = 0;
+	//while (true)
+	//{
+	//	std::shared_ptr<MyWork> ps(new MyWork(1, 2));
+	//	if (++count % 100 == 0)
+	//		cout << dump_mem_tracer() << '\n';
+	//	//Sleep(1);
+	//}
+
+	// 3. malloc
+	void* pm = malloc(1000);
+	cout << dump_mem_tracer() << '\n';
+	free(pm);
+	cout << dump_mem_tracer() << '\n';
+	system("pause");
+	return 0;
+}
+*/
+
+int main()
+{
+	proc_mem<> pm;
+	pm.fresh();
+	cout << pm.working_size() << '\n';
+	cout << pm.peak_working_size() << '\n';
+	cout << pm.page_file() << '\n';
+	cout << pm.peak_page_file() << '\n';
+
+	pm.gc();
+	pm.fresh();
+	cout << pm.working_size() << '\n';
+	cout << pm.peak_working_size() << '\n';
+	cout << pm.page_file() << '\n';
+	cout << pm.peak_page_file() << '\n';
+
 	system("pause");
 	return 0;
 }
