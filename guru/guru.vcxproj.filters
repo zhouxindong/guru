@@ -58,6 +58,9 @@
     <Filter Include="Header Files\cpp\ext">
       <UniqueIdentifier>{8013f156-b5eb-4e03-936a-2ff1368e90eb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\cpp\operator">
+      <UniqueIdentifier>{cfc35890-5f11-43c2-a735-865d33513ffe}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -245,6 +248,15 @@
     </ClInclude>
     <ClInclude Include="socket\tcp_client.h">
       <Filter>Header Files\socket</Filter>
+    </ClInclude>
+    <ClInclude Include="template\callable.h">
+      <Filter>Header Files\cpp\template</Filter>
+    </ClInclude>
+    <ClInclude Include="dump\mem_tracer.h">
+      <Filter>Header Files\dump</Filter>
+    </ClInclude>
+    <ClInclude Include="operator\newdel.h">
+      <Filter>Header Files\cpp\operator</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

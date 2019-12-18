@@ -23,6 +23,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "trait_stream_test", "trait_
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "socket_test", "socket_test\socket_test.vcxproj", "{6599A915-EFE2-4ED1-9F28-84AEE85C209F}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "operator_test", "operator_test\operator_test.vcxproj", "{1DCA60E0-128D-4EFB-9D9D-FC568222FD05}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -111,6 +113,14 @@ Global
 		{6599A915-EFE2-4ED1-9F28-84AEE85C209F}.Release|x64.Build.0 = Release|x64
 		{6599A915-EFE2-4ED1-9F28-84AEE85C209F}.Release|x86.ActiveCfg = Release|Win32
 		{6599A915-EFE2-4ED1-9F28-84AEE85C209F}.Release|x86.Build.0 = Release|Win32
+		{1DCA60E0-128D-4EFB-9D9D-FC568222FD05}.Debug|x64.ActiveCfg = Debug|x64
+		{1DCA60E0-128D-4EFB-9D9D-FC568222FD05}.Debug|x64.Build.0 = Debug|x64
+		{1DCA60E0-128D-4EFB-9D9D-FC568222FD05}.Debug|x86.ActiveCfg = Debug|Win32
+		{1DCA60E0-128D-4EFB-9D9D-FC568222FD05}.Debug|x86.Build.0 = Debug|Win32
+		{1DCA60E0-128D-4EFB-9D9D-FC568222FD05}.Release|x64.ActiveCfg = Release|x64
+		{1DCA60E0-128D-4EFB-9D9D-FC568222FD05}.Release|x64.Build.0 = Release|x64
+		{1DCA60E0-128D-4EFB-9D9D-FC568222FD05}.Release|x86.ActiveCfg = Release|Win32
+		{1DCA60E0-128D-4EFB-9D9D-FC568222FD05}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

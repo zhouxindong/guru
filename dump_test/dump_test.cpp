@@ -9,6 +9,7 @@
 #include <iostream>
 #include "struct_exception_af.h"
 #include "dump/uncatcher.h"
+#include "dump/mem_tracer.h"
 
 using namespace std;
 using namespace guru;
@@ -62,6 +63,7 @@ using namespace guru;
 
 // SEH
 // C++ /EHa
+/*
 void uncatch_cb(std::string const& msg)
 {
 	std::cout << msg;
@@ -110,4 +112,72 @@ int main()
 	system("pause");
 	return 0;
 }
+*/
 
+// mem_tracer
+//#if defined(_WIN32) || defined(_WIN64)
+//#include <crtdbg.h>
+//#endif
+
+class MyWork
+{
+public:
+	MyWork() :
+		_a{ new int[1000000] }, _b{ new int[1000000] }
+	{
+		//std::cout << "MyWork::MyWork()\n";
+	}
+	MyWork(int a, int b) 
+		: _a{ new int[1000000] }, _b{ new int[1000000] }
+	{
+		//std::cout << "MyWork::MyWork(int, int)\n";
+		int c = a + b;
+		c++;
+	}
+	~MyWork()
+	{
+		//std::cout << "MyWork::~MyWork()\n";
+		delete[] _a;
+		delete[] _b;
+	}
+
+private:
+	int* _a;
+	int* _b;
+
+};
+
+int main()
+{
+	// pointer
+	//int* pi = new int;
+	//double* pda = new double[10];
+	//std::string* ps1 = new std::string("hello");
+	//std::string* psa2 = new std::string[10];
+	//MyWork* pmw1 = new MyWork(2, 3);
+	//MyWork* pmw2 = new MyWork[10];
+
+	//cout << dump_mem_tracer() << "\n";
+
+	//delete pi;
+	//delete[] pda;
+	//delete ps1;
+	//delete[] psa2;
+	//delete pmw1;
+	//delete[] pmw2;
+
+	//cout << "\n--------------after deleted----------------\n";
+	//cout << dump_mem_tracer() << "\n";
+
+	// smart pointer
+	uint64_t count = 0;
+	while (true)
+	{
+		std::shared_ptr<MyWork> ps(new MyWork(1, 2));
+		if (++count % 100 == 0)
+			cout << dump_mem_tracer() << '\n';
+		//Sleep(1);
+	}
+	system("pause");
+	return 0;
+}
