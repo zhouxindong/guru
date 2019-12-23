@@ -157,6 +157,7 @@
     <ClInclude Include="c17\if_constexpr.h" />
     <ClInclude Include="dump\mem_tracer.h" />
     <ClInclude Include="dump\proc_info.h" />
+    <ClInclude Include="dump\ringer.h" />
     <ClInclude Include="dump\stack_tracer.h" />
     <ClInclude Include="dump\struct_exception.h" />
     <ClInclude Include="dump\uncatcher.h" />
@@ -173,7 +174,12 @@
     <ClInclude Include="mp\loop.h" />
     <ClInclude Include="mp\pow.h" />
     <ClInclude Include="mp\sqrt.h" />
+    <ClInclude Include="nut\event_base.h" />
+    <ClInclude Include="nut\eye_base.h" />
+    <ClInclude Include="nut\keyboard_eye.h" />
+    <ClInclude Include="nut\process_eye.h" />
     <ClInclude Include="nut\signal.h" />
+    <ClInclude Include="nut\thread_guard.h" />
     <ClInclude Include="operator\newdel.h" />
     <ClInclude Include="socket\base_socket.h" />
     <ClInclude Include="socket\broad_recver.h" />

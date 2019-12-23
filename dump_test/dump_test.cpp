@@ -11,6 +11,7 @@
 #include "dump/uncatcher.h"
 #include "dump/mem_tracer.h"
 #include "dump/proc_info.h"
+#include "dump/ringer.h"
 
 using namespace std;
 using namespace guru;
@@ -190,22 +191,56 @@ int main()
 }
 */
 
+// proc_mem
+/*
 int main()
 {
 	proc_mem<> pm;
 	pm.fresh();
-	cout << pm.working_size() << '\n';
-	cout << pm.peak_working_size() << '\n';
-	cout << pm.page_file() << '\n';
-	cout << pm.peak_page_file() << '\n';
+	cout << pm.working_size_string() << '\n';
+	cout << pm.peak_working_size_string() << '\n';
+	cout << pm.page_file_string() << '\n';
+	cout << pm.peak_page_file_string() << '\n';
+	cout << pm.total_string() << '\n';
+	cout << pm.total_peak_string() << '\n';
 
-	pm.gc();
+	cout << "\n---------------------------------\n";
+
+	gc();
 	pm.fresh();
-	cout << pm.working_size() << '\n';
-	cout << pm.peak_working_size() << '\n';
-	cout << pm.page_file() << '\n';
-	cout << pm.peak_page_file() << '\n';
+	cout << pm.working_size_string() << '\n';
+	cout << pm.peak_working_size_string() << '\n';
+	cout << pm.page_file_string() << '\n';
+	cout << pm.peak_page_file_string() << '\n';
+	cout << pm.total_string() << '\n';
+	cout << pm.total_peak_string() << '\n';
 
+	system("pause");
+	return 0;
+}
+*/
+
+// ringer
+/*
+int main()
+{
+	cout << promote_privilege() << endl;
+	cout << empty_all_set() << endl;
+
+	system("pause");
+	return 0;
+}
+*/
+
+// proc_cup
+int main()
+{
+	FILETIME now;
+	GetSystemTimeAsFileTime(&now);
+	cout << file_time_2_utc(&now) << endl;
+	cout << get_processor_number() << endl;
+	cout << get_cpu_usage(GetCurrentProcessId()) << endl;
+	
 	system("pause");
 	return 0;
 }

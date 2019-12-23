@@ -90,3 +90,15 @@ void printByIdx(T t, Indices<Idx...>)
 {
 	print(std::get<Idx>(t)...);
 }
+
+
+template <typename... Ts>
+struct ArgList
+{
+	template<Ts... vals>
+	struct Vals
+	{
+	};
+};
+
+static ArgList<int, char, char>::Vals<3, 'x', 'y'> tada;

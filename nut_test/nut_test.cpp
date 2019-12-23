@@ -5,11 +5,15 @@
 #include "nut/signal.h"
 #include <iostream>
 #include "signal_af.h"
+#include "nut/keyboard_eye.h"
+#include "nut/thread_guard.h"
+#include "nut/process_eye.h"
 
 using namespace std;
 using namespace guru;
 
 // signal test
+/*
 int main()
 {
 	// 1.
@@ -112,4 +116,38 @@ int main()
 	system("pause");
     return 0;
 }
+*/
 
+// keyboard eye test
+/*
+void key_eyer(std::string m)
+{
+	cout << m << endl;
+}
+
+int main()
+{
+	keyboard_eye key_eye;
+	key_eye.sig().connect(key_eyer);
+	thread key_eye_thread(key_eye);
+	thread_guard guard(key_eye_thread);
+
+	return 0;
+}
+*/
+
+// process eye test
+void process_eyer(std::string m)
+{
+	cout << m << endl;
+}
+int main()
+{
+	process_eye proc_eye;
+	proc_eye.sig().connect(process_eyer);
+	thread proc_eye_thread(proc_eye);
+	proc_eye_thread.detach();
+	thread_guard guard(proc_eye_thread);
+	system("pause");
+	return 0;
+}

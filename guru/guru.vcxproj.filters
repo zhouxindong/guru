@@ -261,6 +261,24 @@
     <ClInclude Include="dump\proc_info.h">
       <Filter>Header Files\dump</Filter>
     </ClInclude>
+    <ClInclude Include="dump\ringer.h">
+      <Filter>Header Files\dump</Filter>
+    </ClInclude>
+    <ClInclude Include="nut\event_base.h">
+      <Filter>Header Files\nut</Filter>
+    </ClInclude>
+    <ClInclude Include="nut\eye_base.h">
+      <Filter>Header Files\nut</Filter>
+    </ClInclude>
+    <ClInclude Include="nut\keyboard_eye.h">
+      <Filter>Header Files\nut</Filter>
+    </ClInclude>
+    <ClInclude Include="nut\thread_guard.h">
+      <Filter>Header Files\nut</Filter>
+    </ClInclude>
+    <ClInclude Include="nut\process_eye.h">
+      <Filter>Header Files\nut</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">

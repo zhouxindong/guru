@@ -44,3 +44,14 @@ void f(T&& val) // T&& behaves is diff X&&(X&& means rvalue ref, a temp obj or m
 {				// T&& means universal ref, can be bound a mutable, immutable, or movable object
 	g(std::forward<T>(val));
 }
+
+// perfect forwarding temporaries
+template <typename T>
+void foo(T x)
+{
+	auto&& val = get(x);
+	//
+	//...
+	//foo2(std::forward<decltype(val)>(val);
+
+}
