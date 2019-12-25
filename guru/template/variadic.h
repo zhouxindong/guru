@@ -6,8 +6,10 @@ void print()
 }
 
 template <typename T, typename... Types>
-void print(T firstArg, Types... args)
-{
+void print(T firstArg, Types... args)  
+{	// Types... is a pack expansion
+	// that produces a sequence of template arguments
+	// within the argument pack subsituted for Types
 	std::cout << firstArg << '\n';
 	print(args...);
 }
@@ -102,3 +104,9 @@ struct ArgList
 };
 
 static ArgList<int, char, char>::Vals<3, 'x', 'y'> tada;
+
+template <typename... Types>
+class PtrTuple : public std::tuple<Types*...> // pack expansion Types*... for each type in pack
+{
+};
+PtrTuple<int, float> t3; // inherits from tuple<int*, float*>

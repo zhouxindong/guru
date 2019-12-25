@@ -15,17 +15,22 @@ class foo
 {};
 
 // path
-//int main()
-//{
-//	cout << path::app_full_name() << endl;
-//	cout << path::app_name() << endl;
-//	cout << path::app_base_name() << endl;
-//	cout << unique_name_by_date_for_class<int>("demo1", ".log") << endl;
-//	cout << unique_name_by_date_for_class<double>("demo1", ".log") << endl;
-//	cout << unique_name_by_date_for_class<foo>("demo1", ".log") << endl;
-//	system("pause");
-//	return 0;
-//}
+int main()
+{
+	cout << path::app_full_name() << endl;
+	cout << path::app_path() << endl;
+	cout << path::app_name() << endl;
+	cout << path::app_base_name() << endl;
+	cout << unique_name_by_date_for_class<int>("demo1", ".log") << endl;
+	cout << unique_name_by_date_for_class<double>("demo1", ".log") << endl;
+	cout << unique_name_by_date_for_class<foo>("demo1", ".log") << endl;
+
+	cout << path::cwd() << endl;
+	path::cwd("C:/Ñ¸À×ÏÂÔØ");
+	cout << path::cwd() << endl;
+	system("pause");
+	return 0;
+}
 
 // digest
 //int main()
@@ -39,15 +44,15 @@ class foo
 //}
 
 // ostream_ex
-int main()
-{
-	vector<uint8_t> v1;
-	for (int i = 0; i < 64; ++i)
-	{
-		v1.push_back(i);
-	}
-
-	cout << v1;
-	system("pause");
-	return 0;
-}
+//int main()
+//{
+//	vector<uint8_t> v1;
+//	for (int i = 0; i < 64; ++i)
+//	{
+//		v1.push_back(i);
+//	}
+//
+//	cout << v1;
+//	system("pause");
+//	return 0;
+//}

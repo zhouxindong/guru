@@ -27,6 +27,9 @@
     <ClInclude Include="signal_af.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="test_service.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">

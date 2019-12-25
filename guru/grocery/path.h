@@ -25,6 +25,15 @@ public:
 		return std::string(buf);
 	}
 
+	static 
+	std::string
+	app_path() noexcept
+	{
+		std::string f = app_full_name();
+		size_t pos = f.find_last_of('\\', f.size());
+		return f.substr(0, pos);
+	}
+
 	/*
 	** get current application name(include .exe)
 	*/
@@ -56,6 +65,22 @@ public:
 		char buf[MAX_PATH];
 		::strncpy_s(buf, name.data(), (size_t)(name.size() - 4));
 		return std::string(buf);
+	}
+
+	static
+	std::string
+	cwd() noexcept
+	{
+		char dir[MAX_PATH];
+		::GetCurrentDirectoryA(MAX_PATH, dir);
+		return std::string(dir);
+	}
+
+	static 
+	void
+	cwd(std::string new_path) noexcept
+	{
+		::SetCurrentDirectoryA(new_path.c_str());
 	}
 };
 

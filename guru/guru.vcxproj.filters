@@ -279,6 +279,18 @@
     <ClInclude Include="nut\process_eye.h">
       <Filter>Header Files\nut</Filter>
     </ClInclude>
+    <ClInclude Include="template\arguments.h">
+      <Filter>Header Files\cpp\template</Filter>
+    </ClInclude>
+    <ClInclude Include="nut\single_proc.h">
+      <Filter>Header Files\nut</Filter>
+    </ClInclude>
+    <ClInclude Include="nut\service_base.h">
+      <Filter>Header Files\nut</Filter>
+    </ClInclude>
+    <ClInclude Include="nut\service_installer.h">
+      <Filter>Header Files\nut</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
