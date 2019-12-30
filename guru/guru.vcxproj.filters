@@ -291,6 +291,30 @@
     <ClInclude Include="nut\service_installer.h">
       <Filter>Header Files\nut</Filter>
     </ClInclude>
+    <ClInclude Include="grocery\xmlhd3.h">
+      <Filter>Header Files\grocery</Filter>
+    </ClInclude>
+    <ClInclude Include="grocery\xmlhd3_wrap.h">
+      <Filter>Header Files\grocery</Filter>
+    </ClInclude>
+    <ClInclude Include="grocery\xmler.h">
+      <Filter>Header Files\grocery</Filter>
+    </ClInclude>
+    <ClInclude Include="grocery\file.h">
+      <Filter>Header Files\grocery</Filter>
+    </ClInclude>
+    <ClInclude Include="grocery\tinyxml2.h">
+      <Filter>Header Files\grocery</Filter>
+    </ClInclude>
+    <ClInclude Include="template\nested.h">
+      <Filter>Header Files\cpp\template</Filter>
+    </ClInclude>
+    <ClInclude Include="template\inheritance.h">
+      <Filter>Header Files\cpp\template</Filter>
+    </ClInclude>
+    <ClInclude Include="grocery\tinyxml2_wrap.h">
+      <Filter>Header Files\grocery</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">

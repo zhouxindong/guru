@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include <tuple>
 
 void print()
 {
@@ -110,3 +111,82 @@ class PtrTuple : public std::tuple<Types*...> // pack expansion Types*... for ea
 {
 };
 PtrTuple<int, float> t3; // inherits from tuple<int*, float*>
+
+						 // pack expansions
+						 // 1. in the list of base classes
+template <typename... Mixins>
+class Point : public Mixins... // base class pack expansion
+{
+	double x, y, z;
+public:
+	Point() : Mixins()... {} // base class initializer pack expansion
+
+	Point(Mixins... mixins) // mixins is a function parameter pack
+		: Mixins(mixins)... // initialize each base with the supplied mixin value
+	{
+	}
+
+	template <typename Visitor>
+	void visitMixins(Visitor visitor)
+	{
+		visitor(static_cast<Mixins&>(*this)...); // call argument pack expansion
+	}
+};
+
+struct Color
+{
+	char red, green, blue;
+};
+
+struct Label
+{
+	std::string name;
+};
+
+Point<Color, Label> p; // inherits from both Color and Label(default ctor)
+Point<Color, Label> p({ 0x7F, 0, 0x7F }, { "center" });
+
+
+// 2. to create a nontype or template parameter pack
+template <typename... Ts>
+struct Values
+{
+	template <Ts... Vs>
+	struct Holder
+	{
+	};
+};
+
+int i;
+Values<char, int, int*>::Holder<'a', 17, &i> valueHolder;
+
+template <typename F, typename... Types>
+void forwardCopy(F f, Types const&... values)
+{
+	f(Types(values)...); // two parameters packs, Types and values
+}
+
+// fold expression
+// a right fold of fn over a sequence x[1], x[2]... x[n]
+// fn(x[1], fn(x[2], fn(..., fn(x[n-1], x[n])...)))
+
+bool and_all()
+{
+	return true;
+}
+
+template <typename T>
+bool and_all(T cond)
+{
+	return cond;
+}
+
+template <typename T, typename... Ts>
+bool and_all(T cond, Ts... conds)
+{
+	return cond && and_all(conds...);
+}
+
+// fold expressions applies to all binary operators
+// right fold: (pack op ... op value)
+// left fold:  (value op ... op pack)

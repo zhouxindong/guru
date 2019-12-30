@@ -69,6 +69,22 @@ public:
 
 	static
 	std::string
+	file_ext_name(std::string name) noexcept
+	{
+		size_t idx = name.find_last_of('.');
+		return (idx == std::string::npos) ? std::string() : name.substr(idx + 1);
+	}
+
+	static
+	std::string
+	file_name_no_ext(std::string name) noexcept
+	{
+		size_t idx = name.find_last_of('.');
+		return (idx == std::string::npos) ? name : name.substr(0, idx);
+	}
+
+	static
+	std::string
 	cwd() noexcept
 	{
 		char dir[MAX_PATH];

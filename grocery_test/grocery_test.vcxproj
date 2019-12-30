@@ -150,6 +150,8 @@
   <ItemGroup>
     <ClCompile Include="grocery_test.cpp" />
     <ClCompile Include="stdafx.cpp" />
+    <ClCompile Include="tinyxml2.cpp" />
+    <ClCompile Include="xmlhd3.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\guru\guru.vcxproj">

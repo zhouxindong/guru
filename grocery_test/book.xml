@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="gb2312"?>
+<root>
+  <book>root book</book>
+  <section1>
+    <book>section1 book1</book>
+    <book>section1 book2</book>
+  </section1>
+  <section2>
+    <book>section2 book1</book>
+    <section22>
+      <book>section22 book1</book>
+      <book>section22 book2</book>
+    </section22>
+  </section2>
+</root>

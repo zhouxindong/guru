@@ -165,10 +165,16 @@
     <ClInclude Include="ext\Stack.h" />
     <ClInclude Include="grocery\chrono_ex.h" />
     <ClInclude Include="grocery\digest.h" />
+    <ClInclude Include="grocery\file.h" />
     <ClInclude Include="grocery\low_chrono.h" />
     <ClInclude Include="grocery\ostream_ex.h" />
     <ClInclude Include="grocery\path.h" />
     <ClInclude Include="grocery\string_ex.h" />
+    <ClInclude Include="grocery\tinyxml2.h" />
+    <ClInclude Include="grocery\tinyxml2_wrap.h" />
+    <ClInclude Include="grocery\xmler.h" />
+    <ClInclude Include="grocery\xmlhd3.h" />
+    <ClInclude Include="grocery\xmlhd3_wrap.h" />
     <ClInclude Include="guru.h" />
     <ClInclude Include="gvals.h" />
     <ClInclude Include="mp\loop.h" />
@@ -209,6 +215,8 @@
     <ClInclude Include="template\callable.h" />
     <ClInclude Include="template\forwarding.h" />
     <ClInclude Include="template\friend.h" />
+    <ClInclude Include="template\inheritance.h" />
+    <ClInclude Include="template\nested.h" />
     <ClInclude Include="template\raw_array.h" />
     <ClInclude Include="template\variable.h" />
     <ClInclude Include="template\variadic.h" />

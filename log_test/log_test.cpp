@@ -266,10 +266,10 @@ int main()
 */
 
  //different logger class with the same name, it would create different log file
-bool thread_proc(/*logger& mylog*/) {
+/*
+bool thread_proc() {
 	auto v = generate_log_item(1000, std::string("单独的异步线程..."));
 	for (auto& item : v) {
-		//logger::get("thread_logger3").log(item);
 		file_info_logger::get("thread_logger84").log(item);
 
 		Sleep(1);
@@ -279,18 +279,22 @@ bool thread_proc(/*logger& mylog*/) {
 
 int main()
 {
-	/*auto& logger = logger::get("thread_logger2");*/
 	auto v = generate_log_item(1000, std::string("主线程..."));
-	std::future<bool> rs(std::async(thread_proc/*, std::ref(logger)*/));
+	std::future<bool> rs(std::async(thread_proc));
 
 	for (auto& item : v) {
-
-		//logger::get("thread_logger3").log(item);
 		file_logger::get("thread_logger84").log(item);
-
 		Sleep(1);
 	}
 	rs.wait();
+	system("pause");
+	return 0;
+}
+*/
+
+// multi channel
+int main()
+{
 	system("pause");
 	return 0;
 }

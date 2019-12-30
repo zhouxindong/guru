@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="gb2312"?>
+<CORE_ID>
+  <ID DESC="VDR域" INIT="174">VDR_region</ID>
+  <ID DESC="VDR ID" INIT="1811">VDR_id</ID>
+  <ID DESC="VDR组播地址" INIT="224.0.0.155">VDR_group_ip</ID>
+  <ID DESC="VDR组播端口" INIT="9000">VDR_group_port</ID>
+  <ID DESC="VDR本机地址" INIT="localhost">VDR_local_ip</ID>
+  <ID DESC="VDR本机端口" INIT="9078">VDR_local_port</ID>
+  
+  <ID DESC="运行控制指令" INIT="运行控制指令">cmd_name</ID>
+  <ID DESC="仿真步长" INIT="仿真步长">cmd_speed_name</ID>
+  <ID DESC="资源加载" INIT="800">cmd_load</ID>
+  <ID DESC="初始化" INIT="1000">cmd_init</ID>
+  <ID DESC="仿真开始" INIT="1100">cmd_start</ID>
+  <ID DESC="仿真暂停" INIT="1200">cmd_freeze</ID>
+  <ID DESC="仿真继续" INIT="1300">cmd_unfreeze</ID>
+  <ID DESC="调整步长" INIT="1400">cmd_set_speed</ID>
+  <ID DESC="仿真结束" INIT="2000">cmd_finish</ID>
+</CORE_ID>
