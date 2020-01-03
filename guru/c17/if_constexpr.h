@@ -31,3 +31,55 @@ void foo(T t)
 		static_assert(!std::is_integral_v<T>, "no integral");
 	}
 }
+
+template <typename T>
+bool f(T p)
+{
+	if constexpr (sizeof(T) <= sizeof(long long))
+	{
+		return p > 0;
+	}
+	else
+	{
+		return p.compare(0) > 0;
+	}
+}
+
+bool g(int n) {
+	return f(n); // only if statement instantiated
+}
+
+// in C++14
+template <bool b, typename T>
+struct Dispatch
+{
+	static bool f(T p)
+	{
+		return p.compare(0) > 0;
+	}
+};
+
+template <typename T>
+struct Dispatch<true>
+{
+	static bool f(T p)
+	{
+		return p > 0;
+	}
+};
+
+template <typename T>
+bool f(T p)
+{
+	return Dispatch<sizeof(T) <= sizeof(long long), T>::f(p);
+}
+
+template <typename Head, typename... Remainder>
+void f(Head&& h, Remainder&&... r)
+{
+	doSomething(std::forward<Head>(h));
+	if constexpr (sizeof...(r) != 0)
+	{
+		f(std::forward<Remainder>(r)...);
+	}
+}

@@ -28,6 +28,11 @@ public:
 		return _ready;
 	}
 
+	tinyxml2_wrap(tinyxml2_wrap const&) = delete;
+	tinyxml2_wrap(tinyxml2_wrap&&) = delete;
+	tinyxml2_wrap& operator=(tinyxml2_wrap const&) = delete;
+	tinyxml2_wrap& operator=(tinyxml2_wrap&&) = delete;
+
 public:
 	root_type root() override
 	{

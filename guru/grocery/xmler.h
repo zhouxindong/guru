@@ -4,6 +4,7 @@
 
 #include "../gvals.h"
 #include <vector>
+#include <utility>
 
 _GURU_BEGIN
 
@@ -22,15 +23,51 @@ public:
 	virtual ~xmler() noexcept {}
 
 public:
+	/** build xml tree from a string
+		usually after default ctor		
+	*/
 	virtual bool parse(char const* xml) = 0;
 
+	/** retrive all element with speical name
+		@verbatim
+		<name>
+		@endverbatim
+	*/
 	virtual std::vector<_Vec_ele> all(char const* name) = 0;
+
+	/** retrive all elements with special name and its parent
+		@verbatim
+		<parent>
+			<name>
+		@endverbatim
+	*/
 	virtual std::vector<_Vec_ele> all(char const* name, char const* parent) = 0;
+
+	/** retrive all elements with special name and its parent and grand-parent
+		@verbatim
+		<grand-parent>
+			<parent>
+				<name>
+		@endverbatim
+	*/
 	virtual std::vector<_Vec_ele> all(char const* name, char const* parent, char const* pparent) = 0;
 	
+	/** return the root elements
+	*/
 	virtual _Root_ele root() = 0;
 
+	/** return all the directly children for special element
+		parameter name can point child with special name
+	*/
 	virtual std::vector<_Vec_ele> childs(_Vec_ele ele, char const* name = (const char*)0) = 0;
+
+public:
+	virtual std::pair<bool, int32_t> int32_attribute(char const* name) = 0;
+
+
+public:
+	virtual char const* text(_Vec_ele ele) = 0;
+
 public:
 	bool ready() const noexcept { return _ready; }
 

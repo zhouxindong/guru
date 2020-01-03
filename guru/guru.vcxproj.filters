@@ -61,9 +61,15 @@
     <Filter Include="Header Files\cpp\operator">
       <UniqueIdentifier>{cfc35890-5f11-43c2-a735-865d33513ffe}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\cpp\c11+">
+      <UniqueIdentifier>{34b48bae-add9-41c7-9f38-dd92826fab62}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
+    <Text Include="header.txt">
+      <Filter>Header Files</Filter>
+    </Text>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -314,6 +320,24 @@
     </ClInclude>
     <ClInclude Include="grocery\tinyxml2_wrap.h">
       <Filter>Header Files\grocery</Filter>
+    </ClInclude>
+    <ClInclude Include="template\explicit_inst.h">
+      <Filter>Header Files\cpp\template</Filter>
+    </ClInclude>
+    <ClInclude Include="grocery\x64fmt.h">
+      <Filter>Header Files\grocery</Filter>
+    </ClInclude>
+    <ClInclude Include="template\deduced.h">
+      <Filter>Header Files\cpp\template</Filter>
+    </ClInclude>
+    <ClInclude Include="template\rvalue.h">
+      <Filter>Header Files\cpp\template</Filter>
+    </ClInclude>
+    <ClInclude Include="c11+\auto.h">
+      <Filter>Header Files\cpp\c11+</Filter>
+    </ClInclude>
+    <ClInclude Include="c11+\decltype.h">
+      <Filter>Header Files\cpp\c11+</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

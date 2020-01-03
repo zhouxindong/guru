@@ -190,3 +190,45 @@ bool and_all(T cond, Ts... conds)
 // fold expressions applies to all binary operators
 // right fold: (pack op ... op value)
 // left fold:  (value op ... op pack)
+
+// parameter packs deduced
+// because deduction for function parameter packs use the pattern of the expansion for its comparison
+// the pattern can be arbitrarily complex
+// values from multiple template parameters and parameter packs can be determined from each of the argument types
+template <typename T, typename U>
+class pair {};
+
+template <typename T, typename... Rest>
+void h1(pair<T, Rest> const&...);
+
+template <typename... Ts, typename... Rest>
+void h2(pair<Ts, Rest> const&...);
+
+void foo(pair<int, float> pif, pair<int, double> pid, pair<double, double> pdd)
+{
+	h1(pif, pid);	// T = int, Rest = {float, double}
+	h2(pif, pid);	// T = {int, int}, Rest = {float, double}
+	h1(pif, pdd);	// ERROR, T -> int, T -> double, conflict
+	h2(pif, pdd);	// T = {int, double}, T = {float, double}
+}
+
+// perfect forwarding
+template <typename... Ts>
+void forwardToG(Ts&&... xs)
+{
+	g(std::forward<TS>(xs)...);	// forward all xs to g()
+}
+
+// c11
+template <typename... Ts>
+auto forwardToG(Ts&&... xs) -> decltype(g(std::forward<Ts>(xs)...))
+{
+	return g(std::forward<Ts>(xs)...);
+}
+
+// c14
+template <typename... Ts>
+decltype(auto) forwardToG(Ts&&... xs)
+{
+	return g(std::forward<Ts>(xs)...);
+}
