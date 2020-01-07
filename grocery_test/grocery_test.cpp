@@ -10,6 +10,7 @@
 #include "grocery/string_ex.h"
 #include "grocery/file.h"
 #include <cassert>
+#include <fstream>
 
 using namespace std;
 using namespace guru;
@@ -36,6 +37,8 @@ class foo
 //	cout << path::file_ext_name("12345") << endl;
 //	cout << path::file_name_no_ext("1.config") << endl;
 //	cout << path::file_name_no_ext("12345") << endl;
+//
+//	ofstream fout(get_log_name("grocery_test"), std::ios::app | std::ios::out);
 //
 //	system("pause");
 //	return 0;

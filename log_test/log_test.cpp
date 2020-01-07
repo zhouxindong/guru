@@ -163,6 +163,7 @@ int main()
 
 	//log1 = LOG(FATAL) << "a log item: fatal";
 	//Console_Channel << log1;
+	//system("pause");
 
 	// 3. file_channel
 	//file_channel fc("file_channel1.out");
@@ -190,15 +191,15 @@ int main()
 	//fc << log1;
 
 	// 4. udp_channel
-	udp_channel uc("udptest#10.16.2.105#8005#10.16.2.105");
-	while (true)
-	{
-		static int count = 1;
-		log_item log1 = LOG(INFO) << ++count;
-		uc << log1;
-		std::cout << count << "\n";
-		Sleep(1);
-	}
+	//udp_channel uc("udptest#10.16.2.105#8005#10.16.2.105");
+	//while (true)
+	//{
+	//	static int count = 1;
+	//	log_item log1 = LOG(INFO) << ++count;
+	//	uc << log1;
+	//	std::cout << count << "\n";
+	//	Sleep(100);
+	//}
 }
 //*/
 
@@ -254,45 +255,45 @@ int main()
 	//}
 
 	// file_logger
-	auto& logger = file_logger::get("log_test");
-	auto v = std::move(generate_log_item(200));
-	for (auto& item : v)
-	{
-		logger.log(item);
-	}
+	//auto& logger = file_logger::get("log_test");
+	//auto v = std::move(generate_log_item(200));
+	//for (auto& item : v)
+	//{
+	//	logger.log(item);
+	//}
 
-	auto& logger2 = file_logger::get("log_test");
-	v = std::move(generate_log_item(200, " new log"));
-	for (auto& item : v)
-	{
-		logger2.log(item);
-	}
+	//auto& logger2 = file_logger::get("log_test");
+	//v = std::move(generate_log_item(200, " new log"));
+	//for (auto& item : v)
+	//{
+	//	logger2.log(item);
+	//}
 
-	system("pause");
-	return 0;
+	//system("pause");
+	//return 0;
 }
 */
 
  //different logger class with the same name, it would create different log file
 /*
 bool thread_proc() {
-	auto v = generate_log_item(1000, std::string("单独的异步线程..."));
+	auto v = generate_log_item(2000, std::string("单独的异步线程..."));
 	for (auto& item : v) {
-		file_info_logger::get("thread_logger84").log(item);
+		file_info_logger::get("max4kfile").log(item);
 
-		Sleep(1);
+		Sleep(100);
 	}
 	return true;
 }
 
 int main()
 {
-	auto v = generate_log_item(1000, std::string("主线程..."));
+	auto v = generate_log_item(2000, std::string("主线程..."));
 	std::future<bool> rs(std::async(thread_proc));
 
 	for (auto& item : v) {
-		file_logger::get("thread_logger84").log(item);
-		Sleep(1);
+		file_logger::get("max4kfile").log(item);
+		Sleep(100);
 	}
 	rs.wait();
 	system("pause");

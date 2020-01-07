@@ -35,7 +35,8 @@ public:
 
 	basic_logger(const std::string& name) noexcept:
 		_name(name),
-		_channel(unique_name_by_date_for_class<decltype(this)>(name, ".log"))
+		_channel(name)
+		//_channel(unique_name_by_date_for_class<decltype(this)>(name, ".log"))
 	{
 	}
 

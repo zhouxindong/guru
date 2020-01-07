@@ -9,6 +9,8 @@
 #include <fstream>
 #include "../base_feature/lock_fixable.h"
 #include "../grocery/string_ex.h"
+#include "../grocery/path.h"
+#include "../grocery/file.h"
 
 _GURU_BEGIN
 
@@ -88,17 +90,26 @@ static console_channel Console_Channel;
 
 #pragma region file_channel
 
+static constexpr int64_t LogFileMaxSize = /*10 * 1024 * 1024*/ 4 * 1024;
+
 /*
 ** file_channel
 */
 class file_channel 
 {
+	template <typename _Log_item = log_item, typename Fmt = std_formatter<_Log_item>>
+	friend file_channel& operator << (file_channel& out, _Log_item const& item);
+
+	_PROPERTY_READONLY(std::string, name)
+	_PROPERTY_READONLY(std::string, file_name)
 	_PROPERTY_READONLY(std::ofstream, file)
 
 public:
 	explicit 
 	file_channel(const std::string& file_name) noexcept :
-		_file(file_name, std::ios::app | std::ios::out) 
+		_name(file_name),
+		_file_name(get_log_name(file_name)),
+		_file(_file_name, std::ios::app | std::ios::out) 
 	{
 	}
 
@@ -137,7 +148,7 @@ public:
  */
 class udp_channel
 {
-	template <typename _Log_item = log_item>
+	template <typename _Log_item = log_item, typename Fmt = std_formatter<_Log_item>>
 	friend udp_channel&	operator << (udp_channel& out, _Log_item const& item);
 
 	_PROPERTY_READONLY(std::ostringstream, stream)
@@ -200,43 +211,57 @@ public:
 
 #pragma  endregion
 
-template <typename _Log_item = log_item>
+template <
+	typename _Log_item = log_item,
+	typename Fmt = std_formatter<_Log_item>>
 null_channel&
 operator << (null_channel& out, _Log_item const& item)
 {
-	out.stream() << std_formatter<_Log_item>::format(item);
+	out.stream() << /*std_formatter<_Log_item>::format(item)*/Fmt::format(item);
 	out.stream() << std::endl;
 	out.flush();
 	return out;
 }
 
-template <typename _Log_item = log_item>
+template <
+	typename _Log_item = log_item,
+	typename Fmt = std_formatter<_Log_item>>
 console_channel&
 operator << (console_channel& out, _Log_item const& item)
 {
-	out.stream() << std_formatter<_Log_item>::format(item);
+	out.stream() << /*std_formatter<_Log_item>::format(item)*/Fmt::format(item);
 	out.stream() << std::endl;
 	out.flush();
 	return out;
 }
 
-template <typename _Log_item = log_item>
+template <typename _Log_item, typename Fmt>
 file_channel&
 operator << (file_channel& out, _Log_item const& item)
 {
 	assert(out.ready());
-	out.stream() << std_formatter<_Log_item>::format(item);
+	int64_t size = file_size(out._file_name.c_str());
+	//std::cout << size << endl;
+	if (size >= LogFileMaxSize)
+	{
+		out._file.close();
+		out._file_name = get_log_name(out._name);
+		out._file = std::ofstream(out._file_name, std::ios::app | std::ios::out);
+		assert(out.ready());
+	}
+
+	out.stream() << /*std_formatter<_Log_item>::format(item)*/Fmt::format(item);
 	out.stream() << std::endl;
 	out.flush();
 	return out;
 }
 
-template <typename _Log_item>
+template <typename _Log_item, typename Fmt>
 udp_channel&
 operator << (udp_channel& out, _Log_item const& item)
 {
 	assert(out.ready());
-	out.stream() << std_formatter<_Log_item>::format(item) << std::endl;
+	out.stream() << /*std_formatter<_Log_item>::format(item)*/Fmt::format(item) << std::endl;
 	std::string s = std::move(out.get_stream().str());
 	out._sender.send(s.c_str(), (int)s.size());
 	out._stream.str("");

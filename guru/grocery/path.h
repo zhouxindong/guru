@@ -7,6 +7,7 @@
 #include <windows.h>
 #include "chrono_ex.h"
 #include "digest.h"
+#include "file.h"
 
 _GURU_BEGIN
 
@@ -117,6 +118,25 @@ unique_name_by_date_for_class(std::string const& name, std::string const& ext) n
 		<< std::get<0>(t) << std::setw(2) << std::setfill('0')
 		<< std::get<1>(t) << std::setw(2) << std::setfill('0') << std::get<2>(t)
 		<< ext;
+	return oss.str();
+}
+
+inline
+std::string
+get_log_name(std::string const& name, int surfix = 1)
+{
+	auto t = tokenize_time_point(to_local(std::chrono::system_clock::now()));
+	std::ostringstream oss;
+	oss << name << "_" << std::get<0>(t)
+		<< std::setw(2) << std::setfill('0') << std::get<1>(t)
+		<< std::setw(2) << std::setfill('0') << std::get<2>(t);
+	if (surfix != 1) oss << "_" << surfix;
+	oss << ".log";
+	std::string file_name = oss.str();
+	if (file_exists(file_name))
+	{
+		return get_log_name(name, ++surfix);
+	}
 	return oss.str();
 }
 

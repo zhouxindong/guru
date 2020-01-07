@@ -5,6 +5,7 @@
 #include "../gvals.h"
 #include <fstream>
 #include <string>
+#include <io.h>
 
 _GURU_BEGIN
 
@@ -53,6 +54,16 @@ copy_file_b(std::string s, std::string d) noexcept
 
 	return FILE_OP_RESULT::SUCCEEDED;
 }
+
+inline
+int64_t
+file_size(const char* name)
+{
+	struct _stat info;
+	_stat(name, &info);
+	return info.st_size;
+}
+
 
 _GURU_END
 
