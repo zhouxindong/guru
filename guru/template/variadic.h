@@ -232,3 +232,29 @@ decltype(auto) forwardToG(Ts&&... xs)
 {
 	return g(std::forward<Ts>(xs)...);
 }
+
+/////////////////////////////////////
+template <typename T>
+int f(T*)
+{
+	return 1;
+}
+
+template <typename... Ts>
+int f(Ts...)
+{
+	return 2;
+}
+
+template <typename... Ts>
+int f(Ts*...)
+{
+	return 3;
+}
+
+void fff()
+{
+	f(0, 0.0);	// f<>(Ts...)
+	f((int*)nullptr, (double*)nullptr);	// f<>(Ts*...)
+	f((int*)nullptr);	// f<>(T*)
+}

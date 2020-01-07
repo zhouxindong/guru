@@ -3,9 +3,12 @@
 #define _GURU_LOG_CHANNEL_H_
 
 #include "../gvals.h"
+#include "../socket/udp_sender.h"
 #include "../stream/null_stream.h"
 #include <iostream>
 #include <fstream>
+#include "../base_feature/lock_fixable.h"
+#include "../grocery/string_ex.h"
 
 _GURU_BEGIN
 
@@ -129,6 +132,72 @@ public:
 	}
 };
 
+/**
+ * socket channel used UDP
+ */
+class udp_channel
+{
+	template <typename _Log_item = log_item>
+	friend udp_channel&	operator << (udp_channel& out, _Log_item const& item);
+
+	_PROPERTY_READONLY(std::ostringstream, stream)
+	_PROPERTY_READONLY(std::string, name)
+	_PROPERTY_READONLY(std::string, dip)
+	_PROPERTY_READONLY(uint16_t, dport)
+	_PROPERTY_READONLY(std::string, sip)
+	_PROPERTY_READONLY(uint16_t, sport)
+
+private:
+	udp_sender<lock_fixable> _sender;
+
+public:
+	explicit udp_channel(const std::string& str) noexcept
+	{
+		auto splits = split(str, '#');
+		if (splits.size() < 3) return; // name&dip&dport must
+
+		_name = splits[0];
+		_sender.dst_ip(splits[1]);
+		int value;
+		to_int(splits[2], &value);
+		_sender.dst_port((uint16_t)value);
+		_sender.src_ip(splits.size() >= 4 ? splits[3] : "127.0.0.1");
+		if (splits.size() >= 5)
+		{
+			if (to_int(splits[4], &value))
+				_sender.src_port((uint16_t)value);
+			else
+				_sender.src_port(0);
+		}
+		else
+			_sender.src_port(0);
+		_sender.init();
+	}
+
+	udp_channel(const udp_channel&) = delete;
+	udp_channel(udp_channel&&) = delete;
+	udp_channel& operator = (const udp_channel&) = delete;
+	udp_channel& operator = (udp_channel&&) = delete;
+
+	std::ostream&
+	stream() noexcept
+	{
+		return _stream;
+	}
+
+	std::ostream&
+	flush() noexcept
+	{
+		return _stream.flush();
+	}
+
+	bool
+	ready() noexcept
+	{
+		return _sender.get_ready();
+	}
+};
+
 #pragma  endregion
 
 template <typename _Log_item = log_item>
@@ -155,9 +224,22 @@ template <typename _Log_item = log_item>
 file_channel&
 operator << (file_channel& out, _Log_item const& item)
 {
+	assert(out.ready());
 	out.stream() << std_formatter<_Log_item>::format(item);
 	out.stream() << std::endl;
 	out.flush();
+	return out;
+}
+
+template <typename _Log_item>
+udp_channel&
+operator << (udp_channel& out, _Log_item const& item)
+{
+	assert(out.ready());
+	out.stream() << std_formatter<_Log_item>::format(item) << std::endl;
+	std::string s = std::move(out.get_stream().str());
+	out._sender.send(s.c_str(), (int)s.size());
+	out._stream.str("");
 	return out;
 }
 

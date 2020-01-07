@@ -80,6 +80,39 @@ public:
 		return v;
 	}
 
+public:
+	char const* text(element_type ele) override
+	{
+		return ele->GetText();
+	}
+
+	std::pair<bool, int32_t> int32_attribute(element_type ele, char const* name) override
+	{
+		int32_t value;
+		auto result = ele->QueryIntAttribute(name, &value);
+		return std::make_pair(result == XML_SUCCESS, value);
+	}
+
+	std::pair<bool, std::string> text_attribute(element_type ele, char const* name) override
+	{
+		auto v = ele->Attribute(name);
+		return std::make_pair(v != NULL, v == NULL ? "" : v);
+	}
+
+	std::pair<bool, bool> bool_attribute(element_type ele, char const* name) override
+	{
+		bool value;
+		auto result = ele->QueryBoolAttribute(name, &value);
+		return std::make_pair(result == XML_SUCCESS, value);
+	}
+
+	std::pair<bool, double> double_attribute(element_type ele, char const* name) override
+	{
+		double value;
+		auto result = ele->QueryDoubleAttribute(name, &value);
+		return std::make_pair(result == XML_SUCCESS, value);
+	}
+
 private:
 	void __all(const char* name, element_type ele)
 	{

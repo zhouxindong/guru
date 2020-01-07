@@ -20,6 +20,7 @@ class udp_recver : public recver_socket<N>
 	typedef typename base_type::base_type root_type;
 
 public:
+	udp_recver() noexcept {}
 	udp_recver(string ip, uint16_t port) noexcept;
 };
 

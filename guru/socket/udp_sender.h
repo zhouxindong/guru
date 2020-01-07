@@ -20,6 +20,7 @@ class udp_sender : public sender_socket<_Fixable>
 	typedef typename base_type::base_type root_type;
 
 public:
+	udp_sender() noexcept {}
 	udp_sender(string di, uint16_t dp, string si = "127.0.0.1", uint16_t sp = 0) noexcept;
 };
 

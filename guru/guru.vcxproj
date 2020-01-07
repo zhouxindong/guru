@@ -157,7 +157,9 @@
     <ClInclude Include="base_feature\null_fixable.h" />
     <ClInclude Include="c11+\auto.h" />
     <ClInclude Include="c11+\decltype.h" />
+    <ClInclude Include="c11+\lambda.h" />
     <ClInclude Include="c17\if_constexpr.h" />
+    <ClInclude Include="c17\struct_bind.h" />
     <ClInclude Include="dump\mem_tracer.h" />
     <ClInclude Include="dump\proc_info.h" />
     <ClInclude Include="dump\ringer.h" />
@@ -221,10 +223,13 @@
     <ClInclude Include="template\explicit_inst.h" />
     <ClInclude Include="template\forwarding.h" />
     <ClInclude Include="template\friend.h" />
+    <ClInclude Include="template\function_overload.h" />
     <ClInclude Include="template\inheritance.h" />
     <ClInclude Include="template\nested.h" />
     <ClInclude Include="template\raw_array.h" />
     <ClInclude Include="template\rvalue.h" />
+    <ClInclude Include="template\specialization.h" />
+    <ClInclude Include="template\speical_member_function.h" />
     <ClInclude Include="template\variable.h" />
     <ClInclude Include="template\variadic.h" />
     <ClInclude Include="trick\countable_CRTP.h" />

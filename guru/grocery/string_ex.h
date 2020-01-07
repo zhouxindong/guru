@@ -8,8 +8,15 @@
 #include <sstream>
 #include <algorithm>
 #include <objbase.h>
+#include <type_traits>
+#include <cassert>
+
+#define BUF_SIZE 100
 
 _GURU_BEGIN
+
+static const char* BoolTrue = "true";
+static const char* BoolFalse = "false";
 
 /*
 ** tokenize a string by delim
@@ -89,6 +96,156 @@ guid() noexcept
 		guid.Data4[5], guid.Data4[6],
 		guid.Data4[7]);
 	return std::string(cBuffer);
+}
+
+inline
+int 
+snprintf(char* buffer, size_t size, const char* format, ...)
+{
+	va_list va;
+	va_start(va, format);
+	const int result = vsnprintf_s(buffer, size, (size_t)-1, format, va);
+	va_end(va);
+	return result;
+}
+
+template <typename T>
+inline
+std::string
+to_string(T v) noexcept
+{
+	char buf[BUF_SIZE];
+	if (std::is_same_v<T, int32_t> ||
+		std::is_same_v<T, int8_t> ||
+		std::is_same_v<T, uint8_t> ||
+		std::is_same_v<T, int16_t> ||
+		std::is_same_v<T, uint16_t>)
+	{
+		snprintf(buf, BUF_SIZE, "%d", v);
+		return buf;
+	}
+	if (std::is_same_v<T, uint32_t>)
+	{
+		snprintf(buf, BUF_SIZE, "%u", v);
+		return buf;
+	}
+	if (std::is_same_v<T, bool>)
+	{
+		sprintf(buf, BUF_SIZE, "%s", v ? BoolTrue : BoolFalse);
+		return buf;
+	}
+	if (std::is_same_v<T, float>)
+	{
+		snprintf(buf, BUF_SIZE, "%.8g", v);
+		return buf;
+	}
+	if (std::is_same_v<T, double>)
+	{
+		snprintf(buf, BUF_SIZE, "%.17g", v);
+		return buf;
+	}
+	if (std::is_same_v<T, int64_t>)
+	{
+		snprintf(buf, BUF_SIZE, "%lld", static_cast<long long>(v));
+		return buf;
+	}
+	if (std::is_same_v<T, uint64_t>)
+	{
+		snprintf(buf, BUF_SIZE, "%llu", (long long)v);
+		return buf;
+	}
+
+	return "";
+}
+
+inline
+bool 
+string_literal_equal(const char* p, const char* q, int nChar = INT_MAX)
+{
+	if (p == q) return true;
+	assert(p);
+	assert(q);
+	assert(nChar >= 0);
+	return strncmp(p, q, nChar) == 0;
+}
+
+inline
+bool
+to_int(std::string const& s, int* value) noexcept
+{
+	return sscanf_s(s.c_str(), "%d", value) == 1;
+}
+
+inline
+bool
+to_uint(std::string const& s, unsigned* value) noexcept
+{
+	return sscanf_s(s.c_str(), "%u", value) == 1;
+}
+
+inline
+bool 
+to_bool(std::string const& s, bool* value) noexcept
+{
+	int ival = 0;
+	if (to_int(s, &ival)) {
+		*value = (ival == 0) ? false : true;
+		return true;
+	}
+	static const char* TRUE_TEXT[] = { "true", "True", "TRUE", 0 };
+	static const char* FALSE_TEXT[] = { "false", "False", "FALSE", 0 };
+
+	for (int i = 0; TRUE_TEXT[i]; ++i) {
+		if (string_literal_equal(s.c_str(), TRUE_TEXT[i])) {
+			*value = true;
+			return true;
+		}
+	}
+	for (int i = 0; FALSE_TEXT[i]; ++i) {
+		if (string_literal_equal(s.c_str(), FALSE_TEXT[i])) {
+			*value = false;
+			return true;
+		}
+	}
+	return false;
+}
+
+inline
+bool
+to_float(std::string const& s, float* value) noexcept
+{
+	return sscanf_s(s.c_str(), "%f", value) == 1;
+}
+
+inline
+bool
+to_double(std::string const& s, double* value) noexcept
+{
+	return sscanf_s(s.c_str(), "%lf", value) == 1;
+}
+
+inline
+bool
+to_int64(std::string const& s, int64_t* value) noexcept
+{
+	long long v = 0;	
+	if (sscanf_s(s.c_str(), "%lld", &v) == 1) {
+		*value = static_cast<int64_t>(v);
+		return true;
+	}
+	return false;
+}
+
+inline
+bool
+to_uint64(std::string const& s, uint64_t* value) noexcept
+{
+	unsigned long long v = 0;	
+	if (sscanf_s(s.c_str(), "%llu", &v) == 1) {
+		*value = (uint64_t)v;
+		return true;
+	}
+	return false;
 }
 
 _GURU_END

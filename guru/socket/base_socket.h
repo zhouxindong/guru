@@ -75,7 +75,34 @@ bind_socket(SOCKET& socket, const sockaddr* name) noexcept
 */
 class base_socket : public noncopyable, public nonassignable
 {
+public:
+	void src_ip(std::string const& s)
+	{
+		_src_ip = s;
+	}
+
+	void src_port(uint16_t v)
+	{
+		_src_port = v;
+	}
+
+	void dst_ip(std::string const& s)
+	{
+		_dst_ip = s;
+	}
+
+	void dst_port(uint16_t v)
+	{
+		_dst_port = v;
+	}
+
+	const bool get_ready() const
+	{
+		return _ready;
+	}
+
 protected:
+	base_socket() noexcept {}
 	base_socket(std::string si, uint16_t sp, std::string di, uint16_t dp) noexcept;
 	~base_socket() noexcept;
 
@@ -93,11 +120,29 @@ protected:
 	uint16_t _src_port;
 	std::string _dst_ip;
 	uint16_t _dst_port;
+
+public:
+	void init();
 };
 
 inline
 base_socket::base_socket(std::string si, uint16_t sp, std::string di, uint16_t dp) noexcept
 	: _src_ip{ si }, _src_port{ sp }, _dst_ip{ di }, _dst_port{ dp }
+{
+	init();
+}
+
+inline
+base_socket::~base_socket() noexcept
+{
+	if (_ready)
+	{
+		closesocket(_socket);
+		WSACleanup();
+	}
+}
+
+inline void base_socket::init()
 {
 	if (!init_WSA())
 	{
@@ -110,16 +155,6 @@ base_socket::base_socket(std::string si, uint16_t sp, std::string di, uint16_t d
 	if (!bind_socket(_socket, (SOCKADDR*)&_src_addr)) return;
 
 	_ready = true;
-}
-
-inline
-base_socket::~base_socket() noexcept
-{
-	if (_ready)
-	{
-		closesocket(_socket);
-		WSACleanup();
-	}
 }
 
 _GURU_END

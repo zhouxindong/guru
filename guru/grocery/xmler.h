@@ -62,11 +62,11 @@ public:
 	virtual std::vector<_Vec_ele> childs(_Vec_ele ele, char const* name = (const char*)0) = 0;
 
 public:
-	virtual std::pair<bool, int32_t> int32_attribute(char const* name) = 0;
-
-
-public:
 	virtual char const* text(_Vec_ele ele) = 0;
+	virtual std::pair<bool, int32_t> int32_attribute(_Vec_ele ele, char const* name) = 0;
+	virtual std::pair<bool, std::string> text_attribute(_Vec_ele ele, char const* name) = 0;
+	virtual std::pair<bool, bool> bool_attribute(_Vec_ele ele, char const* name) = 0;
+	virtual std::pair<bool, double> double_attribute(_Vec_ele ele, char const* name) = 0;
 
 public:
 	bool ready() const noexcept { return _ready; }

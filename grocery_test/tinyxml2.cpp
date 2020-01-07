@@ -2,6 +2,7 @@
 #include "grocery/tinyxml2.h"
 #include "grocery/tinyxml2_wrap.h"
 #include <cassert>
+#include <iostream>
 
 using namespace std;
 using namespace guru;
@@ -49,17 +50,35 @@ using namespace guru;
 //	return 0;
 //}
 
-int main()
-{
-	tinyxml2_wrap tiny("model.config");
-	vector<tinyxml2_wrap::element_type> ids = tiny.all("CLASS", "CLASS_DECLARE");
-	assert(ids.size() == 2);
-	ids = tiny.all("DATA", "INPUT_DATA");
-	assert(ids.size() == 4);
-	ids = tiny.all("DATA", "INNER_DATA");
-	assert(ids.size() == 3);
-	ids = tiny.all("DATA", "OUTPUT_DATA");
-	assert(ids.size() == 16);
-	system("pause");
-	return 0;
-}
+//int main()
+//{
+//	tinyxml2_wrap tiny("model.config");
+//	vector<tinyxml2_wrap::element_type> ids = tiny.all("CLASS", "CLASS_DECLARE");
+//	assert(ids.size() == 2);
+//	ids = tiny.all("DATA", "INPUT_DATA");
+//	assert(ids.size() == 4);
+//	ids = tiny.all("DATA", "INNER_DATA");
+//	assert(ids.size() == 3);
+//	ids = tiny.all("DATA", "OUTPUT_DATA");
+//	assert(ids.size() == 16);
+//
+//	ids = tiny.all("new_element");
+//	assert(ids.size() == 1);
+//	typename tinyxml2_wrap::element_type ele = ids[0];
+//	std::cout << tiny.text(ele) << "\n";
+//	std::cout << tiny.int32_attribute(ele, "AGE").first <<
+//		" "  << tiny.int32_attribute(ele, "AGE").second << "\n";
+//	std::cout << tiny.text_attribute(ele, "NAME").first <<
+//		" " << tiny.text_attribute(ele, "NAME").second.c_str() << "\n";
+//	std::cout << tiny.bool_attribute(ele, "MALE").first <<
+//		" " << tiny.bool_attribute(ele, "MALE").second << "\n";
+//	std::cout << tiny.double_attribute(ele, "HEIGH").first << 
+//		" " << tiny.double_attribute(ele, "HEIGH").second << "\n";
+//
+//	assert(!tiny.int32_attribute(ele, "noexist").first);
+//	assert(!tiny.text_attribute(ele, "noexist").first);
+//	assert(!tiny.bool_attribute(ele, "noexist").first);
+//	assert(!tiny.double_attribute(ele, "noexist").first);
+//	system("pause");
+//	return 0;
+//}

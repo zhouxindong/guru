@@ -2,10 +2,10 @@
 //
 
 #include "stdafx.h"
+#include "zlog/log_channel.h"
 #include "zlog/log_item.h"
 #include "zlog/log_formatter.h"
 #include "base_chain/non_instantable.h"
-#include "zlog/log_channel.h"
 #include "zlog/log_item_generator.h"
 #include "zlog/log_filter.h"
 #include "zlog/logger.h"
@@ -113,7 +113,7 @@ int main()
 */
 
 // channel
-/*
+///*
 int main()
 {
 	// 1. null_channel
@@ -165,34 +165,42 @@ int main()
 	//Console_Channel << log1;
 
 	// 3. file_channel
-	file_channel fc("file_channel1.out");
-	log_item log1 = LOG(FATAL);
-	log1 << "some information";
-	log1 << " " << 3456;
-	fc << log1;
+	//file_channel fc("file_channel1.out");
+	//log_item log1 = LOG(FATAL);
+	//log1 << "some information";
+	//log1 << " " << 3456;
+	//fc << log1;
 
-	log1 = std::move((LOG(TRACE) << "a log item: trace"));
-	fc << log1;
+	//log1 = std::move((LOG(TRACE) << "a log item: trace"));
+	//fc << log1;
 
-	log1 = LOG(DEBUG) << "a log item: debug";
-	fc << log1;
+	//log1 = LOG(DEBUG) << "a log item: debug";
+	//fc << log1;
 
-	log1 = LOG(INFO) << "a log item: info";
-	fc << log1;
+	//log1 = LOG(INFO) << "a log item: info";
+	//fc << log1;
 
-	log1 = std::move(LOG(WARN) << "a log item: warn");
-	fc << log1;
+	//log1 = std::move(LOG(WARN) << "a log item: warn");
+	//fc << log1;
 
-	log1 = LOG(ERROR) << "a log item: error";
-	fc << log1;
+	//log1 = LOG(ERROR) << "a log item: error";
+	//fc << log1;
 
-	log1 = LOG(FATAL) << "a log item: fatal";
-	fc << log1;
+	//log1 = LOG(FATAL) << "a log item: fatal";
+	//fc << log1;
 
-	system("pause");
-	return 0;
+	// 4. udp_channel
+	udp_channel uc("udptest#10.16.2.105#8005#10.16.2.105");
+	while (true)
+	{
+		static int count = 1;
+		log_item log1 = LOG(INFO) << ++count;
+		uc << log1;
+		std::cout << count << "\n";
+		Sleep(1);
+	}
 }
-*/
+//*/
 
 // filter
 /*
@@ -291,10 +299,3 @@ int main()
 	return 0;
 }
 */
-
-// multi channel
-int main()
-{
-	system("pause");
-	return 0;
-}

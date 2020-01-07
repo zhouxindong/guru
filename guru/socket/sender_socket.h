@@ -26,6 +26,7 @@ protected:
 
 protected:
 	sender_socket(string si, uint16_t sp, string di, uint16_t dp) noexcept;
+	sender_socket() noexcept {}
 };
 
 template<typename _Fixable>

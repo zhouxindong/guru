@@ -27,6 +27,7 @@ public:
 	void add_listen(std::function<void(std::vector<char>)> listen) noexcept;
 
 protected:
+	recver_socket() noexcept {}
 	recver_socket(string si, uint16_t sp, string di, uint16_t dp) noexcept;
 	~recver_socket() noexcept;
 

@@ -339,6 +339,21 @@
     <ClInclude Include="c11+\decltype.h">
       <Filter>Header Files\cpp\c11+</Filter>
     </ClInclude>
+    <ClInclude Include="c17\struct_bind.h">
+      <Filter>Header Files\cpp\c17</Filter>
+    </ClInclude>
+    <ClInclude Include="c11+\lambda.h">
+      <Filter>Header Files\cpp\c11+</Filter>
+    </ClInclude>
+    <ClInclude Include="template\function_overload.h">
+      <Filter>Header Files\cpp\template</Filter>
+    </ClInclude>
+    <ClInclude Include="template\speical_member_function.h">
+      <Filter>Header Files\cpp\template</Filter>
+    </ClInclude>
+    <ClInclude Include="template\specialization.h">
+      <Filter>Header Files\cpp\template</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
