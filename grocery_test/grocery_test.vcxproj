@@ -150,6 +150,7 @@
   <ItemGroup>
     <ClCompile Include="file.cpp" />
     <ClCompile Include="grocery_test.cpp" />
+    <ClCompile Include="path.cpp" />
     <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="string_ex.cpp" />
     <ClCompile Include="tinyxml2.cpp" />

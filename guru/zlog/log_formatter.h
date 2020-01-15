@@ -79,6 +79,17 @@ using std_formatter = non_instantable<line_formatter<_Log_item>>;
 template <typename _Log_item = log_item>
 using semicolon_formatter = non_instantable<table_formatter<_Log_item>>;
 
+enum class LogFormatter
+{
+	STD_FORMATTER,
+	TBL_FORMATTER
+};
+
+//class basic_log_formatter
+//{
+//
+//};
+
 _GURU_END
 
 #endif /* _GURU_LOG_FORMATTER_H_ */

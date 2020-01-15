@@ -148,6 +148,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="decay_test.cpp" />
     <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="type_traits_test.cpp" />
   </ItemGroup>

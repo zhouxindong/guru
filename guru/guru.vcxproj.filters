@@ -64,6 +64,12 @@
     <Filter Include="Header Files\cpp\c11+">
       <UniqueIdentifier>{34b48bae-add9-41c7-9f38-dd92826fab62}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\cpp\ling">
+      <UniqueIdentifier>{9406b4d9-897a-4575-b4a0-26ae73fbceaf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\cpp\template\inheritance">
+      <UniqueIdentifier>{e3ce9ea4-a420-40db-824d-e5e0dfaf8049}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -353,6 +359,36 @@
     </ClInclude>
     <ClInclude Include="template\specialization.h">
       <Filter>Header Files\cpp\template</Filter>
+    </ClInclude>
+    <ClInclude Include="ling\static_member.h">
+      <Filter>Header Files\cpp\ling</Filter>
+    </ClInclude>
+    <ClInclude Include="zlog\config_logger.h">
+      <Filter>Header Files\zlog</Filter>
+    </ClInclude>
+    <ClInclude Include="trick\decay.h">
+      <Filter>Header Files\cpp\trick</Filter>
+    </ClInclude>
+    <ClInclude Include="template\tag_dispatch.h">
+      <Filter>Header Files\cpp\template</Filter>
+    </ClInclude>
+    <ClInclude Include="template\SFINAE.h">
+      <Filter>Header Files\cpp\template</Filter>
+    </ClInclude>
+    <ClInclude Include="template\EBCO.h">
+      <Filter>Header Files\cpp\template\inheritance</Filter>
+    </ClInclude>
+    <ClInclude Include="template\CRTP.h">
+      <Filter>Header Files\cpp\template\inheritance</Filter>
+    </ClInclude>
+    <ClInclude Include="template\mixins.h">
+      <Filter>Header Files\cpp\template\inheritance</Filter>
+    </ClInclude>
+    <ClInclude Include="template\static_dynamic.h">
+      <Filter>Header Files\cpp\template</Filter>
+    </ClInclude>
+    <ClInclude Include="zlog\dumper.h">
+      <Filter>Header Files\zlog</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -32,5 +32,8 @@
     <ClCompile Include="type_traits_test.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="decay_test.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

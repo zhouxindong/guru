@@ -11,8 +11,33 @@
 #include "../grocery/string_ex.h"
 #include "../grocery/path.h"
 #include "../grocery/file.h"
+#include "log_item.h"
+#include "log_formatter.h"
+#include <type_traits>
+#include <iomanip>
 
 _GURU_BEGIN
+
+std::string to_string(log_item const&l, LogFormatter f = LogFormatter::STD_FORMATTER)
+{
+	std::ostringstream oss;
+	oss << (f == LogFormatter::STD_FORMATTER ? std_formatter<log_item>::format(l) :
+		f == LogFormatter::TBL_FORMATTER ? semicolon_formatter<log_item>::format(l) : "");
+	oss << std::endl;
+	return oss.str();
+}
+
+class channel_base
+{
+public:
+	virtual ~channel_base() noexcept {}
+
+public:
+	virtual std::ostream& stream() noexcept = 0;
+	virtual std::ostream& flush() noexcept = 0;
+	virtual bool ready() noexcept = 0;
+	virtual void log(log_item const&, LogFormatter = LogFormatter::STD_FORMATTER) noexcept = 0;
+};
 
 #pragma region null_channel
 
@@ -20,7 +45,7 @@ _GURU_BEGIN
 ** null_channel
 ** used for those log items which be filtered
 */
-class null_channel 
+class null_channel : public channel_base
 {
 	_PROPERTY_READONLY(null_stream, null)
 
@@ -30,25 +55,30 @@ public:
 	{}
 	
 	std::ostream& 
-	stream() noexcept
+	stream() noexcept override
 	{ 
 		return _null; 
 	}
 
 	std::ostream&
-	flush() noexcept
+	flush() noexcept override
 	{
 		return _null.flush(); 
 	}
 
 	bool 
-	ready() noexcept
+	ready() noexcept override
 	{ 
 		return true; 
+	}
+
+	void log(log_item const& lg, LogFormatter = LogFormatter::STD_FORMATTER) noexcept override
+	{
 	}
 };
 
 static null_channel Dummy_Channel;
+static null_stream NullStream;
 
 #pragma endregion
 
@@ -57,7 +87,7 @@ static null_channel Dummy_Channel;
 /*
 ** console_channel
 */
-class console_channel 
+class console_channel : public channel_base
 {
 public:
 	explicit 
@@ -66,49 +96,67 @@ public:
 	}
 	
 	std::ostream& 
-	stream() noexcept
+	stream() noexcept override
 	{ 
 		return std::cerr; 
 	}
 
 	std::ostream& 
-	flush() noexcept
+	flush() noexcept override
 	{
 		return std::cerr.flush(); 
 	}
 	
 	bool
-	ready() noexcept
+	ready() noexcept override
 	{ 
 		return true; 
 	}
+
+	void log(log_item const& l, LogFormatter f = LogFormatter::STD_FORMATTER) noexcept override 
+	{
+		stream() << guru::to_string(l, f);
+	}
 };
 
-static console_channel Console_Channel;
+static console_channel ConsoleChannel;
 
 #pragma endregion
 
 #pragma region file_channel
 
-static constexpr int64_t LogFileMaxSize = /*10 * 1024 * 1024*/ 4 * 1024;
+static constexpr int64_t LogFileMaxSize = 10 * 1024 * 1024;
+static std::string LogPath = path::combine(path::cwd(), "log");
 
 /*
 ** file_channel
 */
-class file_channel 
+class file_channel : public channel_base
 {
+	class log_path
+	{
+	public:
+		log_path()
+		{
+			path::create_directory(LogPath);
+		}
+	};
+
 	template <typename _Log_item = log_item, typename Fmt = std_formatter<_Log_item>>
 	friend file_channel& operator << (file_channel& out, _Log_item const& item);
 
+	_PROPERTY_READONLY(log_path, lp)
 	_PROPERTY_READONLY(std::string, name)
 	_PROPERTY_READONLY(std::string, file_name)
 	_PROPERTY_READONLY(std::ofstream, file)
 
+
 public:
 	explicit 
 	file_channel(const std::string& file_name) noexcept :
+		_lp{},
 		_name(file_name),
-		_file_name(get_log_name(file_name)),
+		_file_name(path::combine(LogPath, get_log_name(file_name, LogPath))),
 		_file(_file_name, std::ios::app | std::ios::out) 
 	{
 	}
@@ -141,12 +189,31 @@ public:
 	{ 
 		return (bool)_file; 
 	}
+
+	void log(log_item const& l, LogFormatter f = LogFormatter::STD_FORMATTER) noexcept override
+	{
+		assert(ready());
+		int64_t size = file_size(_file_name.c_str());
+		//std::cout << size << endl;
+		if (size >= LogFileMaxSize)
+		{
+			_file.close();
+			_file_name = path::combine(LogPath, get_log_name(_name, LogPath));
+			_file = std::ofstream(_file_name, std::ios::app | std::ios::out);
+			assert(ready());
+		}
+
+		//out.stream() << /*std_formatter<_Log_item>::format(item)*/Fmt::format(item);
+		//out.stream() << std::endl;
+		stream() << guru::to_string(l, f);
+		_file.flush();
+	}
 };
 
 /**
  * socket channel used UDP
  */
-class udp_channel
+class udp_channel : public channel_base
 {
 	template <typename _Log_item = log_item, typename Fmt = std_formatter<_Log_item>>
 	friend udp_channel&	operator << (udp_channel& out, _Log_item const& item);
@@ -207,9 +274,30 @@ public:
 	{
 		return _sender.get_ready();
 	}
+
+	void log(log_item const& l, LogFormatter f = LogFormatter::STD_FORMATTER) noexcept override
+	{
+		assert(ready());
+		stream() << guru::to_string(l, f);
+		std::string s = std::move(get_stream().str());
+		_sender.send(s.c_str(), (int)s.size());
+		_stream.str("");
+	}
 };
 
 #pragma  endregion
+
+//channel_base*
+//operator << (channel_base* out, log_item const& item)
+//{
+//	if (std::is_same_v<null_channel, decltype(*out)>)
+//	{
+//		out->stream() << Fmt::format(item);
+//		out->stream() << std::endl;
+//		out->flush();
+//	}
+//	return out;
+//}
 
 template <
 	typename _Log_item = log_item,
@@ -217,9 +305,9 @@ template <
 null_channel&
 operator << (null_channel& out, _Log_item const& item)
 {
-	out.stream() << /*std_formatter<_Log_item>::format(item)*/Fmt::format(item);
-	out.stream() << std::endl;
-	out.flush();
+	//out.stream() << /*std_formatter<_Log_item>::format(item)*/Fmt::format(item);
+	//out.stream() << std::endl;
+	//out.flush();
 	return out;
 }
 
@@ -245,7 +333,7 @@ operator << (file_channel& out, _Log_item const& item)
 	if (size >= LogFileMaxSize)
 	{
 		out._file.close();
-		out._file_name = get_log_name(out._name);
+		out._file_name = path::combine(LogPath, get_log_name(out._name, LogPath));
 		out._file = std::ofstream(out._file_name, std::ios::app | std::ios::out);
 		assert(out.ready());
 	}

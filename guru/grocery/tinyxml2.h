@@ -479,17 +479,17 @@ inline bool	ToBool(const char* str, bool* value)
 		*value = (ival == 0) ? false : true;
 		return true;
 	}
-	static const char* TRUE[] = { "true", "True", "TRUE", 0 };
-	static const char* FALSE[] = { "false", "False", "FALSE", 0 };
+	static const char* TRUE_T[] = { "true", "True", "TRUE", 0 };
+	static const char* FALSE_T[] = { "false", "False", "FALSE", 0 };
 
-	for (int i = 0; TRUE[i]; ++i) {
-		if (StringEqual(str, TRUE[i])) {
+	for (int i = 0; TRUE_T[i]; ++i) {
+		if (StringEqual(str, TRUE_T[i])) {
 			*value = true;
 			return true;
 		}
 	}
-	for (int i = 0; FALSE[i]; ++i) {
-		if (StringEqual(str, FALSE[i])) {
+	for (int i = 0; FALSE_T[i]; ++i) {
+		if (StringEqual(str, FALSE_T[i])) {
 			*value = false;
 			return true;
 		}

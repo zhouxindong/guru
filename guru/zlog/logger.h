@@ -10,8 +10,11 @@
 #include <memory>
 #include <mutex>
 #include "../grocery/path.h"
+#include "../dump/uncatcher.h"
 
 _GURU_BEGIN
+
+#pragma region basic_logger
 
 /*
 ** basic_logger
@@ -35,7 +38,11 @@ public:
 
 	basic_logger(const std::string& name) noexcept:
 		_name(name),
-		_channel(name)
+		_channel(name),
+		_uncatcher([&](std::string s) {
+			typename formatter_type::log_item_type li = LOG(FATAL) << s;
+			log(li);
+	})
 		//_channel(unique_name_by_date_for_class<decltype(this)>(name, ".log"))
 	{
 	}
@@ -63,7 +70,12 @@ public:
 	log(typename formatter_type::log_item_type const& item) noexcept
 	{
 		std::lock_guard<std::mutex> lock(_mutex);
-		_filter(item, _channel) << formatter_type::format(item) << std::endl;
+		//_filter(item, _channel) << /*formatter_type::format(item) << std::endl*/item;
+		//std::ostream& out = _filter(item, _channel);
+		if (&_filter(item, _channel) != &NullStream)
+		{
+			_channel << item;
+		}
 		return *this;
 	}
 
@@ -75,6 +87,7 @@ private:
 	filter_type _filter;
 	channel_type _channel;
 	std::mutex _mutex;
+	uncatcher _uncatcher;
 };
 
 // definition of _loggers
@@ -106,6 +119,30 @@ typedef basic_logger<
 	level_filter<_LOG_LEVEL::_LOG_INFO>,
 	std_formatter<log_item>,
 	console_channel> console_info_logger;
+
+// logger(all level, std_formatter<log_item>, udp_channel)
+typedef basic_logger<
+	level_filter<_LOG_LEVEL::_LOG_TRACE>,
+	std_formatter<log_item>,
+	udp_channel> udp_logger;
+
+// logger(INFO above, std_formatter<log_item>, udp_channel)
+typedef basic_logger<
+	level_filter<_LOG_LEVEL::_LOG_INFO>,
+	std_formatter<log_item>,
+	udp_channel> udp_info_logger;
+
+#pragma endregion
+
+//template <typename UdpLogger = udp_logger>
+//void config_logger(std::string const& config_file)
+//{
+//	tinyxml2_wrap tiny(config_file.c_str());
+//
+//	//UdpLogger::get()
+//}
+
+
 
 _GURU_END
 

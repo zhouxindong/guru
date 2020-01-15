@@ -64,9 +64,8 @@ public:
 		return _vec;
 	}
 
-	std::vector<element_type> childs(element_type ele, char const* name = (char const*)0)
+	std::vector<element_type> childs(element_type ele, char const* name = (char const*)0) override
 	{
-		assert(_ready);
 		std::vector<element_type> v;
 		if (ele->NoChildren())
 			return v;

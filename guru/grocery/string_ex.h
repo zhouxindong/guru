@@ -11,7 +11,7 @@
 #include <type_traits>
 #include <cassert>
 
-#define BUF_SIZE 100
+#define STRING_EX_BUF_SIZE 100
 
 _GURU_BEGIN
 
@@ -99,6 +99,32 @@ guid() noexcept
 }
 
 inline
+bool
+end_of(std::string const& str, std::initializer_list<char> chars) noexcept
+{
+	for (char c : chars)
+	{
+		if (str.back() == c)
+			return true;
+	}
+	return false;
+}
+
+inline
+bool
+begin_of(std::string const& str, std::initializer_list<char> chars) noexcept
+{
+	for (char c : chars)
+	{
+		if (str.front() == c)
+			return true;
+	}
+	return false;
+}
+
+#pragma region to_string
+
+inline
 int 
 snprintf(char* buffer, size_t size, const char* format, ...)
 {
@@ -114,49 +140,53 @@ inline
 std::string
 to_string(T v) noexcept
 {
-	char buf[BUF_SIZE];
+	char buf[STRING_EX_BUF_SIZE];
 	if (std::is_same_v<T, int32_t> ||
 		std::is_same_v<T, int8_t> ||
 		std::is_same_v<T, uint8_t> ||
 		std::is_same_v<T, int16_t> ||
 		std::is_same_v<T, uint16_t>)
 	{
-		snprintf(buf, BUF_SIZE, "%d", v);
+		snprintf(buf, STRING_EX_BUF_SIZE, "%d", v);
 		return buf;
 	}
 	if (std::is_same_v<T, uint32_t>)
 	{
-		snprintf(buf, BUF_SIZE, "%u", v);
+		snprintf(buf, STRING_EX_BUF_SIZE, "%u", v);
 		return buf;
 	}
 	if (std::is_same_v<T, bool>)
 	{
-		sprintf(buf, BUF_SIZE, "%s", v ? BoolTrue : BoolFalse);
+		sprintf(buf, STRING_EX_BUF_SIZE, "%s", v ? BoolTrue : BoolFalse);
 		return buf;
 	}
 	if (std::is_same_v<T, float>)
 	{
-		snprintf(buf, BUF_SIZE, "%.8g", v);
+		snprintf(buf, STRING_EX_BUF_SIZE, "%.8g", v);
 		return buf;
 	}
 	if (std::is_same_v<T, double>)
 	{
-		snprintf(buf, BUF_SIZE, "%.17g", v);
+		snprintf(buf, STRING_EX_BUF_SIZE, "%.17g", v);
 		return buf;
 	}
 	if (std::is_same_v<T, int64_t>)
 	{
-		snprintf(buf, BUF_SIZE, "%lld", static_cast<long long>(v));
+		snprintf(buf, STRING_EX_BUF_SIZE, "%lld", static_cast<long long>(v));
 		return buf;
 	}
 	if (std::is_same_v<T, uint64_t>)
 	{
-		snprintf(buf, BUF_SIZE, "%llu", (long long)v);
+		snprintf(buf, STRING_EX_BUF_SIZE, "%llu", (long long)v);
 		return buf;
 	}
 
 	return "";
 }
+
+#pragma endregion
+
+#pragma region to_scalr
 
 inline
 bool 
@@ -247,6 +277,8 @@ to_uint64(std::string const& s, uint64_t* value) noexcept
 	}
 	return false;
 }
+
+#pragma endregion
 
 _GURU_END
 

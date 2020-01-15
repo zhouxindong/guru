@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="gb2312"?>
+<!--
+<LOGGER CHANNEL="SOCKET|CONSOLE|FILE">
+1. "SOCKET": 日志输出至socket流 
+  NAME: 日志名称，日志服务使用此名称作为存放文件夹名
+  <SOCKET DIP: 服务IP，DPORT: 服务端口，LIP: 本机IP，LPORT: 本机端口>
+  <FORMAT 日志格式化器: STD: 标准格式，TBL: 各字段间以逗号分隔>
+  <FILTER TYPE: 过滤器类型(LEVEL: 级别过滤，TRACE < DEBUG < INFO < WARN < ERROR < FATAL
+                          SET: 逐个指定需输出的日志级别，"DEBUG,WARN,FATAL")
+
+2. "CONSOLE": 日志输出至控制台窗口
+  <FILTER 同上>
+  
+3. "FILE": 日志输出至文件
+  NAME: 日志名称，日志文件名称
+  <FORMAT 同上>
+  <FILTER 同上>
+-->
+<LOG>
+  <LOGGER CHANNEL="SOCKET" NAME="socket_log">
+    <SOCKET RIP="10.16.2.55" RPORT="8808" LIP="10.16.2.55" LPORT="0" />    
+    <FORMAT>STD</FORMAT>     
+    <FILTER TYPE="LEVEL" VALUE="TRACE"></FILTER>
+  </LOGGER>
+  <LOGGER CHANNEL="CONSOLE">
+    <FILTER TYPE="SET" VALUE="TRACE,DEBUG,INFO,WARN,ERROR,FATAL"></FILTER>
+  </LOGGER>
+  <LOGGER CHANNEL="FILE" NAME="file_log">
+    <FORMAT>TBL</FORMAT>
+    <FILTER TYPE="LEVEL" VALUE="TRACE"></FILTER>
+  </LOGGER>
+</LOG>

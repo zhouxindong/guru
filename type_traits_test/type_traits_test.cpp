@@ -5,11 +5,11 @@
 #include "type_traits/enable_if.h"
 
 
-int main()
-{
-	//foo<double>();
-	//foo<int>(); // foo not
-	system("pause");
-    return 0;
-}
+//int main()
+//{
+//	//foo<double>();
+//	//foo<int>(); // foo not
+//	system("pause");
+//    return 0;
+//}
 

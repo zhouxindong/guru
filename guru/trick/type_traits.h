@@ -123,6 +123,87 @@ public:
 	typedef _Tc class_type;
 };
 
+// Removing References
+template <typename T>
+struct RemoveReferenceT
+{
+	using Type = T;
+};
+
+template <typename T>
+struct RemoveReferenceT<T&>
+{
+	using Type = T;
+};
+
+template <typename T>
+struct RemoveReferenceT<T&&>
+{
+	using Type = T;
+};
+
+// Adding References
+template <typename T>
+struct AddLValueReferenceT
+{
+	using Type = T&;
+};
+
+template <typename T>
+struct AddRValueReferenceT
+{
+	using Type = T&&;
+};
+
+template <>
+struct AddLValueReferenceT<void>
+{
+	using Type = void;
+};
+
+template <>
+struct AddLValueReferenceT<void const>
+{
+	using Type = void const;
+};
+
+template <>
+struct AddLValueReferenceT<void volatile>
+{
+	using Type = void volatile;
+};
+
+template <>
+struct AddLValueReferenceT<void const volatile>
+{
+	using Type = void const volatile;
+};
+
+// Removing Qualifiers
+template <typename T>
+struct RemoveConstT {
+	using Type = T;
+};
+
+template <typename T>
+struct RemoveConstT<T const> {
+	using Type = T;
+};
+
+template <typename T>
+struct RemoveVolatileT {
+	using Type = T;
+};
+
+template <typename T>
+struct RemoveVolatileT<T volatile> {
+	using Type = T;
+};
+
+template <typename T>
+struct RemoveCVT : RemoveConstT<typename RemoveVolatileT<T>::Type> {
+};
+
 _GURU_END
 
 #endif /* _GURU_TYPE_TRAITS_H_ */

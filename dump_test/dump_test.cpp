@@ -55,6 +55,8 @@ using namespace guru;
 //int main()
 //{
 //	uncatcher uncat(uncatch_cb);
+//
+//	uncatcher uncat2(uncatch_cb);
 //	foo1();
 //	//throw std::exception("asdfasdf");
 //
@@ -75,41 +77,12 @@ int main()
 {
 	uncatcher uncat(uncatch_cb);
 
-	//try {
-	//	int* p = 0;
-	//	std::cout << *p;
-	//}
-	//catch (const std::exception& e) {
-	//	std::cerr << e.what() << "\n";
-	//}
+	//int* p = 0;
+	//std::cout << *p;
 
-	//try
-	//{
-	//	throw "adfasdf";
-	//}
-	//catch (...)
-	//{
-	//	std::cout << "adfasdf\n";
-	//}
-
-	//try {
-	//	int* p = 0;
-	//	*p = 0;
-	//	std::cout << *p;
-	//}
-	//catch (const std::exception& e) {
-	//	std::cerr << e.what() << "\n";
-	//}
-
-	//try {
 	int a = 42;
 	volatile int b = 0;
 	std::cout << a / b;
-	//}
-	//catch (const std::exception& e) {
-	//	std::cerr << e.what() << "\n";
-	//}
-
 
 	system("pause");
 	return 0;
@@ -120,7 +93,7 @@ int main()
 //#if defined(_WIN32) || defined(_WIN64)
 //#include <crtdbg.h>
 //#endif
-/*
+///*
 class MyWork
 {
 public:
@@ -141,6 +114,11 @@ public:
 		//std::cout << "MyWork::~MyWork()\n";
 		delete[] _a;
 		delete[] _b;
+	}
+
+	void show()
+	{
+		std::cout << "MyWork::show()\n";
 	}
 
 private:
@@ -172,24 +150,28 @@ int main()
 	//cout << dump_mem_tracer() << "\n";
 
 	// 2. smart pointer
-	//uint64_t count = 0;
-	//while (true)
-	//{
-	//	std::shared_ptr<MyWork> ps(new MyWork(1, 2));
-	//	if (++count % 100 == 0)
-	//		cout << dump_mem_tracer() << '\n';
-	//	//Sleep(1);
-	//}
+	uint64_t count = 0;
+	while (true)
+	{
+		std::shared_ptr<MyWork> ps(new MyWork(1, 2));
+		if (++count % 100 == 0)
+		{
+			ps->show();
+			cout << dump_mem_tracer() << '\n';
+		}
+		Sleep(1);
+	}
 
 	// 3. malloc
-	void* pm = malloc(1000);
-	cout << dump_mem_tracer() << '\n';
-	free(pm);
-	cout << dump_mem_tracer() << '\n';
+	//void* pm = malloc(1000);
+	//cout << dump_mem_tracer() << '\n';
+	////free(pm);
+	//cout << dump_mem_tracer() << '\n';
+
 	system("pause");
 	return 0;
 }
-*/
+//*/
 
 // proc_mem
 /*
@@ -233,14 +215,14 @@ int main()
 */
 
 // proc_cup
-int main()
-{
-	FILETIME now;
-	GetSystemTimeAsFileTime(&now);
-	cout << file_time_2_utc(&now) << endl;
-	cout << get_processor_number() << endl;
-	cout << get_cpu_usage(GetCurrentProcessId()) << endl;
-	
-	system("pause");
-	return 0;
-}
+//int main()
+//{
+//	FILETIME now;
+//	GetSystemTimeAsFileTime(&now);
+//	cout << file_time_2_utc(&now) << endl;
+//	cout << get_processor_number() << endl;
+//	cout << get_cpu_usage(GetCurrentProcessId()) << endl;
+//	
+//	system("pause");
+//	return 0;
+//}

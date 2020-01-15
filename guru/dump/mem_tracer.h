@@ -11,6 +11,10 @@
 #include <mutex>
 #include <sstream>
 
+//#if defined(_WIN32) || defined(_WIN64)
+//#include <crtdbg.h>
+//#endif
+
 #pragma warning(disable:4595 4291) 
 
 _GURU_BEGIN

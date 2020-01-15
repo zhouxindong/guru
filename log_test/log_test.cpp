@@ -10,6 +10,10 @@
 #include "zlog/log_filter.h"
 #include "zlog/logger.h"
 #include <future>
+#include <memory>
+#include "zlog/config_logger.h"
+#include "zlog/dumper.h"
+#include "dump/struct_exception.h"
 
 #include <iostream>
 
@@ -113,7 +117,7 @@ int main()
 */
 
 // channel
-///*
+/*
 int main()
 {
 	// 1. null_channel
@@ -139,6 +143,8 @@ int main()
 
 	//log1 = LOG(FATAL) << "a log item: fatal";
 	//Dummy_Channel << log1;
+	//system("pause");
+	//return 0;
 
 	// 2. console_channel
 	//log_item log1 = LOG(FATAL);
@@ -189,9 +195,11 @@ int main()
 
 	//log1 = LOG(FATAL) << "a log item: fatal";
 	//fc << log1;
+	//system("pause");
+	//return 0;
 
 	// 4. udp_channel
-	//udp_channel uc("udptest#10.16.2.105#8005#10.16.2.105");
+	//udp_channel uc("udptest#10.16.2.55#8005#10.16.2.55");
 	//while (true)
 	//{
 	//	static int count = 1;
@@ -200,8 +208,28 @@ int main()
 	//	std::cout << count << "\n";
 	//	Sleep(100);
 	//}
+
+	// 5. channel_base
+	//std::shared_ptr<channel_base> channel{ new udp_channel("udptest#10.16.2.55#8005#10.16.2.55") };
+	std::shared_ptr<channel_base> channel{ new console_channel() };
+
+	log_item li = LOG(TRACE) << "this is a trace";
+	channel->log(li, LogFormatter::STD_FORMATTER);
+	li = LOG(DEBUG) << "this is a debug";
+	channel->log(li);
+	li = LOG(INFO) << "this is a info";
+	channel->log(li, LogFormatter::TBL_FORMATTER);
+	li = LOG(WARN) << "this is a warn";
+	channel->log(li);
+	li = LOG(ERROR) << "this is a error";
+	channel->log(li);
+	li = LOG(FATAL) << "this is a fatal";
+	channel->log(li, LogFormatter::TBL_FORMATTER);
+
+	system("pause");
+	return 0;
 }
-//*/
+*/
 
 // filter
 /*
@@ -237,16 +265,16 @@ int main()
 /*
 int main()
 {
-	// console_logger
+	// 1. console_logger
 	//auto& logger = console_logger::get("console1");
-	//auto v = std::move(generate_log_item(200));
+	//auto v = std::move(generate_log_item(2));
 	//for (auto& item : v)
 	//{
 	//	logger.log(item);
 	//	Sleep(100);
 	//}
 
-	//auto& logger2 = console_logger::get("console2");
+	//auto& logger2 = console_info_logger::get("console2");
 	//v = std::move(generate_log_item(200, " new log"));
 	//for (auto& item : v)
 	//{
@@ -254,16 +282,19 @@ int main()
 	//	Sleep(100);
 	//}
 
-	// file_logger
-	//auto& logger = file_logger::get("log_test");
-	//auto v = std::move(generate_log_item(200));
+	//system("pause");
+
+
+	// 2. file_logger
+	//auto& logger = file_logger::get("testlog");
+	//auto v = std::move(generate_log_item(2000));
 	//for (auto& item : v)
 	//{
 	//	logger.log(item);
 	//}
 
-	//auto& logger2 = file_logger::get("log_test");
-	//v = std::move(generate_log_item(200, " new log"));
+	//auto& logger2 = file_logger::get("testlog");
+	//v = std::move(generate_log_item(2000, " new log"));
 	//for (auto& item : v)
 	//{
 	//	logger2.log(item);
@@ -271,6 +302,15 @@ int main()
 
 	//system("pause");
 	//return 0;
+
+	// 3. udp logger
+	auto& logger = udp_info_logger::get("udptest#10.16.2.55#8808#10.16.2.55");
+	auto v = std::move(generate_log_item(200));
+	for (auto& item : v)
+	{
+		logger.log(item);
+		Sleep(100);
+	}
 }
 */
 
@@ -300,3 +340,217 @@ int main()
 	return 0;
 }
 */
+
+// config logger from file
+//int main()
+//{
+//	config_log logger("log.config.xml");
+//
+//	log_item li = LOG(TRACE) << "this is a trace";
+//	logger.log(li);
+//	li = LOG(DEBUG) << "this is a debug";
+//	logger.log(li);
+//	li = LOG(INFO) << "this is a info";
+//	logger.log(li);
+//	li = LOG(WARN) << "this is a warn";
+//	logger.log(li);
+//	li = LOG(ERROR) << "this is a error";
+//	logger.log(li);
+//	li = LOG(FATAL) << "this is a fatal";
+//	logger.log(li);
+//
+//	system("pause");
+//	return 0;
+//}
+
+// dump_stack_trace
+//int main()
+//{
+//	// 1. config_log
+//	//config_log logger("log.config.xml");
+//	//dump_stack_trace(logger);
+//
+//	// 2. basic_log
+//	//auto& logger = console_logger::get("console");
+//	//dump_stack_trace(logger);
+//
+//	//auto& logger2 = file_logger::get("dump_file");
+//	//dump_stack_trace(logger2);
+//
+//	//auto& logger3 = udp_logger::get("udptest#10.16.2.55#8808#10.16.2.55");
+//	//dump_stack_trace(logger3);
+//
+//	system("pause");
+//	return 0;
+//}
+
+void foo3()
+{
+	throw guru::struct_exception("test struct_exception");
+}
+
+void foo2()
+{
+	foo3();
+}
+
+void foo1()
+{
+	foo2();
+}
+
+// dump_exception_msg
+//int main()
+//{
+//	// 1. config_log
+//	config_log logger("log.config.xml");
+//	try
+//	{
+//		foo1();
+//	}
+//	catch (std::exception& e)
+//	{
+//		dump_exception_msg(logger, e);
+//	}
+//
+//	// 2. basic_log
+//	//auto& logger = console_logger::get("console");
+//	//auto& logger2 = file_logger::get("dump_file");
+//	//auto& logger3 = udp_logger::get("udptest#10.16.2.55#8808#10.16.2.55");
+//	//try
+//	//{
+//	//	foo1();
+//	//}
+//	//catch (std::exception& e)
+//	//{
+//	//	dump_exception_msg(logger, e);
+//	//	dump_exception_msg(logger2, e);
+//	//	dump_exception_msg(logger3, e);
+//	//}
+//
+//	system("pause");
+//	return 0;
+//}
+
+// uncatcher
+// must be runned without IDE
+// caution: xml file must be the right path(in the Debug dir)
+//int main()
+//{
+//	// 1. basic_log
+//	//auto& logger = console_logger::get("demo");
+//
+//	////foo1(); // uncatch
+//
+//	////int* p = 0; 
+//	////*p = 33;  // SEH
+//
+//	//int a = 42;
+//	//volatile int b = 0;
+//	//int c = a / b; // SEH
+//
+//
+//	// 2. config_log
+//	config_log logger("log.config.xml");
+//
+//	//foo1();
+//	//int* p = 0; 
+//	//*p = 33;  // SEH
+//
+//	int a = 42;
+//	volatile int b = 0;
+//	int c = a / b; // SEH
+//
+//	system("pause");
+//	return 0;
+//}
+
+class MyWork
+{
+public:
+	MyWork() :
+		_a{ new int[1000000] }, _b{ new int[1000000] }
+	{
+		//std::cout << "MyWork::MyWork()\n";
+	}
+	MyWork(int a, int b)
+		: _a{ new int[1000000] }, _b{ new int[1000000] }
+	{
+		//std::cout << "MyWork::MyWork(int, int)\n";
+		int c = a + b;
+		c++;
+	}
+	~MyWork()
+	{
+		//std::cout << "MyWork::~MyWork()\n";
+		delete[] _a;
+		delete[] _b;
+	}
+
+	void show()
+	{
+		std::cout << "MyWork::show()\n";
+	}
+
+private:
+	int* _a;
+	int* _b;
+
+};
+
+// memory track
+int main()
+{
+	// 1. pointer		
+	////auto& logger = console_logger::get("demo");
+	//config_log logger("log.config.xml");
+
+	//int* pi = new int;
+	//double* pda = new double[10];
+	//std::string* ps1 = new std::string("hello");
+	//std::string* psa2 = new std::string[10];
+	//MyWork* pmw1 = new MyWork(2, 3);
+	//MyWork* pmw2 = new MyWork[10];
+
+	//dump_memory(logger);
+
+	//delete pi;
+	//delete[] pda;
+	//delete ps1;
+	//delete[] psa2;
+	//delete pmw1;
+	//delete[] pmw2;
+
+	//dump_memory(logger);
+
+	// 2. smart pointer
+	////auto& logger = console_logger::get("demo");
+	//config_log logger("log.config.xml");
+
+	//uint64_t count = 0;
+	//while (count < 1000)
+	//{
+	//	std::shared_ptr<MyWork> ps(new MyWork(1, 2));
+	//	if (++count % 5 == 0)
+	//	{
+	//		dump_memory(logger);
+	//	}
+	//	Sleep(100);
+	//}
+
+	// 3. malloc
+	//auto& logger = console_logger::get("demo");
+	config_log logger("log.config.xml");
+
+	void* pm = malloc(1000);
+
+	logger.log(LOG(INFO) << "before free()");
+	dump_memory(logger);
+
+	free(pm);
+	logger.log(LOG(INFO) << "after free()");
+	dump_memory(logger);
+
+	system("pause");
+	return 0;
+}

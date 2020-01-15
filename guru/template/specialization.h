@@ -47,3 +47,17 @@ void Outer<void>::print() const
 {
 	std::cout << "Outer<void>";
 }
+
+// EnableIf
+template <typename Key, typename Value, typename = void>
+class Directory
+{
+	// vector implementation here
+};
+
+template <typename Key, typename Value>
+class Directory<Key, Value, EnableIf<HasLess<Key>>>
+{
+	// parial specializate
+	// map implementation here
+};

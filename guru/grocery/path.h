@@ -8,6 +8,30 @@
 #include "chrono_ex.h"
 #include "digest.h"
 #include "file.h"
+#include "string_ex.h"
+
+#ifdef WIN32
+#include <io.h>
+#include <direct.h>
+#else
+#include <unistd.h>
+#include <sys/stat.h>
+#endif
+
+#include <stdint.h>
+#include <string>
+
+#define MAX_PATH_LEN 256
+
+#ifdef WIN32
+#define ACCESS(fileName, accessMode) _access(fileName, accessMode)
+#define MKDIR(path) _mkdir(path)
+#define PATH_DELIMITER '\\'
+#else
+#define ACCESS(fileName, accessMode) access(fileName, accessMode)
+#define MKDIR(path) mkdir(path, S_IRWXU|S_IRWXG|S_IROTH|S_IXOTH)
+#define PATH_DELIMITER '/'
+#endif
 
 _GURU_BEGIN
 
@@ -99,6 +123,53 @@ public:
 	{
 		::SetCurrentDirectoryA(new_path.c_str());
 	}
+
+	/**
+	 * 从左到右依次判断文件夹是否存在,不存在就创建
+	 */
+	static
+	int32_t
+		create_directory(std::string path)
+	{
+
+		if (!end_of(path, { '\\', '/' }))
+			path += PATH_DELIMITER;
+
+		size_t len = path.length();
+		if (len > MAX_PATH_LEN)
+		{
+			return -1;
+		}
+		char tmp[MAX_PATH_LEN] = { 0 };
+		for (size_t i = 0; i < len; ++i)
+		{
+			tmp[i] = path[i];
+			if (tmp[i] == '\\' || tmp[i] == '/')
+			{
+				if (ACCESS(tmp, 0) != 0)
+				{
+					int32_t ret = MKDIR(tmp);
+					if (ret != 0)
+					{
+						return ret;
+					}
+				}
+			}
+		}
+		return 0;
+	}
+
+	static
+		std::string
+		combine(std::string const& p1, std::string const& p2)
+	{
+		std::initializer_list<char> ps{ '/', '\\' };
+		if (!end_of(p1, ps) && !begin_of(p2, ps))
+			return p1 + PATH_DELIMITER + p2;
+		if (end_of(p1, ps) && begin_of(p2, ps))
+			return p1.substr(0, p1.size() - 1) + p2;
+		return p1 + p2;
+	}
 };
 
 /*
@@ -123,7 +194,7 @@ unique_name_by_date_for_class(std::string const& name, std::string const& ext) n
 
 inline
 std::string
-get_log_name(std::string const& name, int surfix = 1)
+get_log_name(std::string const& name, std::string const& log_path, int surfix = 1)
 {
 	auto t = tokenize_time_point(to_local(std::chrono::system_clock::now()));
 	std::ostringstream oss;
@@ -133,9 +204,9 @@ get_log_name(std::string const& name, int surfix = 1)
 	if (surfix != 1) oss << "_" << surfix;
 	oss << ".log";
 	std::string file_name = oss.str();
-	if (file_exists(file_name))
+	if (file_exists(path::combine(log_path, file_name)))
 	{
-		return get_log_name(name, ++surfix);
+		return get_log_name(name, log_path, ++surfix);
 	}
 	return oss.str();
 }
