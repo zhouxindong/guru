@@ -390,6 +390,9 @@
     <ClInclude Include="zlog\dumper.h">
       <Filter>Header Files\zlog</Filter>
     </ClInclude>
+    <ClInclude Include="zlog\log_service.h">
+      <Filter>Header Files\zlog</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">

@@ -12,6 +12,7 @@
 #include "nut/service_base.h"
 #include "nut/service_installer.h"
 #include "test_service.h"
+#include "zlog/log_service.h"
 
 using namespace std;
 using namespace guru;
@@ -204,7 +205,9 @@ int main()
 */
 int main(int argc, char* argv[])
 {
-	test_service service;
+	//test_service service;
+	log_service service;
+
 	OutputDebugString(_T("main()"));
 
 	if (argc > 1) {

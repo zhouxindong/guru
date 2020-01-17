@@ -194,7 +194,7 @@ unique_name_by_date_for_class(std::string const& name, std::string const& ext) n
 
 inline
 std::string
-get_log_name(std::string const& name, std::string const& log_path, int surfix = 1)
+get_log_name(std::string const& name, std::string const& log_path, int64_t max_size, int surfix = 1)
 {
 	auto t = tokenize_time_point(to_local(std::chrono::system_clock::now()));
 	std::ostringstream oss;
@@ -203,13 +203,85 @@ get_log_name(std::string const& name, std::string const& log_path, int surfix = 
 		<< std::setw(2) << std::setfill('0') << std::get<2>(t);
 	if (surfix != 1) oss << "_" << surfix;
 	oss << ".log";
-	std::string file_name = oss.str();
-	if (file_exists(path::combine(log_path, file_name)))
+	std::string file_name = /*oss.str()*/path::combine(log_path, oss.str());	
+
+	if (file_exists(file_name) && file_size(file_name.c_str()) >= max_size)
 	{
-		return get_log_name(name, log_path, ++surfix);
+		return get_log_name(name, log_path, max_size, ++surfix);
 	}
 	return oss.str();
 }
+
+template <size_t FileMaxSize = 10 * 1024 * 1024>
+class roll_file
+{
+	class ensure_directory_exist
+	{
+	public:
+		ensure_directory_exist(std::string const& p)
+		{
+			path::create_directory(p);
+		}
+	};
+
+	_PROPERTY_READONLY(ensure_directory_exist, dir_exist)
+	_PROPERTY_READONLY(unsigned, today)
+	_PROPERTY_READONLY(std::string, name)
+	_PROPERTY_READONLY(std::string, log_path)
+	_PROPERTY_READONLY(std::string, file_name)
+	_PROPERTY_READONLY(std::ofstream, file)
+
+public:
+	explicit roll_file(std::string const& log_path, std::string const& name) noexcept :
+		_dir_exist{ log_path },
+		_today{ std::get<2>(tokenize_time_point(to_local(std::chrono::system_clock::now()))) },
+		_name{ name },
+		_log_path{ log_path },
+		_file_name{ path::combine(log_path, get_log_name(name, log_path, FileMaxSize)) },
+		_file {	_file_name, std::ios::app | std::ios::out }
+	{
+	}
+
+	roll_file(roll_file const&) = delete;
+	roll_file(roll_file&&) = delete;
+	roll_file& operator = (roll_file const&) = delete;
+	roll_file& operator = (roll_file&&) = delete;
+
+	~roll_file() noexcept
+	{
+		if (_file)
+			_file.close();
+	}
+
+	std::ostream& stream() noexcept
+	{
+		if (_diff_day() || file_size(_file_name.c_str()) >= FileMaxSize)
+		{
+			_file.close();
+			_today = std::get<2>(tokenize_time_point(to_local(std::chrono::system_clock::now())));
+			_file_name = path::combine(_log_path, get_log_name(_name, _log_path, FileMaxSize));
+			_file = ofstream(_file_name, std::ios::app | std::ios::out);
+		}
+		return _file;
+	}
+
+	std::ostream& flush() noexcept
+	{
+		return _file.flush(); 
+	}
+
+	bool ready() noexcept
+	{
+		return (bool)_file;
+	}
+
+private:
+	bool _diff_day() noexcept
+	{
+		unsigned day = std::get<2>(tokenize_time_point(to_local(std::chrono::system_clock::now())));
+		return day != _today;
+	}
+};
 
 _GURU_END
 

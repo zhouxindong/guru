@@ -74,7 +74,7 @@ _se_translator(unsigned u, EXCEPTION_POINTERS *ep)
 }
 
 // after success call it, SetUnhandledExceptionFilter() call would be invalid
-bool 
+bool inline
 DisableSetUnhandledExceptionFilter()
 {
 	void* addr = (void*)GetProcAddress(LoadLibraryA("kernel32.dll"),

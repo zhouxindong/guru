@@ -6,6 +6,7 @@
 #include <fstream>
 #include <string>
 #include <io.h>
+#include <chrono>
 
 _GURU_BEGIN
 
@@ -63,7 +64,6 @@ file_size(const char* name)
 	_stat(name, &info);
 	return info.st_size;
 }
-
 
 _GURU_END
 

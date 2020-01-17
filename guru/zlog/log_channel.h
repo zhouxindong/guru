@@ -18,7 +18,7 @@
 
 _GURU_BEGIN
 
-std::string to_string(log_item const&l, LogFormatter f = LogFormatter::STD_FORMATTER)
+inline std::string to_string(log_item const&l, LogFormatter f = LogFormatter::STD_FORMATTER)
 {
 	std::ostringstream oss;
 	oss << (f == LogFormatter::STD_FORMATTER ? std_formatter<log_item>::format(l) :
@@ -133,31 +133,28 @@ static std::string LogPath = path::combine(path::cwd(), "log");
 */
 class file_channel : public channel_base
 {
-	class log_path
-	{
-	public:
-		log_path()
-		{
-			path::create_directory(LogPath);
-		}
-	};
+	//class log_path
+	//{
+	//public:
+	//	log_path()
+	//	{
+	//		path::create_directory(LogPath);
+	//	}
+	//};
 
 	template <typename _Log_item = log_item, typename Fmt = std_formatter<_Log_item>>
 	friend file_channel& operator << (file_channel& out, _Log_item const& item);
 
-	_PROPERTY_READONLY(log_path, lp)
-	_PROPERTY_READONLY(std::string, name)
-	_PROPERTY_READONLY(std::string, file_name)
-	_PROPERTY_READONLY(std::ofstream, file)
-
+	//_PROPERTY_READONLY(log_path, lp)
+	//_PROPERTY_READONLY(std::string, name)
+	//_PROPERTY_READONLY(std::string, file_name)
+	//_PROPERTY_READONLY(std::ofstream, file)
+	_PROPERTY_READONLY(roll_file<1000*1024>, roll)
 
 public:
 	explicit 
 	file_channel(const std::string& file_name) noexcept :
-		_lp{},
-		_name(file_name),
-		_file_name(path::combine(LogPath, get_log_name(file_name, LogPath))),
-		_file(_file_name, std::ios::app | std::ios::out) 
+		_roll{LogPath, file_name}
 	{
 	}
 
@@ -166,47 +163,49 @@ public:
 	file_channel& operator = (const file_channel&) = delete;
 	file_channel& operator = (file_channel&&) = delete;
 
-	~file_channel() noexcept
-	{
-		if (ready())
-			_file.close();
-	}
+	//~file_channel() noexcept
+	//{
+	//	//if (ready())
+	//	//	_file.close();
+	//}
 
 	std::ostream&
 	stream() noexcept
 	{ 
-		return _file; 
+		//return _file; 
+		return _roll.stream();
 	}
 
 	std::ostream& 
 	flush() noexcept
 	{
-		return _file.flush(); 
+		//return _file.flush(); 
+		return _roll.flush();
 	}
 
 	bool
 	ready() noexcept 
 	{ 
-		return (bool)_file; 
+		return _roll.ready();
 	}
 
 	void log(log_item const& l, LogFormatter f = LogFormatter::STD_FORMATTER) noexcept override
 	{
 		assert(ready());
-		int64_t size = file_size(_file_name.c_str());
-		//std::cout << size << endl;
-		if (size >= LogFileMaxSize)
-		{
-			_file.close();
-			_file_name = path::combine(LogPath, get_log_name(_name, LogPath));
-			_file = std::ofstream(_file_name, std::ios::app | std::ios::out);
-			assert(ready());
-		}
+		//int64_t size = file_size(_file_name.c_str());
+		////std::cout << size << endl;
+		//if (size >= LogFileMaxSize)
+		//{
+		//	_file.close();
+		//	_file_name = path::combine(LogPath, get_log_name(_name, LogPath, LogFileMaxSize));
+		//	_file = std::ofstream(_file_name, std::ios::app | std::ios::out);
+		//	assert(ready());
+		//}
 
-		//out.stream() << /*std_formatter<_Log_item>::format(item)*/Fmt::format(item);
-		//out.stream() << std::endl;
+		////out.stream() << /*std_formatter<_Log_item>::format(item)*/Fmt::format(item);
+		////out.stream() << std::endl;
 		stream() << guru::to_string(l, f);
-		_file.flush();
+		flush();
 	}
 };
 
@@ -328,15 +327,15 @@ file_channel&
 operator << (file_channel& out, _Log_item const& item)
 {
 	assert(out.ready());
-	int64_t size = file_size(out._file_name.c_str());
-	//std::cout << size << endl;
-	if (size >= LogFileMaxSize)
-	{
-		out._file.close();
-		out._file_name = path::combine(LogPath, get_log_name(out._name, LogPath));
-		out._file = std::ofstream(out._file_name, std::ios::app | std::ios::out);
-		assert(out.ready());
-	}
+	//int64_t size = file_size(out._file_name.c_str());
+	////std::cout << size << endl;
+	//if (size >= LogFileMaxSize)
+	//{
+	//	out._file.close();
+	//	out._file_name = path::combine(LogPath, get_log_name(out._name, LogPath, LogFileMaxSize));
+	//	out._file = std::ofstream(out._file_name, std::ios::app | std::ios::out);
+	//	assert(out.ready());
+	//}
 
 	out.stream() << /*std_formatter<_Log_item>::format(item)*/Fmt::format(item);
 	out.stream() << std::endl;

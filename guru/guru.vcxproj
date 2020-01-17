@@ -105,6 +105,7 @@
       <ExceptionHandling>Async</ExceptionHandling>
       <LanguageStandard>
       </LanguageStandard>
+      <PrecompiledHeaderFile />
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -252,6 +253,7 @@
     <ClInclude Include="zlog\log_item.h" />
     <ClInclude Include="zlog\log_item_generator.h" />
     <ClInclude Include="zlog\log_level.h" />
+    <ClInclude Include="zlog\log_service.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">

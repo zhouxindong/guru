@@ -172,31 +172,40 @@ int main()
 	//system("pause");
 
 	// 3. file_channel
-	//file_channel fc("file_channel1.out");
-	//log_item log1 = LOG(FATAL);
-	//log1 << "some information";
-	//log1 << " " << 3456;
-	//fc << log1;
+	file_channel fc("file_channel1.out");
 
-	//log1 = std::move((LOG(TRACE) << "a log item: trace"));
-	//fc << log1;
+	for (int i = 0; i < 100000; ++i)
+	{
+		if (i % 100 == 0)
+			std::cout << i << endl;
 
-	//log1 = LOG(DEBUG) << "a log item: debug";
-	//fc << log1;
+		log_item log1 = LOG(FATAL);
+		log1 << "some information";
+		log1 << " " << 3456;
+		fc << log1;
 
-	//log1 = LOG(INFO) << "a log item: info";
-	//fc << log1;
+		log1 = std::move((LOG(TRACE) << "a log item: trace"));
+		fc << log1;
 
-	//log1 = std::move(LOG(WARN) << "a log item: warn");
-	//fc << log1;
+		log1 = LOG(DEBUG) << "a log item: debug";
+		fc << log1;
 
-	//log1 = LOG(ERROR) << "a log item: error";
-	//fc << log1;
+		log1 = LOG(INFO) << "a log item: info";
+		fc << log1;
 
-	//log1 = LOG(FATAL) << "a log item: fatal";
-	//fc << log1;
-	//system("pause");
-	//return 0;
+		log1 = std::move(LOG(WARN) << "a log item: warn");
+		fc << log1;
+
+		log1 = LOG(ERROR) << "a log item: error";
+		fc << log1;
+
+		log1 = LOG(FATAL) << "a log item: fatal";
+		fc << log1;
+
+		Sleep(1);
+	}
+	system("pause");
+	return 0;
 
 	// 4. udp_channel
 	//udp_channel uc("udptest#10.16.2.55#8005#10.16.2.55");
@@ -211,23 +220,23 @@ int main()
 
 	// 5. channel_base
 	//std::shared_ptr<channel_base> channel{ new udp_channel("udptest#10.16.2.55#8005#10.16.2.55") };
-	std::shared_ptr<channel_base> channel{ new console_channel() };
+	//std::shared_ptr<channel_base> channel{ new console_channel() };
 
-	log_item li = LOG(TRACE) << "this is a trace";
-	channel->log(li, LogFormatter::STD_FORMATTER);
-	li = LOG(DEBUG) << "this is a debug";
-	channel->log(li);
-	li = LOG(INFO) << "this is a info";
-	channel->log(li, LogFormatter::TBL_FORMATTER);
-	li = LOG(WARN) << "this is a warn";
-	channel->log(li);
-	li = LOG(ERROR) << "this is a error";
-	channel->log(li);
-	li = LOG(FATAL) << "this is a fatal";
-	channel->log(li, LogFormatter::TBL_FORMATTER);
+	//log_item li = LOG(TRACE) << "this is a trace";
+	//channel->log(li, LogFormatter::STD_FORMATTER);
+	//li = LOG(DEBUG) << "this is a debug";
+	//channel->log(li);
+	//li = LOG(INFO) << "this is a info";
+	//channel->log(li, LogFormatter::TBL_FORMATTER);
+	//li = LOG(WARN) << "this is a warn";
+	//channel->log(li);
+	//li = LOG(ERROR) << "this is a error";
+	//channel->log(li);
+	//li = LOG(FATAL) << "this is a fatal";
+	//channel->log(li, LogFormatter::TBL_FORMATTER);
 
-	system("pause");
-	return 0;
+	//system("pause");
+	//return 0;
 }
 */
 
@@ -262,7 +271,7 @@ int main()
 */
 
 // basic_logger
-/*
+///*
 int main()
 {
 	// 1. console_logger
@@ -287,14 +296,14 @@ int main()
 
 	// 2. file_logger
 	//auto& logger = file_logger::get("testlog");
-	//auto v = std::move(generate_log_item(2000));
+	//auto v = std::move(generate_log_item(2));
 	//for (auto& item : v)
 	//{
 	//	logger.log(item);
 	//}
 
 	//auto& logger2 = file_logger::get("testlog");
-	//v = std::move(generate_log_item(2000, " new log"));
+	//v = std::move(generate_log_item(2, " new log"));
 	//for (auto& item : v)
 	//{
 	//	logger2.log(item);
@@ -304,15 +313,14 @@ int main()
 	//return 0;
 
 	// 3. udp logger
-	auto& logger = udp_info_logger::get("udptest#10.16.2.55#8808#10.16.2.55");
-	auto v = std::move(generate_log_item(200));
+	auto& logger = udp_info_logger::get("udptest#10.16.2.55#28583#10.16.2.55");
+	auto v = std::move(generate_log_item(200000));
 	for (auto& item : v)
 	{
 		logger.log(item);
-		Sleep(100);
 	}
 }
-*/
+//*/
 
  //different logger class with the same name, it would create different log file
 /*
@@ -346,18 +354,21 @@ int main()
 //{
 //	config_log logger("log.config.xml");
 //
-//	log_item li = LOG(TRACE) << "this is a trace";
-//	logger.log(li);
-//	li = LOG(DEBUG) << "this is a debug";
-//	logger.log(li);
-//	li = LOG(INFO) << "this is a info";
-//	logger.log(li);
-//	li = LOG(WARN) << "this is a warn";
-//	logger.log(li);
-//	li = LOG(ERROR) << "this is a error";
-//	logger.log(li);
-//	li = LOG(FATAL) << "this is a fatal";
-//	logger.log(li);
+//	for (int i = 0; i < 3000; ++i)
+//	{
+//		log_item li = LOG(TRACE) << "this is a trace";
+//		logger.log(li);
+//		li = LOG(DEBUG) << "this is a debug";
+//		logger.log(li);
+//		li = LOG(INFO) << "this is a info";
+//		logger.log(li);
+//		li = LOG(WARN) << "this is a warn";
+//		logger.log(li);
+//		li = LOG(ERROR) << "this is a error";
+//		logger.log(li);
+//		li = LOG(FATAL) << "this is a fatal";
+//		logger.log(li);
+//	}
 //
 //	system("pause");
 //	return 0;
@@ -499,6 +510,7 @@ private:
 };
 
 // memory track
+/*
 int main()
 {
 	// 1. pointer		
@@ -554,3 +566,4 @@ int main()
 	system("pause");
 	return 0;
 }
+*/
