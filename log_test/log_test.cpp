@@ -271,7 +271,7 @@ int main()
 */
 
 // basic_logger
-///*
+/*
 int main()
 {
 	// 1. console_logger
@@ -320,7 +320,7 @@ int main()
 		logger.log(item);
 	}
 }
-//*/
+*/
 
  //different logger class with the same name, it would create different log file
 /*
@@ -350,29 +350,29 @@ int main()
 */
 
 // config logger from file
-//int main()
-//{
-//	config_log logger("log.config.xml");
-//
-//	for (int i = 0; i < 3000; ++i)
-//	{
-//		log_item li = LOG(TRACE) << "this is a trace";
-//		logger.log(li);
-//		li = LOG(DEBUG) << "this is a debug";
-//		logger.log(li);
-//		li = LOG(INFO) << "this is a info";
-//		logger.log(li);
-//		li = LOG(WARN) << "this is a warn";
-//		logger.log(li);
-//		li = LOG(ERROR) << "this is a error";
-//		logger.log(li);
-//		li = LOG(FATAL) << "this is a fatal";
-//		logger.log(li);
-//	}
-//
-//	system("pause");
-//	return 0;
-//}
+int main()
+{
+	config_log logger("log.config.xml");
+
+	for (int i = 0; i < 10000; ++i)
+	{
+		log_item li = LOG(TRACE) << "this is a trace";
+		logger.log(li);
+		li = LOG(DEBUG) << "this is a debug";
+		logger.log(li);
+		li = LOG(INFO) << "this is a info";
+		logger.log(li);
+		li = LOG(WARN) << "this is a warn";
+		logger.log(li);
+		li = LOG(ERROR) << "this is a error";
+		logger.log(li);
+		li = LOG(FATAL) << "this is a fatal";
+		logger.log(li);
+	}
+
+	system("pause");
+	return 0;
+}
 
 // dump_stack_trace
 //int main()
