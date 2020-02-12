@@ -125,7 +125,7 @@ static console_channel ConsoleChannel;
 
 #pragma region file_channel
 
-static constexpr int64_t LogFileMaxSize = 10 * 1024 * 1024;
+static constexpr int64_t LogFileMaxSize = 10 * 1000 * 1024;
 static std::string LogPath = path::combine(path::cwd(), "log");
 
 /*
@@ -149,7 +149,7 @@ class file_channel : public channel_base
 	//_PROPERTY_READONLY(std::string, name)
 	//_PROPERTY_READONLY(std::string, file_name)
 	//_PROPERTY_READONLY(std::ofstream, file)
-	_PROPERTY_READONLY(roll_file<1000*1024>, roll)
+	_PROPERTY_READONLY(roll_file<LogFileMaxSize>, roll)
 
 public:
 	explicit 

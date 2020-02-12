@@ -13,7 +13,7 @@ using namespace guru;
 //
 //	config_log logger("log.config.xml");
 //
-//	for (int i = 0; i < 10000; ++i)
+//	for (int i = 0; i < 1000; ++i)
 //	{
 //		log_item li = LOG(TRACE) << "this is a trace";
 //		logger.log(li);

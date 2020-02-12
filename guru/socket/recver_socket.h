@@ -66,7 +66,7 @@ recver_socket<N>::start() noexcept
 				size = ::recv(_socket, _buf, N, 0);
 				if (size > 0)
 				{
-					vector<char> rv(_buf, _buf + size);
+					std::vector<char> rv(_buf, _buf + size);
 					for_each(_slots.cbegin(), _slots.cend(),
 						[&](auto slot) {
 						slot(rv);

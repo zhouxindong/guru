@@ -2,6 +2,16 @@
 #ifndef _GURU_GVALS_H
 #define _GURU_GVALS_H
 
+/**
+* to resolve the redefinitions between WinSock2.h and Windows.h
+1. include first WinSock2.h, then Windows.h
+2. or #define WIN32_LEAN_AND_MEAN
+*/
+//#include <WinSock2.h>
+//#include <Windows.h>
+
+#define  WIN32_LEAN_AND_MEAN
+
 #define _GURU_BEGIN namespace guru {
 #define _GURU_END   }
 #define _GURU  ::guru::

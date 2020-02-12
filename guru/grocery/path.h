@@ -260,7 +260,7 @@ public:
 			_file.close();
 			_today = std::get<2>(tokenize_time_point(to_local(std::chrono::system_clock::now())));
 			_file_name = path::combine(_log_path, get_log_name(_name, _log_path, FileMaxSize));
-			_file = ofstream(_file_name, std::ios::app | std::ios::out);
+			_file = std::ofstream(_file_name, std::ios::app | std::ios::out);
 		}
 		return _file;
 	}

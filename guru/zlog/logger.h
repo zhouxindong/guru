@@ -16,6 +16,15 @@ _GURU_BEGIN
 
 #pragma region basic_logger
 
+template <typename T>
+struct global_mutex
+{
+	static std::mutex object;
+};
+
+template <typename T>
+std::mutex global_mutex<T>::object;
+
 /*
 ** basic_logger
 ** thread safe
@@ -24,8 +33,7 @@ template <
 	typename _Filter = level_filter<_LOG_LEVEL::_LOG_TRACE>,
 	typename _Formatter = std_formatter<log_item>,
 	typename _Channel = file_channel>
-
-	class basic_logger
+class basic_logger
 {
 
 	_PROPERTY_READONLY(std::string, name)
@@ -54,7 +62,9 @@ public:
 	type&
 	get(const std::string& name) noexcept
 	{
-		std::lock_guard<std::mutex> lock(_s_mutex);
+		//std::lock_guard<std::mutex> lock(_s_mutex);
+		std::lock_guard<std::mutex> lock(global_mutex<void>::object);
+
 		if (_loggers.find(name) != _loggers.end())
 			return *(_loggers[name]);
 
@@ -69,7 +79,9 @@ public:
 	type& 
 	log(typename formatter_type::log_item_type const& item) noexcept
 	{
-		std::lock_guard<std::mutex> lock(_mutex);
+		//std::lock_guard<std::mutex> lock(_mutex);
+		std::lock_guard<std::mutex> lock(global_mutex<void>::object);
+
 		//_filter(item, _channel) << /*formatter_type::format(item) << std::endl*/item;
 		//std::ostream& out = _filter(item, _channel);
 		if (&_filter(item, _channel) != &NullStream)
@@ -141,8 +153,6 @@ typedef basic_logger<
 //
 //	//UdpLogger::get()
 //}
-
-
 
 _GURU_END
 

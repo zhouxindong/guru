@@ -153,11 +153,6 @@
     <ClCompile Include="log_test.cpp" />
     <ClCompile Include="stdafx.cpp" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\guru\guru.vcxproj">
-      <Project>{188c082f-a690-45bf-8d22-c10fbc4fe8ec}</Project>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

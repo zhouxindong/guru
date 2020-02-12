@@ -313,66 +313,79 @@ int main()
 	//return 0;
 
 	// 3. udp logger
-	auto& logger = udp_info_logger::get("udptest#10.16.2.55#28583#10.16.2.55");
-	auto v = std::move(generate_log_item(200000));
-	for (auto& item : v)
-	{
-		logger.log(item);
-	}
+	//auto& logger = udp_info_logger::get("udptest#10.16.2.55#28583#10.16.2.55");
+	//auto v = std::move(generate_log_item(200000));
+	//for (auto& item : v)
+	//{
+	//	logger.log(item);
+	//}
+
+	// 4. custom logger
+	//typedef basic_logger<
+	//	set_filter<_LOG_LEVEL::_LOG_DEBUG, _LOG_LEVEL::_LOG_FATAL>,
+	//	table_formatter<log_item>,
+	//	console_channel> my_logger;
+	//auto& logger = my_logger::get("cosle");
+	//auto v = std::move(generate_log_item(200000));
+	//for (auto& item : v)
+	//{
+	//	logger.log(item);
+	//}
+
 }
 */
 
  //different logger class with the same name, it would create different log file
-/*
+///*
 bool thread_proc() {
-	auto v = generate_log_item(2000, std::string("单独的异步线程..."));
+	auto v = generate_log_item(5000, std::string("单独的异步线程..."));
 	for (auto& item : v) {
 		file_info_logger::get("max4kfile").log(item);
 
-		Sleep(100);
+		Sleep(1);
 	}
 	return true;
 }
 
 int main()
 {
-	auto v = generate_log_item(2000, std::string("主线程..."));
+	auto v = generate_log_item(5000, std::string("主线程..."));
 	std::future<bool> rs(std::async(thread_proc));
 
 	for (auto& item : v) {
 		file_logger::get("max4kfile").log(item);
-		Sleep(100);
+		Sleep(1);
 	}
 	rs.wait();
 	system("pause");
 	return 0;
 }
-*/
+//*/
 
 // config logger from file
-int main()
-{
-	config_log logger("log.config.xml");
-
-	for (int i = 0; i < 10000; ++i)
-	{
-		log_item li = LOG(TRACE) << "this is a trace";
-		logger.log(li);
-		li = LOG(DEBUG) << "this is a debug";
-		logger.log(li);
-		li = LOG(INFO) << "this is a info";
-		logger.log(li);
-		li = LOG(WARN) << "this is a warn";
-		logger.log(li);
-		li = LOG(ERROR) << "this is a error";
-		logger.log(li);
-		li = LOG(FATAL) << "this is a fatal";
-		logger.log(li);
-	}
-
-	system("pause");
-	return 0;
-}
+//int main()
+//{
+//	config_log logger("log.config.xml");
+//
+//	for (int i = 0; i < 10000; ++i)
+//	{
+//		log_item li = LOG(TRACE) << "this is a trace";
+//		logger.log(li);
+//		li = LOG(DEBUG) << "this is a debug";
+//		logger.log(li);
+//		li = LOG(INFO) << "this is a info";
+//		logger.log(li);
+//		li = LOG(WARN) << "this is a warn";
+//		logger.log(li);
+//		li = LOG(ERROR) << "this is a error";
+//		logger.log(li);
+//		li = LOG(FATAL) << "this is a fatal";
+//		logger.log(li);
+//	}
+//
+//	system("pause");
+//	return 0;
+//}
 
 // dump_stack_trace
 //int main()

@@ -9,6 +9,7 @@
 
 _GURU_BEGIN
 
+inline
 std::vector<log_item> 
 generate_log_item(size_t count, std::string suffix = std::string()) noexcept
 {
