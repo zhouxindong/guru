@@ -25,6 +25,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "socket_test", "socket_test\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "operator_test", "operator_test\operator_test.vcxproj", "{1DCA60E0-128D-4EFB-9D9D-FC568222FD05}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "zlog_service", "zlog_service\zlog_service.vcxproj", "{F57D5E68-37B9-45EF-A90C-31C953AF193A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -121,6 +123,14 @@ Global
 		{1DCA60E0-128D-4EFB-9D9D-FC568222FD05}.Release|x64.Build.0 = Release|x64
 		{1DCA60E0-128D-4EFB-9D9D-FC568222FD05}.Release|x86.ActiveCfg = Release|Win32
 		{1DCA60E0-128D-4EFB-9D9D-FC568222FD05}.Release|x86.Build.0 = Release|Win32
+		{F57D5E68-37B9-45EF-A90C-31C953AF193A}.Debug|x64.ActiveCfg = Debug|x64
+		{F57D5E68-37B9-45EF-A90C-31C953AF193A}.Debug|x64.Build.0 = Debug|x64
+		{F57D5E68-37B9-45EF-A90C-31C953AF193A}.Debug|x86.ActiveCfg = Debug|Win32
+		{F57D5E68-37B9-45EF-A90C-31C953AF193A}.Debug|x86.Build.0 = Debug|Win32
+		{F57D5E68-37B9-45EF-A90C-31C953AF193A}.Release|x64.ActiveCfg = Release|x64
+		{F57D5E68-37B9-45EF-A90C-31C953AF193A}.Release|x64.Build.0 = Release|x64
+		{F57D5E68-37B9-45EF-A90C-31C953AF193A}.Release|x86.ActiveCfg = Release|Win32
+		{F57D5E68-37B9-45EF-A90C-31C953AF193A}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

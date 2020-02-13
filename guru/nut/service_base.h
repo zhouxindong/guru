@@ -44,6 +44,7 @@ public:
 	const CString&	disp_name() const noexcept		{ return _disp_name; }
 	const DWORD		start_type() const noexcept		{ return _start_type; }
 	const DWORD		error_ctrl_type() const noexcept{ return _error_ctrl_type; }
+	const bool		delay_start() const noexcept	{ return _delay_start; }
 
 	const CString&	depends() const noexcept		{ return _depends; }
 	const CString&	account() const noexcept		{ return _account; }
@@ -56,6 +57,7 @@ protected:
 		DWORD start_type,
 		DWORD err_ctrl_type = SERVICE_ERROR_NORMAL,
 		DWORD _accepted_cmds = SERVICE_ACCEPT_STOP,
+		bool delay_start = false,
 		const CString& depends = _T(""),
 		const CString& account = _T(""),
 		const CString& password = _T("")) noexcept
@@ -63,6 +65,7 @@ protected:
 		_disp_name(disp_name),
 		_start_type(start_type),
 		_error_ctrl_type(err_ctrl_type),
+		_delay_start(delay_start),
 		_depends(depends),
 		_account(account),
 		_password(password)
@@ -134,6 +137,7 @@ private:
 	CString _disp_name;
 	DWORD _start_type;
 	DWORD _error_ctrl_type;
+	bool _delay_start;
 
 private: 
 	CString _depends;

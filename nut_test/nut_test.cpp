@@ -212,30 +212,12 @@ int main(int argc, char* argv[])
 
 	if (argc > 1) {
 		if (strcmp(argv[1], ("install")) == 0) {
-			_tprintf(_T("Installing service\n"));
-			OutputDebugString(_T("Installing test service"));
-			if (!guru::install_service(service)) {
-				_tprintf(_T("Couldn't install service: %d\n"), ::GetLastError());
-				OutputDebugString(_T("Install test service error"));
-				return -1;
-			}
-
-			_tprintf(_T("Service installed\n"));
-			OutputDebugString(_T("install test service successful"));
+			guru::install_service(service);
 			return 0;
 		}
 
 		if (strcmp(argv[1], ("uninstall")) == 0) {
-			OutputDebugString(_T("uninstall test service"));
-			_tprintf(_T("Uninstalling service\n"));
-			if (!guru::unstall_service(service)) {
-				_tprintf(_T("Couldn't uninstall service: %d\n"), ::GetLastError());
-				OutputDebugString(_T("Can't uninstall test service"));
-				return -1;
-			}
-
-			_tprintf(_T("Service uninstalled\n"));
-			OutputDebugString(_T("uninstall test service successful"));
+			guru::unstall_service(service);
 			return 0;
 		}
 

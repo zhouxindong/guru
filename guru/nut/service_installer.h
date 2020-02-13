@@ -33,7 +33,7 @@ private:
 
 inline
 bool
-install_service(service_base const& svc)
+create_service(service_base const& svc)
 {
 	CString esc_path;
 	TCHAR* m_path = esc_path.GetBufferSetLength(MAX_PATH);
@@ -85,9 +85,73 @@ install_service(service_base const& svc)
 	return true;
 }
 
+inline 
+void
+install_service(service_base const& svc)
+{
+	_tprintf(_T("Installing service\n"));
+	CString s;
+	s.AppendFormat(_T("Installing %s service\n"), svc.name());
+	OutputDebugString(s);
+	if (!create_service(svc)) {
+		_tprintf(_T("create service failed\n"));
+		s.Empty();
+		s.AppendFormat(_T("Couldn't create %s service: %d\n"), svc.name(), ::GetLastError());
+		OutputDebugString(s);
+		return;
+	}
+
+	_tprintf(_T("Create service successful\n"));
+	s.Empty();
+	s.AppendFormat(_T("Service %s created\n"), svc.name());
+	OutputDebugString(s);
+
+	if ((svc.start_type() != SERVICE_AUTO_START) || (svc.delay_start() != true))
+		return;
+
+	service_handle scm = ::OpenSCManager(nullptr, nullptr, SC_MANAGER_ALL_ACCESS);
+	if (!scm)
+	{
+		_tprintf(_T("OpenSCManager failed, please manual to Auto Delay!\n"));
+		s.Empty();
+		s.AppendFormat(_T("Couldn't open service control manager: %d\n"), ::GetLastError());
+		OutputDebugString(s);
+		return;
+	}
+
+	SC_HANDLE handle = ::OpenService(scm, svc.name(), SERVICE_ALL_ACCESS);
+	if (handle == NULL)
+	{
+		_tprintf(_T("OpenService failed, please manual to Auto Delay\n"));
+		s.Empty();
+		s.AppendFormat(_T("OpenService() for %s failed: %d\n"), svc.name(), ::GetLastError());
+		OutputDebugString(s);
+		return;
+	}
+
+	SERVICE_DELAYED_AUTO_START_INFO info = { true };
+	BOOL ret = ::ChangeServiceConfig2(handle, SERVICE_CONFIG_DELAYED_AUTO_START_INFO, &info);
+	if (ret == TRUE)
+	{
+		_tprintf(_T("Service change to Auto Delay successful\n"));
+		s.Empty();
+		s.AppendFormat(_T("ChangeServiceConfig2() for %s successful\n"), svc.name());
+		OutputDebugString(s);
+	}
+	else
+	{
+		_tprintf(_T("ChangeServiceConfig2 failed, please manual to Auto Delay\n"));
+		s.Empty();
+		s.AppendFormat(_T("ChangeServiceConfig2() for %s failed: %d\n"), svc.name(), ::GetLastError());
+		OutputDebugString(s);
+	}
+
+	return ;
+}
+
 inline
 bool
-unstall_service(service_base const& svc)
+delete_service(service_base const& svc)
 {
 	service_handle scm = ::OpenSCManager(nullptr, nullptr, SC_MANAGER_CONNECT);
 	if (!scm) 
@@ -141,6 +205,29 @@ unstall_service(service_base const& svc)
 	}
 
 	return true;
+}
+
+inline 
+void unstall_service(service_base const& svc)
+{
+	_tprintf(_T("Uninstalling service\n"));
+
+	CString s;
+	s.AppendFormat(_T("Uninstalling %s service\n"), svc.name());
+	OutputDebugString(s);
+
+	if (!delete_service(svc)) {
+		s.Empty();
+		s.AppendFormat(_T("Couldn't uninstall %s service: %d\n"), svc.name(), ::GetLastError());
+		OutputDebugString(s);
+		return;
+	}
+
+	_tprintf(_T("Uninstall successful\n"));
+	s.Empty();
+	s.AppendFormat(_T("Uninstall %s service successful\n"), svc.name());
+	OutputDebugString(s);
+	return;
 }
 
 _GURU_END

@@ -76,7 +76,8 @@ public:
 		_T("HJYD Logger (zlog.v1)"),
 		SERVICE_AUTO_START,
 		SERVICE_ERROR_NORMAL,
-		SERVICE_ACCEPT_STOP)
+		SERVICE_ACCEPT_STOP,
+		true)
 	{
 	}
 
