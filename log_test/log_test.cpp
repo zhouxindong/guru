@@ -336,7 +336,7 @@ int main()
 */
 
  //different logger class with the same name, it would create different log file
-///*
+/*
 bool thread_proc() {
 	auto v = generate_log_item(5000, std::string("单独的异步线程..."));
 	for (auto& item : v) {
@@ -360,26 +360,27 @@ int main()
 	system("pause");
 	return 0;
 }
-//*/
+*/
 
 // config logger from file
 //int main()
 //{
 //	config_log logger("log.config.xml");
+//	logger.log(LOG(ERROR) << "HELLO" << 99.3);
 //
 //	for (int i = 0; i < 10000; ++i)
 //	{
-//		log_item li = LOG(TRACE) << "this is a trace";
+//		log_item li = LOG(TRACE) << "this is a trace" << i;
 //		logger.log(li);
-//		li = LOG(DEBUG) << "this is a debug";
+//		li = LOG(DEBUG) << "this is a debug" << i;
 //		logger.log(li);
-//		li = LOG(INFO) << "this is a info";
+//		li = LOG(INFO) << "this is a info" << i;
 //		logger.log(li);
-//		li = LOG(WARN) << "this is a warn";
+//		li = LOG(WARN) << "this is a warn" << i;
 //		logger.log(li);
-//		li = LOG(ERROR) << "this is a error";
+//		li = LOG(ERROR) << "this is a error" << i;
 //		logger.log(li);
-//		li = LOG(FATAL) << "this is a fatal";
+//		li = LOG(FATAL) << "this is a fatal" << i;
 //		logger.log(li);
 //	}
 //
@@ -523,30 +524,30 @@ private:
 };
 
 // memory track
-/*
+///*
 int main()
 {
 	// 1. pointer		
-	////auto& logger = console_logger::get("demo");
+	auto& logger = console_logger::get("demo");
 	//config_log logger("log.config.xml");
 
-	//int* pi = new int;
-	//double* pda = new double[10];
-	//std::string* ps1 = new std::string("hello");
-	//std::string* psa2 = new std::string[10];
-	//MyWork* pmw1 = new MyWork(2, 3);
-	//MyWork* pmw2 = new MyWork[10];
+	int* pi = new int;
+	double* pda = new double[10];
+	std::string* ps1 = new std::string("hello");
+	std::string* psa2 = new std::string[10];
+	MyWork* pmw1 = new MyWork(2, 3);
+	MyWork* pmw2 = new MyWork[10];
 
-	//dump_memory(logger);
+	dump_memory(logger);
 
-	//delete pi;
-	//delete[] pda;
-	//delete ps1;
-	//delete[] psa2;
-	//delete pmw1;
-	//delete[] pmw2;
+	delete pi;
+	delete[] pda;
+	delete ps1;
+	delete[] psa2;
+	delete pmw1;
+	delete[] pmw2;
 
-	//dump_memory(logger);
+	dump_memory(logger);
 
 	// 2. smart pointer
 	////auto& logger = console_logger::get("demo");
@@ -565,18 +566,18 @@ int main()
 
 	// 3. malloc
 	//auto& logger = console_logger::get("demo");
-	config_log logger("log.config.xml");
+	//config_log logger("log.config.xml");
 
-	void* pm = malloc(1000);
+	//void* pm = malloc(1000);
 
-	logger.log(LOG(INFO) << "before free()");
-	dump_memory(logger);
+	//logger.log(LOG(INFO) << "before free()");
+	//dump_memory(logger);
 
-	free(pm);
-	logger.log(LOG(INFO) << "after free()");
-	dump_memory(logger);
+	//free(pm);
+	//logger.log(LOG(INFO) << "after free()");
+	//dump_memory(logger);
 
 	system("pause");
 	return 0;
 }
-*/
+//*/

@@ -15,7 +15,7 @@
 //#include <crtdbg.h>
 //#endif
 
-#pragma warning(disable:4595 4291) 
+#pragma warning(disable:4595 4291 4005) 
 
 _GURU_BEGIN
 
@@ -29,8 +29,8 @@ struct alloc_rec
 	size_t size;
 };
 
-inline 
-std::ostream& 
+inline
+std::ostream&
 operator << (std::ostream& out, alloc_rec const& r) noexcept
 {
 	out << "Addr:" << std::setw(16) << r.addr << " - Size: "
@@ -70,7 +70,7 @@ private:
 static alloc_tracer _mem_tracer;	// instance used only
 
 inline
-std::ostream& 
+std::ostream&
 operator << (std::ostream& out, alloc_tracer const& t) noexcept
 {
 	for_each(t._rec.cbegin(), t._rec.cend(),
@@ -88,7 +88,7 @@ _GURU_END
 #pragma region operators...
 
 inline
-void 
+void
 _record(void* ptr, size_t n, const char* name, int line) noexcept
 {
 	guru::alloc_rec r;
@@ -106,6 +106,13 @@ _trace_malloc(size_t n, const char* name, int line) noexcept
 	void* ptr = malloc(n);
 	_record(ptr, n, name, line);
 	return ptr;
+}
+
+inline
+void*
+_trace_malloc(size_t n, void* p, const char* name, int line) noexcept // for emplace
+{
+	return p;
 }
 
 inline
@@ -145,23 +152,37 @@ dump_mem_tracer() noexcept
 }
 
 inline
-void* 
-operator new(size_t n, const char* name, int line) 
-{	
+void*
+operator new(size_t n, const char* name, int line)
+{
 	return _trace_malloc(n, name, line);
 }
 
 inline
 void*
-operator new[](size_t n, const char* name, int line) 
-{	
+operator new[](size_t n, const char* name, int line)
+{
 	return _trace_malloc(n, name, line);
 }
 
 inline
-void 
+void*
+operator new(size_t n, void* p, const char* name, int line)
+{
+	return _trace_malloc(n, p, name, line);
+}
+
+inline
+void*
+operator new[](size_t n, void* p, const char* name, int line)
+{
+	return _trace_malloc(n, p, name, line);
+}
+
+inline
+void
 operator delete(void* ptr) noexcept
-{	
+{
 	_trace_free(ptr);
 }
 
@@ -173,7 +194,7 @@ operator delete[](void* ptr) noexcept
 }
 
 inline
-void 
+void
 operator delete(void* ptr, const char* name, int line) noexcept
 {
 	_trace_free(ptr);
@@ -195,6 +216,9 @@ operator delete[](void* ptr, const char* name, int line) noexcept
 #define realloc(p,s) _trace_realloc(p, s, __FILE__, __LINE__)
 #define calloc(n,s) _trace_calloc(n, s, __FILE__, __LINE__)
 #define free(p) _trace_free(p)
+
+#define tracingnew_p(p) new (p, __FILE__, __LINE__)
+#define new_p(p) tracingnew_p(p)
 
 #pragma endregion
 

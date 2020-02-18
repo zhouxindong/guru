@@ -17,15 +17,15 @@ using namespace std;
 using namespace guru;
 
 // stack_tracer::stack_trace()
-//int main()
-//{
-//	cout << "-------------stack_trace()----------------" << endl;
-//	cout << stack_tracer::stack_trace("prefix", "surfix") << endl;
-//	cout << "-------------stack_trace2()---------------" << endl;;
-//	cout << stack_tracer::stack_trace2("prefix2", "surfix2") << endl;
-//	system("pause");
-//    return 0;
-//}
+int main()
+{
+	cout << "-------------stack_trace()----------------" << endl;
+	cout << stack_tracer::stack_trace("prefix", "surfix") << endl;
+	cout << "-------------stack_trace2()---------------" << endl;;
+	cout << stack_tracer::stack_trace2("prefix2", "surfix2") << endl;
+	system("pause");
+    return 0;
+}
 
 // struct_exception
 //int main()
@@ -127,6 +127,7 @@ private:
 
 };
 
+/*
 int main()
 {
 	// 1. pointer
@@ -171,7 +172,7 @@ int main()
 	system("pause");
 	return 0;
 }
-//*/
+*/
 
 // proc_mem
 /*
