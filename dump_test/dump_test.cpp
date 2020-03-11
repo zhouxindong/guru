@@ -17,15 +17,15 @@ using namespace std;
 using namespace guru;
 
 // stack_tracer::stack_trace()
-int main()
-{
-	cout << "-------------stack_trace()----------------" << endl;
-	cout << stack_tracer::stack_trace("prefix", "surfix") << endl;
-	cout << "-------------stack_trace2()---------------" << endl;;
-	cout << stack_tracer::stack_trace2("prefix2", "surfix2") << endl;
-	system("pause");
-    return 0;
-}
+//int main()
+//{
+//	cout << "-------------stack_trace()----------------" << endl;
+//	cout << stack_tracer::stack_trace("prefix", "surfix") << endl;
+//	cout << "-------------stack_trace2()---------------" << endl;;
+//	cout << stack_tracer::stack_trace2("prefix2", "surfix2") << endl;
+//	system("pause");
+//    return 0;
+//}
 
 // struct_exception
 //int main()
@@ -45,25 +45,34 @@ int main()
 
 // uncatched exception
 // must be runed without IDE
-//void uncatch_cb(std::string const& msg)
-//{
-//	std::cout << "uncatched begin:\n";
-//	std::cout << msg;
-//	std::cout << "uncatched end!\n";
-//}
-//
-//int main()
-//{
-//	uncatcher uncat(uncatch_cb);
-//
-//	uncatcher uncat2(uncatch_cb);
-//	foo1();
-//	//throw std::exception("asdfasdf");
-//
-//	cout << "after uncaught!!!\n";
-//	system("pause");
-//	return 0;
-//}
+void uncatch_cb(std::string const& msg)
+{
+	std::cout << "uncatched begin:\n";
+	std::cout << msg;
+	std::cout << "uncatched end!\n";
+}
+
+
+void my_terminate()
+{
+	std::cout << "my_terminate()\n";
+	abort();
+}
+
+void(*old_terminate)() = set_terminate(my_terminate);
+
+int main()
+{
+	uncatcher uncat(uncatch_cb);
+
+	//uncatcher uncat2(uncatch_cb);
+	foo1();
+	//throw std::exception("asdfasdf");
+
+	cout << "after uncaught!!!\n";
+	system("pause");
+	return 0;
+}
 
 // SEH
 // C++ /EHa

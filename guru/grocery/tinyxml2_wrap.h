@@ -12,7 +12,7 @@ _GURU_BEGIN
 /*
  wrap class for tinyxml2
 */
-class tinyxml2_wrap : public xmler<guru::XMLElement*>
+class tinyxml2_wrap : public xmler<XMLElement*>
 {
 public:
 	tinyxml2_wrap() {}
@@ -34,7 +34,7 @@ public:
 	tinyxml2_wrap& operator=(tinyxml2_wrap&&) = delete;
 
 public:
-	root_type root() override
+	element_type root() override
 	{
 		assert(_ready);
 		return _doc.RootElement();
