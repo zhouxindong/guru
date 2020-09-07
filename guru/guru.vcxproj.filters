@@ -315,9 +315,6 @@
     <ClInclude Include="grocery\file.h">
       <Filter>Header Files\grocery</Filter>
     </ClInclude>
-    <ClInclude Include="grocery\tinyxml2.h">
-      <Filter>Header Files\grocery</Filter>
-    </ClInclude>
     <ClInclude Include="template\nested.h">
       <Filter>Header Files\cpp\template</Filter>
     </ClInclude>
@@ -392,6 +389,9 @@
     </ClInclude>
     <ClInclude Include="zlog\log_service.h">
       <Filter>Header Files\zlog</Filter>
+    </ClInclude>
+    <ClInclude Include="grocery\tinyxml2.hpp">
+      <Filter>Header Files\grocery</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

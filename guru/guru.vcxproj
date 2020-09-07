@@ -176,7 +176,7 @@
     <ClInclude Include="grocery\ostream_ex.h" />
     <ClInclude Include="grocery\path.h" />
     <ClInclude Include="grocery\string_ex.h" />
-    <ClInclude Include="grocery\tinyxml2.h" />
+    <ClInclude Include="grocery\tinyxml2.hpp" />
     <ClInclude Include="grocery\tinyxml2_wrap.h" />
     <ClInclude Include="grocery\x64fmt.h" />
     <ClInclude Include="grocery\xmler.h" />

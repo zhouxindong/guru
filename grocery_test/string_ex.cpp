@@ -6,13 +6,13 @@
 
 using namespace std;
 
-int main()
-{
-	cout << to_string(-33) << "\n";
-
-	system("pause");
-	return 0;
-}
+//int main()
+//{
+//	cout << to_string(-33) << "\n";
+//
+//	system("pause");
+//	return 0;
+//}
 
 //int main()
 //{

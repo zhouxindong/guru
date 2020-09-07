@@ -4,7 +4,7 @@
 
 #include "../gvals.h"
 #include "xmler.h"
-#include "tinyxml2.h"
+#include "tinyxml2.hpp"
 #include <cassert>
 
 _GURU_BEGIN

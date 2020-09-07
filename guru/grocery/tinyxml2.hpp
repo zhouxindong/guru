@@ -3,7 +3,10 @@
 #ifndef _GURU_TINYXML2_H_
 #define _GURU_TINYXML2_H_
 
-#include "../gvals.h"
+//#include "../gvals.h"
+#define _GURU_BEGIN namespace guru {
+#define _GURU_END   }
+#define _GURU  ::guru::
 
 #if defined(ANDROID_NDK) || defined(__BORLANDC__) || defined(__QNXNTO__)
 #   include <ctype.h>
